@@ -8,9 +8,11 @@ tesselation of a planar point set, as constructed by the function deldir.
 This is a method for plot.
 }
 \usage{
-\method{plot}{deldir}(x, add=F, wlines='both', wpoints='both',
-            number=F, cex=1, nex=1, col=NULL, lty=NULL,
-            pch=NULL, xlim=NULL, ylim=NULL,...)
+\method{plot}{deldir}(x,add=FALSE,wlines=c('both','triang','tess'),
+                      wpoints=c('both','real','dummy','none'),
+                      number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
+                      pch=NULL,xlim=NULL,ylim=NULL,...)
+
 }
 \arguments{
 \item{x}{
@@ -32,9 +34,10 @@ default) ?
 default) or should no points be plotted (wpoints='none')?
 }
 \item{number}{
-Logical argument, defaulting to FALSE; if TRUE then the points plotted
-will be labelled with their index numbers (corresponding to the row
-numbers of the matrix "summary" in the output of deldir).
+Logical argument, defaulting to \code{FALSE}; if \code{TRUE} then the
+points plotted will be labelled with their index numbers
+(corresponding to the row numbers of the matrix "summary" in the
+output of deldir).
 }
 \item{cex}{
 The value of the character expansion argument cex to be used
@@ -43,7 +46,7 @@ with the plotting symbols for plotting the points.
 \item{nex}{
 The value of the character expansion argument cex to be used by the
 text function when numbering the points with their indices.  Used only
-if number=T.
+if number=\code{TRUE}.
 }
 \item{col}{
 the colour numbers for plotting the triangulation, the tesselation,
@@ -72,8 +75,10 @@ rectangular window specification returned by deldir().
 the limits on the y-axis.  Defaults to rw[3:4] where rw is the
 rectangular window specification returned by deldir().
 }
-\item{...} Further plotting parameters to be passed to \code{plot()}
+\item{...}{
+Further plotting parameters to be passed to \code{plot()}
 \code{segments()} or \code{points()}.  Unlikely to be used.
+}
 }
 \section{Side Effects}{
 A plot of the points being triangulated is produced or added to
@@ -95,10 +100,10 @@ deldir
 try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
 plot(try)
 #
-deldir(x,y,list(ndx=4,ndy=4),plot=T,add=T,wl='te',
-       col=c(1,1,2,3,4),num=T)
+deldir(x,y,list(ndx=4,ndy=4),plot=TRUE,add=TRUE,wl='te',
+       col=c(1,1,2,3,4),num=TRUE)
 # Plots the tesselation, but does not save the results.
-try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=T,wl='tr',
+try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr',
               wp='n')
 # Plots the triangulation, but not the points, and saves the returned
 structure.

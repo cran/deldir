@@ -1,6 +1,6 @@
-plot.deldir <- function(x,add=F,wlines=c('both','triang','tess'),
+plot.deldir <- function(x,add=FALSE,wlines=c('both','triang','tess'),
                         wpoints=c('both','real','dummy','none'),
-                        number=F,cex=1,nex=1,col=NULL,lty=NULL,
+                        number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
                         pch=NULL,xlim=NULL,ylim=NULL,...)
 {
 #
@@ -21,10 +21,10 @@ col <- if(is.null(col)) c(1,1,1,1,1) else rep(col,length.out=5)
 lty <- if(is.null(lty)) 1:2 else rep(lty,length.out=2)
 pch <- if(is.null(pch)) 1:2 else rep(pch,length.out=2)
 
-plot.del <- switch(wlines,both=T,triang=T,tess=F)
-plot.dir <- switch(wlines,both=T,triang=F,tess=T)
-plot.rl  <- switch(wpoints,both=T,real=T,dummy=F,none=F)
-plot.dum <- switch(wpoints,both=T,real=F,dummy=T,none=F)
+plot.del <- switch(wlines,both=TRUE,triang=TRUE,tess=FALSE)
+plot.dir <- switch(wlines,both=TRUE,triang=FALSE,tess=TRUE)
+plot.rl  <- switch(wpoints,both=TRUE,real=TRUE,dummy=FALSE,none=FALSE)
+plot.dum <- switch(wpoints,both=TRUE,real=FALSE,dummy=TRUE,none=FALSE)
 
 delsgs <- x$delsgs
 dirsgs <- x$dirsgs
@@ -55,7 +55,7 @@ if(!add) {
 	if(is.null(xlim)) xlim <- rw[1:2]
 	if(is.null(ylim)) ylim <- rw[3:4]
 	plot(0,0,type='n',xlim=xlim,ylim=ylim,
-     		xlab='x',ylab='y',axes=F,...)
+     		xlab='x',ylab='y',axes=FALSE,...)
 	axis(side=1)
 	axis(side=2)
 }

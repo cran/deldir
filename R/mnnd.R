@@ -14,6 +14,7 @@ dmb <- (max(x)-min(x))**2 + (max(y)-min(y))**2
 	y=as.double(y),
 	n=as.integer(n),
 	dmb=as.double(dmb),
-	d=double(1)
+	d=double(1),
+	PACKAGE='deldir'
 	)$d
 }

@@ -12,6 +12,7 @@ ind.dup(x,y,rw=NULL,frac=0.0001)
 mnnd(x,y)
 }
 \details{
-  These are not to be called by the user.
+  These functions are auxilliary and are not intended to be called by
+  the user.
 }
 \keyword{internal}
