@@ -1,5 +1,5 @@
       subroutine master(x,y,sort,rw,npd,ntot,nadj,madj,ind,tx,ty,ilst,
-&     eps, delsgs,ndel,delsum,dirsgs,ndir,dirsum,nerror)
+     *eps, delsgs,ndel,delsum,dirsgs,ndir,dirsum,nerror)
       implicit double precision(a-h,o-z)
       logical sort
       dimension x(-3:ntot), y(-3:ntot)

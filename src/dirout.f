@@ -61,7 +61,7 @@
       xm = 0.5*(ai+ci)
       ym = 0.5*(bi+di)
       if(.not.(xmin.lt.xm.and.xm.lt.xmax.and.ymin.lt.ym.and.ym.lt.ymax))
-&     goto 23024
+     *goto 23024
       nbpt = nbpt+2
       npt = npt+1
 23024 continue

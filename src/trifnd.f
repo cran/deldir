@@ -1,7 +1,7 @@
       subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(
-&     3)
+     *3)
       integer tau(3)
       logical adjace
       nerror = -1

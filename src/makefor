@@ -2,4 +2,9 @@
 foreach file (*.r)
 set stem = `basename $file .r`
 ratfor $file > $stem.f
+e $stem.f << EOF >& /dev/null
+g/^&     /s//     */
+w
+q
+EOF
 end
