@@ -11,7 +11,7 @@ This is a method for plot.
 \method{plot}{deldir}(x,add=FALSE,wlines=c('both','triang','tess'),
                       wpoints=c('both','real','dummy','none'),
                       number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                      pch=NULL,xlim=NULL,ylim=NULL,...)
+                      pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',...)
 
 }
 \arguments{
@@ -74,6 +74,14 @@ rectangular window specification returned by deldir().
 \item{ylim}{
 the limits on the y-axis.  Defaults to rw[3:4] where rw is the
 rectangular window specification returned by deldir().
+}
+\item{xlab}{
+label for the x-axis.  Defaults to \code{x}.  Ignored if
+\code{add=TRUE}.
+}
+\item{ylab}{
+label for the y-axis.  Defaults to \code{y}.  Ignored if
+\code{add=TRUE}.
 }
 \item{...}{
 Further plotting parameters to be passed to \code{plot()}
