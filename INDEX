@@ -1,0 +1,7 @@
+deldir                   Construct the Delaunay triangulation and the
+                         Dirichlet (or Voronoi) tessellation of a planar
+                         point set.
+plot.deldir              Produce a plot of the Delaunay triangulation and
+                         Dirichlet (Voronoi) tesselation of a planar
+                         point set, as constructed by the function
+                         deldir.
