@@ -14,7 +14,8 @@ rslt <- .Fortran(
 		n=as.integer(n),
 		rw=as.double(rw),
 		frac=as.double(frac),
-		dup=logical(n)
+		dup=logical(n),
+		PACKAGE='deldir'
 	)
 
 rslt$dup

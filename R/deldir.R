@@ -1,5 +1,5 @@
 deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,frac=1e-4,
-                   sort=T,plotit=F,digits=6,...) {
+                   sort=TRUE,plotit=FALSE,digits=6,...) {
 # Function deldir
 #
 #   Copyright (C) 1996 by T. Rolf Turner
@@ -136,7 +136,8 @@ repeat {
 			dirsgs=double(tdir),
 			ndir=as.integer(ndir),
 			dirsum=double(ntdir),
-			nerror=integer(1)
+			nerror=integer(1),
+			PACKAGE='deldir'
 		)
 	
 # Check for errors:

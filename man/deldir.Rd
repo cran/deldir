@@ -16,7 +16,7 @@ be added, in various ways, to the set of data points being triangulated.
 }
 \usage{
 deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, frac=0.0001,
-       sort=T, plotit=F, digits=6, \dots)
+       sort=TRUE, plotit=FALSE, digits=6, \dots)
 }
 \arguments{
 \item{x,y}{
@@ -76,18 +76,18 @@ points; defaults to 0.0001. Points are considered duplicates if
 abs(x1-x2) < frac*(xmax-xmin) AND abs(y1-y2) < frac*(ymax-ymin).
 }
 \item{sort}{
-Logical argument; if TRUE (the default) the data (including dummy
+Logical argument; if \code{TRUE} (the default) the data (including dummy
 points) are sorted into a sequence of "bins" prior to triangulation;
 this makes the algorithm slightly more efficient.  Normally one would
-set sort equal to FALSE only if one wished to observe some of the
+set sort equal to \code{FALSE} only if one wished to observe some of the
 fine detail of the way in which adding a point to a data set affected
 the triangulation, and therefore wished to make sure that the point
 in question was added last.  Essentially this argument would get used
 only in a de-bugging process.
 }
 \item{plotit}{
-Logical argument; if TRUE a plot of the triangulation and tessellation
-is produced; the default is FALSE.
+Logical argument; if \code{TRUE} a plot of the triangulation and tessellation
+is produced; the default is \code{FALSE}.
 }
 \item{digits}{
 The number of decimal places to which all numeric values in the
@@ -95,11 +95,11 @@ returned list should be rounded.  Defaults to 6.
 }
 \item{...}{
 Auxilliary arguments add, wlines, wpoints, number, nex, col, lty,
-pch, xlim, and ylim may be passed to plot.deldir through "\dots" if
-plot=T.
+pch, xlim, and ylim (and possibly other plotting parameters) may be
+passed to plot.deldir through "\dots" if plotit=\code{TRUE}.
 }}
 \value{
-A list (of class \code{deldir}), invisible if plot=T, with components:
+A list (of class \code{deldir}), invisible if plotit=\code{TRUE}, with components:
 
 \item{delsgs}{
 a matrix with 6 columns.  The first 4 entries of each row are the
@@ -164,7 +164,7 @@ If ndx >= 2 and ndy >= 2, then the rectangular window IS the convex
 hull, and so the values of del.area and dir.area are identical.
 }
 \section{Side Effects}{
-If plot==T a plot of the triangulation and/or tessellation is produced
+If plotit==\code{TRUE} a plot of the triangulation and/or tessellation is produced
 or added to an existing plot.
 }
 \details{
@@ -216,7 +216,7 @@ try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
 # Puts dummy points at the corners of the rectangular
 # window, i.e. at (0,0), (10,0), (10,10), and (0,10)
 \dontrun{
-try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=T,wl='tr')
+try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
 }
 # Plots the triangulation which was created (but not the tesselation).
 }
