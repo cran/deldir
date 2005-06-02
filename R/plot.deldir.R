@@ -1,7 +1,7 @@
 plot.deldir <- function(x,add=FALSE,wlines=c('both','triang','tess'),
                         wpoints=c('both','real','dummy','none'),
                         number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                        pch=NULL,xlim=NULL,ylim=NULL,...)
+                        pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',...)
 {
 #
 # Function plot.deldir to produce a plot of the Delaunay triangulation
@@ -55,7 +55,7 @@ if(!add) {
 	if(is.null(xlim)) xlim <- rw[1:2]
 	if(is.null(ylim)) ylim <- rw[3:4]
 	plot(0,0,type='n',xlim=xlim,ylim=ylim,
-     		xlab='x',ylab='y',axes=FALSE,...)
+     		xlab=xlab,ylab=ylab,axes=FALSE,...)
 	axis(side=1)
 	axis(side=2)
 }
