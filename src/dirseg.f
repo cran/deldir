@@ -1,5 +1,5 @@
       subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,
-&     nerror)
+     *nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsgs(8,ndir), rw(4), ind(1)
@@ -87,7 +87,7 @@
       xm = 0.5*(ai+ci)
       ym = 0.5*(bi+di)
       if(.not.(xmin.lt.xm.and.xm.lt.xmax.and.ymin.lt.ym.and.ym.lt.ymax))
-&     goto 23030
+     *goto 23030
       goferit = .true.
 23030 continue
 23028 continue

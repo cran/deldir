@@ -9,7 +9,7 @@
       ymin = rw(3)
       ymax = rw(4)
       if(.not.(xmin.le.a.and.a.le.xmax.and.ymin.le.b.and.b.le.ymax))
-&     goto 23000
+     *goto 23000
       ai = a
       bi = b
       bpt = .false.
