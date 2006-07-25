@@ -32,8 +32,16 @@ The set of vertices of each tile may be ``incomplete''.  Only
 vertices which lie within the enclosing rectangle, and ``boundary
 points'' are listed.
 
-Note that the enclosing rectangle my be specified by the user
+Note that the enclosing rectangle may be specified by the user
 in the call to \code{\link{deldir}()}.
+
+In contrast to the previous version of \code{deldir}, the
+corners of the enclosing rectangle are now include as vertices
+of tiles.  I.e. a tile which in fact extends beyond the rectangular
+window and contains a corner of that window will have that
+corner added to its list of vertices.  Thus when the corresponding
+polygon is plotted, the result is the intersection of the tile
+with the enclosing rectangular window.
 }
 
 \seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}}

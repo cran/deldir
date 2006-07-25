@@ -1,7 +1,9 @@
 \name{deldir-internal}
 \alias{dumpts}
 \alias{ind.dup}
+\alias{mid.in}
 \alias{mnnd}
+\alias{get.cnrpt}
 \title{Internal deldir functions}
 \description{
   Internal deldir functions.
@@ -9,7 +11,9 @@
 \usage{
 dumpts(x,y,dpl,rw)
 ind.dup(x,y,rw=NULL,frac=0.0001)
+mid.in(x,y,rx,ry)
 mnnd(x,y)
+get.cnrpt(j,xxx,cntr)
 }
 \details{
   These functions are auxilliary and are not intended to be called by
