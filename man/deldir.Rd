@@ -2,7 +2,7 @@
 \alias{deldir}
 \title{
 Construct the Delaunay triangulation and the Dirichlet
-(or Voronoi) tessellation of a planar point set.
+(Voronoi) tessellation of a planar point set.
 }
 \description{
 This function computes the Delaunay triangulation (and hence the
@@ -196,13 +196,17 @@ favour of the current package ``delaunay'' package.  Don also
 collaborated in the preparation of that package.
 
 Further revisions and bug-fixes were made in 1998, 1999, and 2002.
-
 }
+
+\author{Rolf Turner
+  \email{r.turner@auckland.ac.nz}
+  \url{http://www.math.unb.ca/~rolf}
+}
+
 \references{
 Lee, D. T., and Schacter, B. J.  "Two algorithms for constructing a
 Delaunay triangulation", Int. J. Computer and Information
 Sciences, Vol. 9, No. 3, 1980, pp. 219 -- 242.
-
 
 Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 }

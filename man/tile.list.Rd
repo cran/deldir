@@ -25,7 +25,15 @@ anticlockwise order.}
 ``real'' vertex, or a \emph{boundary point}, i.e. a point where the
 tile edge intersects the boundary of the enclosing rectangle}
 }
-\author{Rolf Turner}
+\author{Rolf Turner
+  \email{r.turner@auckland.ac.nz}
+  \url{http://www.math.unb.ca/~rolf}
+}
+\section{Acknowledgement}{
+The author expresses sincere thanks to Majid Yazdani who found and
+pointed out a serious bug in \code{tile.list} in the previous
+version (0.0-5) of the \code{deldir} package.
+}
 
 \section{Warning}{
 The set of vertices of each tile may be ``incomplete''.  Only

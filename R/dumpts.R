@@ -45,13 +45,16 @@ if(ndm >0) {
 }
 
 # Rectangular grid:
-if(!is.null(dpl$ndx)) {
-	ndx <- dpl$ndx
-	ndy <- dpl$ndy
+ndx <- dpl$ndx
+okx <- !is.null(ndx) && ndx > 0
+ndy <- dpl$ndy
+oky <- !is.null(ndy) && ndy > 0
+if(okx & oky) {
 	xt  <- if(ndx>1) seq(xmin,xmax,length=ndx) else 0.5*(xmin+xmax)
 	yt  <- if(ndy>1) seq(ymin,ymax,length=ndy) else 0.5*(ymin+ymax)
-	xd  <- c(xd,rep(xt,ndy))
-	yd  <- c(yd,rep(yt,rep(ndx,ndy)))
+	xy <- expand.grid(x=xt,y=yt)
+	xd  <- c(xd,xy$x)
+	yd  <- c(yd,xy$y)
 }
 
 ndm <- length(xd)
