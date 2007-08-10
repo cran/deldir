@@ -100,8 +100,10 @@ The points in the set being triangulated are plotted with distinguishing
 symbols.  By default the real points are plotted as circles (pch=1) and the
 dummy points are plotted as triangles (pch=2).
 }
-\seealso{
-deldir
+\seealso{ \code{\link{deldir}()} }
+\author{Rolf Turner
+  \email{r.turner@auckland.ac.nz}
+  \url{http://www.math.unb.ca/~rolf}
 }
 \examples{
 \dontrun{

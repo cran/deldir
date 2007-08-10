@@ -36,7 +36,10 @@ plot.tile.list(x, verbose = FALSE, close=FALSE, pch=1, polycol=NA,
    it is now \code{FALSE}.
 }
 \value{NULL; side effect is a plot.}
-\author{ Rolf Turner }
+\author{Rolf Turner
+  \email{r.turner@auckland.ac.nz}
+  \url{http://www.math.unb.ca/~rolf}
+}
 \seealso{
 \code{\link{tile.list}()}
 }
