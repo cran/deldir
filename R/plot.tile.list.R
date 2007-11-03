@@ -1,6 +1,6 @@
 `plot.tile.list` <-
 function (x, verbose = FALSE, close = FALSE, pch = 1, polycol = NA, 
-    showpoints = TRUE, ...) 
+    showpoints = TRUE, asp = 1, ...) 
 {
     object <- x
     if (!inherits(object, "tile.list")) 
@@ -20,20 +20,20 @@ function (x, verbose = FALSE, close = FALSE, pch = 1, polycol = NA,
     }))
     rx <- range(x.all)
     ry <- range(y.all)
-    plot(x.all, y.all, type = "n", asp = 1, xlab = "x", ylab = "y")
+    plot(x.all, y.all, type = "n", asp = asp, xlab = "x", ylab = "y")
+    polycol <- apply(col2rgb(polycol,TRUE),2,
+                     function(x){do.call(rgb,as.list(x/255))})
     polycol <- rep(polycol, length = length(object))
-    ptcol <- ifelse(palette()[polycol] == "black", "white", "black")
-    ptcol[is.na(ptcol)] <- "black"
-    lnwid <- ifelse(palette()[polycol] == "black", 2, 1)
-    lnwid[is.na(lnwid)] <- 1
+    hexbla  <- do.call(rgb,as.list(col2rgb("black",TRUE)/255))
+    hexwhi  <- do.call(rgb,as.list(col2rgb("white",TRUE)/255))
+    ptcol <- ifelse(polycol == hexbla,hexwhi,hexbla)
+    lnwid <- ifelse(polycol == hexbla, 2, 1)
     for (i in 1:n) {
         inner <- !any(object[[i]]$bp)
         if (close | inner) 
             polygon(object[[i]], col = polycol[i], border = ptcol[i], 
                 lwd = lnwid[i])
         else {
-            ptcol[i] <- "black"
-            lnwid[i] <- 1
             x <- object[[i]]$x
             y <- object[[i]]$y
             bp <- object[[i]]$bp
