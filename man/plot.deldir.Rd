@@ -119,5 +119,5 @@ try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr',
 structure.
 }
 }
-\keyword{}
+\keyword{ hplot }
 % Converted by Sd2Rd version 1.21.

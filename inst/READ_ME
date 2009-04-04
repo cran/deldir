@@ -1,5 +1,21 @@
+ Version 0.0-8 (4 April 2009)
 
- Version date: 21 February 2002.
+ Removed the labels from the x and y vectors in the tile descriptions
+ produced by tile.list.  These labels (which were the row numbers in
+ the dirsgs data frame returned by deldir()) served no useful purpose
+ and were potentially confusing.
+
+                       *****************************
+
+ Versions 0.0-2 through 0.0-7 were not tracked here. :-( Simply forgot
+ about doing this.  I thouroughly *intend* [ :-) ] to get the archives
+ from CRAN and try to document the changes.  Recent ones involved
+ fixing bugs in and adding features to the tile.list() and
+ plot.tile.list() functions.
+
+                       *****************************
+
+ Version 0.0-1 (21 February 2002)
  This version is simply an adaptation of the Splus version
  of the package to R.
 
