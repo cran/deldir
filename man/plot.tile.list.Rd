@@ -4,8 +4,6 @@
 \description{ A method for \code{plot}.  Plots (sequentially)
 the tiles associated with each point in the set being tessellated. }
 \usage{
-plot.tile.list(x, verbose = FALSE, close=FALSE, pch=1, polycol=NA,
-               showpoints=TRUE, asp=1, ...)
 \method{plot}{tile.list}(x, verbose = FALSE, close=FALSE, pch=1,
                          polycol=NA, showpoints=TRUE, asp=1, ...)
 }
