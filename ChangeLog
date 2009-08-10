@@ -1,3 +1,13 @@
+ Version 0.0-12 (08 January 2019)
+
+ Fixed a minor glitch in the .First.lib() function.  I had
+ a backspace coded into the message produced, and this upset
+ Sweave.  The backspace had been put in to get things to line
+ up correctly.  Re-arranged things (properly!) so that it is
+ no longer needed.
+
+                       *****************************
+
  Version 0.0-11 (09 December 2009)
 
  No change, really.  A tweak that I made to the First() function
