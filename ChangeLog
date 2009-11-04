@@ -1,0 +1,97 @@
+
+ Version 0.0-9 (4 November 2009)
+
+ Added a new function tile.centroids() --- which does the obvious.
+ Motivated by an inquiry from Leandro Moreira.
+
+ Added a ChangeLog
+
+                       *****************************
+
+ Version 0.0-8 (4 April 2009)
+
+ Removed the labels from the x and y vectors in the tile descriptions
+ produced by tile.list.  These labels (which were the row numbers in
+ the dirsgs data frame returned by deldir()) served no useful purpose
+ and were potentially confusing.
+
+                       *****************************
+
+ Versions 0.0-2 through 0.0-7 were not tracked here. :-( Simply forgot
+ about doing this.  I thouroughly *intend* [ :-) ] to get the archives
+ from CRAN and try to document the changes.  Recent ones involved
+ fixing bugs in and adding features to the tile.list() and
+ plot.tile.list() functions.
+
+                       *****************************
+
+ Version 0.0-1 (21 February 2002)
+ This version is simply an adaptation of the Splus version
+ of the package to R.
+
+
+=========================================================================================
+The following items relate to the Splus versions of deldir
+=========================================================================================
+
+ Version date: 14 February 2002.
+ This version supercedes the version dated 24 April 1999.
+
+ The changes from the version dated 24 April 1999 to the
+ version dated 14 February 2002 were:
+
+	A bug in the procedure for eliminating duplicated points was
+	fixed.  Thanks go to Dr. Berwin Turlach of the Department of
+	Maths and Stats at the University of Western Australia, for
+	spotting this bug.
+
+                       *****************************
+
+ Version date: 24 April 1999.
+ This version supercedes the version dated 26 October 1998.
+
+ The changes from the version dated 26 October 1998 to the
+ version dated 24 April 1999 were:
+
+	(1) The function mipd(), stored in mipd.sf, and the
+	corresponding Fortran subroutine mipd, stored in mipd.r, have
+	been replaced by mnnd() in mnnd.sf and mnnd in mnnd.r.  The
+	function mipd calculated the mean interpoint distance, to be
+	used in constructing dummy point structures of a certain
+	type.  After some reflection it became apparent that the mean
+	interpoint distance was much too large for the intended
+	purpose, and that a more appropriate value was the ``mean
+	nearest neighbour distance'' which is calculated by the new
+	function.  This new value is now used in constructing dummy
+	point structures.
+
+	Note that the operative result is that the resulting dummy
+	point structures contain many more points than before.  The
+	old value caused large numbers of the dummy points to fall
+	outside the data window and therefore to be clipped.
+
+                       *****************************
+
+ Version date: 26 October 1998.
+ This version supercedes the version dated 6 December 1996.
+
+ The changes from the version dated 6 December 1996 to the
+ version dated 26 October 1998 were:
+
+	(1) A ratfor/Fortran routine named ``inside'' has been
+	renamed ``dldins'' to avoid conflict with a name built in to
+	some versions of Splus.
+
+	(2) Some minor corrections have been made to dangerous
+	infelicities in a piece of the ratfor/Fortran code.
+
+	(3) The dynamic loading procedure has been changed to use
+	dyn.load.shared so that the package is easily usable on
+	IRIX systems as well as under SunOS/Solaris.
+
+	(4) The package has been adjusted slightly so that it
+	can easily be installed as a section of a library.  In
+	particular, the dynamic loading is now done by the
+	.First.lib() function rather than from within deldir()
+	itself; reference to an environment variable DYN_LOAD_LIB
+	is no longer needed.

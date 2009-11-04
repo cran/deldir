@@ -43,7 +43,7 @@ points'' are listed.
 Note that the enclosing rectangle may be specified by the user
 in the call to \code{\link{deldir}()}.
 
-In contrast to the previous version of \code{deldir}, the
+In contrast to some previous versions of \code{deldir}, the
 corners of the enclosing rectangle are now include as vertices
 of tiles.  I.e. a tile which in fact extends beyond the rectangular
 window and contains a corner of that window will have that
