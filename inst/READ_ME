@@ -1,3 +1,8 @@
+ Version 0.0-9 (??? 2 June 2009)
+
+ Added a new function tile.centroids() --- which does the obvious.
+ Motivated by an inquiry from Leandro Moreira.
+
  Version 0.0-8 (4 April 2009)
 
  Removed the labels from the x and y vectors in the tile descriptions
