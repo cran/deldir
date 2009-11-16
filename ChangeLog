@@ -1,3 +1,10 @@
+ Version 0.0-10 (16 November 2009)
+
+ Got rid of the call to ind.dup() used a very rough
+ bit of Fortran code to detect duplicated points, and
+ replaced it with a call to duplicated().
+
+ (Bug pointed out by Bjarke Christensen.)
 
  Version 0.0-9 (4 November 2009)
 

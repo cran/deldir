@@ -15,8 +15,8 @@ finite rectangular window.  A set of dummy points may
 be added, in various ways, to the set of data points being triangulated.
 }
 \usage{
-deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, frac=0.0001,
-       sort=TRUE, plotit=FALSE, digits=6, \dots)
+deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
+       digits=6, \dots)
 }
 \arguments{
 \item{x,y}{
@@ -69,11 +69,6 @@ A value of epsilon used in testing whether a quantity is zero, mainly
 in the context of whether points are collinear.  If anomalous errors
 arise, it is possible that these may averted by adjusting the value
 of eps upward or downward.
-}
-\item{frac}{
-A value specifying the tolerance used in eliminating duplicate
-points; defaults to 0.0001. Points are considered duplicates if
-abs(x1-x2) < frac*(xmax-xmin) AND abs(y1-y2) < frac*(ymax-ymin).
 }
 \item{sort}{
 Logical argument; if \code{TRUE} (the default) the data (including dummy
@@ -196,6 +191,21 @@ favour of the current package ``delaunay'' package.  Don also
 collaborated in the preparation of that package.
 
 Further revisions and bug-fixes were made in 1998, 1999, and 2002.
+}
+
+\section{Warning}{
+The process for determining if points are duplicated changed
+between versions 0.1-9 and 0.1-10.  Previously there was an
+argument \code{frac} for this function, which defaulted to
+0.0001.  Points were deemed to be duplicates if the difference
+in \code{x}-coordinates was less than \code{frac} times the
+in \code{y}-coordinates was less than \code{frac} times the
+height of \code{rw}.  This process has been changed to one
+which uses \code{\link{duplicated}()} on the data frame whose
+columns are \code{x} and \code{y}.
+
+As a result it may happen that points which were previously
+eliminated as duplicates will no longer be eliminated.
 }
 
 \author{Rolf Turner
