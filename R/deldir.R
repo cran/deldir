@@ -1,4 +1,4 @@
-deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,frac=1e-4,
+deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,
                    sort=TRUE,plotit=FALSE,digits=6,...) {
 # Function deldir
 #
@@ -84,7 +84,7 @@ if(!is.null(dpl)) {
 }
 
 # Eliminate duplicate points:
-iii <- !ind.dup(x,y,rw,frac)
+iii <- !duplicated(data.frame(x,y))
 ndm <- sum(iii[-(1:n)])
 n   <- sum(iii[1:n])
 x   <- x[iii]
