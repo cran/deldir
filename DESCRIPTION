@@ -1,6 +1,6 @@
 Package: deldir
-Version: 0.0-10
-Date: 2009-11-16
+Version: 0.0-11
+Date: 2009-12-09
 Title: Delaunay Triangulation and Dirichlet (Voronoi) Tessellation.
 Author: Rolf Turner <r.turner@auckland.ac.nz>
 Maintainer: Rolf Turner <r.turner@auckland.ac.nz>
@@ -10,6 +10,6 @@ Description: Calculates the Delaunay triangulation and the Dirichlet or
         planar point set.
 License: GPL (>= 2)
 URL: http://www.math.unb.ca/~rolf/
-Packaged: 2009-11-16 18:58:54 UTC; rturner
+Packaged: 2009-12-08 19:16:41 UTC; rturner
 Repository: CRAN
-Date/Publication: 2009-11-16 19:01:12
+Date/Publication: 2009-12-09 08:53:33

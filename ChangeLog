@@ -1,3 +1,15 @@
+ Version 0.0-11 (09 December 2009)
+
+ No change, really.  A tweak that I made to the First() function
+ in version 0.0-10, *without* changing the version number (psigh!)
+ did not propagate to the Windoze and Mac OSX binaries.
+
+ So version 0.0-11 is just the same as the tweaked realization of
+ of version 0.0-10 but with the version number changed so that the
+ tweak will propagate.
+
+                       *****************************
+
  Version 0.0-10 (16 November 2009)
 
  Got rid of the call to ind.dup() used a very rough
@@ -5,6 +17,8 @@
  replaced it with a call to duplicated().
 
  (Bug pointed out by Bjarke Christensen.)
+
+                       *****************************
 
  Version 0.0-9 (4 November 2009)
 
