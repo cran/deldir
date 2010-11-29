@@ -11,7 +11,8 @@ This is a method for plot.
 \method{plot}{deldir}(x,add=FALSE,wlines=c('both','triang','tess'),
                       wpoints=c('both','real','dummy','none'),
                       number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                      pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',...)
+                      pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',
+                      showrect=FALSE,...)
 
 }
 \arguments{
@@ -83,6 +84,9 @@ label for the x-axis.  Defaults to \code{x}.  Ignored if
 label for the y-axis.  Defaults to \code{y}.  Ignored if
 \code{add=TRUE}.
 }
+\item{showrect}{
+logical scalar; show the enclosing rectangle \code{rw} (see
+\code{\link{deldir}()}) be plotted? }
 \item{...}{
 Further plotting parameters to be passed to \code{plot()}
 \code{segments()} or \code{points()}.  Unlikely to be used.
