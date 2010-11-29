@@ -1,6 +1,5 @@
 \name{deldir-internal}
 \alias{dumpts}
-\alias{ind.dup}
 \alias{mid.in}
 \alias{mnnd}
 \alias{get.cnrind}
@@ -11,7 +10,6 @@
 }
 \usage{
 dumpts(x,y,dpl,rw)
-ind.dup(x,y,rw=NULL,frac=0.0001)
 mid.in(x,y,rx,ry)
 mnnd(x,y)
 get.cnrind(x,y,rw)

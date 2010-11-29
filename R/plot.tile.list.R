@@ -1,26 +1,33 @@
-`plot.tile.list` <-
-function (x, verbose = FALSE, close = FALSE, pch = 1, polycol = NA, 
-    showpoints = TRUE, asp = 1, ...) 
+plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
+                            polycol = NA, showpoints = TRUE, showrect=FALSE,
+                            add=FALSE, asp = 1, xlab = "x", ylab = "y", main = "", ...) 
 {
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
     n <- length(object)
-    x.all <- unlist(lapply(object, function(w) {
-        c(w$pt[1], w$x)
-    }))
-    y.all <- unlist(lapply(object, function(w) {
-        c(w$pt[2], w$y)
-    }))
+    if(showrect) {
+	rw <- attr(object,"rw")
+        rx <- rw[1:2]
+        ry <- rw[3:4]
+    } else {
+        x.all <- unlist(lapply(object, function(w) {
+            c(w$pt[1], w$x)
+        }))
+        y.all <- unlist(lapply(object, function(w) {
+            c(w$pt[2], w$y)
+        }))
+        rx <- range(x.all)
+        ry <- range(y.all)
+    }
     x.pts <- unlist(lapply(object, function(w) {
         w$pt[1]
     }))
     y.pts <- unlist(lapply(object, function(w) {
         w$pt[2]
     }))
-    rx <- range(x.all)
-    ry <- range(y.all)
-    plot(x.all, y.all, type = "n", asp = asp, xlab = "x", ylab = "y")
+    if(!add) plot(0, 0, type = "n", asp = asp, xlim=rx, ylim=ry, xlab = xlab,
+                  ylab = ylab, main = main)
     polycol <- apply(col2rgb(polycol,TRUE),2,
                      function(x){do.call(rgb,as.list(x/255))})
     polycol <- rep(polycol, length = length(object))
@@ -55,7 +62,10 @@ function (x, verbose = FALSE, close = FALSE, pch = 1, polycol = NA,
         if (verbose & i < n) 
             readline("Go? ")
     }
-    if (showpoints) 
+    if (showpoints & !verbose) 
         points(x.pts, y.pts, pch = pch, col = ptcol)
+    if(showrect) {
+	do.call(rect,as.list(rw)[c(1,3,2,4)])
+    }
     invisible()
 }

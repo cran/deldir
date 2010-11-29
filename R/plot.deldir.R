@@ -1,7 +1,8 @@
 plot.deldir <- function(x,add=FALSE,wlines=c('both','triang','tess'),
                         wpoints=c('both','real','dummy','none'),
                         number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                        pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',...)
+                        pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',
+                        showrect=FALSE,...)
 {
 #
 # Function plot.deldir to produce a plot of the Delaunay triangulation
@@ -77,5 +78,6 @@ if(number) {
 	yoff <-0.02*diff(range(Y))
 	text(X+xoff,Y+yoff,1:length(X),cex=nex,col=col[5],...)
 }
+if(showrect) do.call(rect,as.list(x$rw)[c(1,3,2,4)])
 invisible()
 }

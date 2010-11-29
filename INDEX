@@ -1,10 +1,9 @@
 deldir                  Construct the Delaunay triangulation and the
-                        Dirichlet (Voronoi) tessellation of a planar
-                        point set.
+                        Dirichlet (Voronoi)
 plot.deldir             Produce a plot of the Delaunay triangulation
-                        and Dirichlet (Voronoi) tesselation of a planar
-                        point set, as constructed by the function
-                        deldir.
+                        and Dirichlet (Voronoi)
 plot.tile.list          Plot Dirchlet/Voronoi tiles
+plot.triang.list        Plot Delaunay triangles
 tile.centroids          Compute centroids of Voronoi/Dirchlet tiles.
 tile.list               Create a list of tiles in a tessellation.
+triang.list             Produce a list of Delaunay triangles.

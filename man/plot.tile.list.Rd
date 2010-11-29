@@ -5,7 +5,9 @@
 the tiles associated with each point in the set being tessellated. }
 \usage{
 \method{plot}{tile.list}(x, verbose = FALSE, close=FALSE, pch=1,
-                         polycol=NA, showpoints=TRUE, asp=1, ...)
+                         polycol=NA, showpoints=TRUE, showrect=FALSE,
+                         add=FALSE, asp=1, xlab = "x", ylab = "y",
+                         main = "", ...)
 }
 \arguments{
   \item{x}{ A list of the tiles in a tessellation, as produced
@@ -26,11 +28,23 @@ the tiles associated with each point in the set being tessellated. }
   the use of no colour at all.}
   \item{showpoints}{Logical scalar; if \code{TRUE} the points of
   the pattern which was tesselated are plotted.}
+  \item{showrect}{
+   Logical scalar; show the enclosing rectangle \code{rw} (see
+   \code{\link{deldir}()}) be plotted?}
+  \item{add}{
+   Logical scalar; should the plot of the triangles be added
+   to an existing plot?  }
   \item{asp}{The aspect ratio of the plot; integer scalar or
   \code{NA}.  Set this argument equal to \code{NA} to allow the data
   to determine the aspect ratio and hence to make the plot occupy the
   complete plotting region in both \code{x} and \code{y} directions.
   This is inadvisable; see the \bold{Warnings}.}
+  \item{xlab}{
+   Label for the \code{x}-axis (used only if \code{add} is \code{FALSE}).}
+  \item{ylab}{
+   Label for the \code{y}-axis (used only if \code{add} is \code{FALSE}).}
+  \item{main}{
+   A title for the plot (used only if \code{add} is \code{FALSE}).}
   \item{...}{ Optional arguments; not used.  There for consistency
   with the generic \code{plot} function.}
 }

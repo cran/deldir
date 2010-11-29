@@ -35,5 +35,6 @@ tile.list <- function (object)
         rslt[[i]] <- acw(list(pt=pt, x = unname(xx), y = unname(yy), bp = bp))
     }
     class(rslt) <- "tile.list"
+    attr(rslt,"rw") <- object$rw
     rslt
 }

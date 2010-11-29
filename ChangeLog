@@ -1,4 +1,27 @@
- Version 0.0-12 (08 January 2019)
+
+                       *****************************
+
+ Version 0.0-13 (29 November 2010)
+
+ Renamed the directory inst/ratfor.discarded inst/code.discarded
+ and moved the no-longer-used function ind.dup to that directory.
+
+ Added a facility to plot.deldir() to plot the enclosing rectangle "rw".
+
+ Added the same facility to plot.tile.list().
+
+ Added attribute "rw" to the object returned by tile.list() so that
+ the foregoing facility can work.
+
+ Added function triang.list().
+
+ Added function plot.triang.list().
+
+ Added arguments add, xlab, ylab, main, and asp to plot.tile.list().
+
+                       *****************************
+
+ Version 0.0-12 (08 January 2009)
 
  Fixed a minor glitch in the .First.lib() function.  I had
  a backspace coded into the message produced, and this upset
