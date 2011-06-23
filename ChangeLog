@@ -1,6 +1,13 @@
 
                        *****************************
 
+ Version 0.0-14 (22 June 2011)
+
+Put the startup messages into packageStartupMessage()
+rather than catting them.  At the request of Thierry Onkelinx.
+
+                       *****************************
+
  Version 0.0-13 (29 November 2010)
 
  Renamed the directory inst/ratfor.discarded inst/code.discarded
