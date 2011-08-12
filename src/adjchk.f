@@ -1,34 +1,36 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine adjchk(i,j,adj,nadj,madj,ntot,nerror)
       dimension nadj(-3:ntot,0:madj)
       logical adj
       nerror = -1
       adj = .false.
       ni = nadj(i,0)
-      if(.not.(ni.gt.0))goto 23000
-      do 23002 k = 1,ni 
-      if(.not.(j.eq.nadj(i,k)))goto 23004
+      if(ni.gt.0)then
+      do23002 k = 1,ni 
+      if(j.eq.nadj(i,k))then
       adj = .true.
       goto 23003
-23004 continue
+      endif
 23002 continue
 23003 continue
-23000 continue
+      endif
       nj = nadj(j,0)
-      if(.not.(nj.gt.0))goto 23006
-      do 23008 k = 1,nj 
-      if(.not.(i.eq.nadj(j,k)))goto 23010
-      if(.not.(adj))goto 23012
+      if(nj.gt.0)then
+      do23008 k = 1,nj 
+      if(i.eq.nadj(j,k))then
+      if(adj)then
       return
-23012 continue
+      else
       nerror = 1
       return
-23013 continue
-23010 continue
+      endif
+      endif
 23008 continue
-23006 continue
-      if(.not.(adj))goto 23014
+23009 continue
+      endif
+      if(adj)then
       nerror = 1
       return
-23014 continue
+      endif
       return
       end

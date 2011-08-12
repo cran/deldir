@@ -36,7 +36,7 @@ if(nerror > 0) return
 if(shdswp) {
         call delet(k1,k2,nadj,madj,ntot,nerror)
 	if(nerror > 0) return
-        call insrt(j,k,nadj,madj,x,y,ntot,nerror,eps)
+	call insrt(j,k,nadj,madj,x,y,ntot,nerror,eps)
 	if(nerror > 0) return
 }
 return

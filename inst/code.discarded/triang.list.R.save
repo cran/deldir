@@ -49,10 +49,17 @@ triang.list <- function (object)
 		u=as.double(x),
 		v=as.double(y),
 		n=as.integer(length(x)),
-		okay=logical(1),
-		PACKAGE="deldir"
-	)
-	if(tmp$okay) {
+		okay=logical(3*length(x)),
+		xxx=double(3*length(x)),
+		PACKAGE="deldir")
+#
+okay <- matrix(tmp$okay,ncol=3)
+xxx  <- matrix(tmp$xxx,ncol=3)
+ok   <- apply(okay,1,any)
+chk  <- apply(xxx,1,function(x){any(x<=0)})
+if(!isTRUE(all.equal(ok,chk))) browser()
+#
+	if(all(ok)) {
 		K <- K+1
 		rslt[[K]] <- data.frame(x=xtri[i,],y=ytri[i,])
 	}

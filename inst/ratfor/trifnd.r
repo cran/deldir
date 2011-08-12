@@ -6,7 +6,7 @@ subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(3)
-integer tau(3)
+integer tau(3), temp(21)
 logical adjace
 
 nerror = -1
@@ -77,32 +77,37 @@ do i = 1,3 {
 
 # We've played ring-around-the-triangle; now figure out the
 # next move:
-switch(ntau) {
-        case 0: # All tests >= 0.; the point is inside; return.
-                return
+
+# case 0: All tests >= 0.; the point is inside; return.
+if(ntau==0) return
 
 # The point is not inside; work out the vertices of the triangle to which
 # to move.  Notation: Number the vertices of the current triangle from 1 to 3,
 # anti-clockwise. Then "triangle i+1" is adjacent to the side from vertex i to
 # vertex i+1, where i+1 is taken modulo 3 (i.e. "3+1 = 1").
-        case 1:
-                # move to "triangle 1"
-                #tau(1) = tau(1)
-                tau(2)  = tau(3)
-		call succ(tau(3),tau(1),tau(2),nadj,madj,ntot,nerror)
-		if(nerror > 0) return
-        case 2:
-                # move to "triangle 2"
-                #tau(1) = tau(1)
-                tau(3)  = tau(2)
-		call pred(tau(2),tau(1),tau(3),nadj,madj,ntot,nerror)
-		if(nerror > 0) return
-        case 3:
-                # move to "triangle 3"
-                tau(1)  = tau(3)
-                #tau(2) = tau(2)
-		call succ(tau(3),tau(1),tau(2),nadj,madj,ntot,nerror)
-		if(nerror > 0) return
+
+# case 1: Move to "triangle 1"
+if(ntau==1) {
+	#tau(1) = tau(1)
+	tau(2)  = tau(3)
+	call succ(tau(3),tau(1),tau(2),nadj,madj,ntot,nerror)
+	if(nerror > 0) return
+}
+
+# case 2: Move to "triangle 2"
+if(ntau==2) {
+	#tau(1) = tau(1)
+	tau(3)  = tau(2)
+	call pred(tau(2),tau(1),tau(3),nadj,madj,ntot,nerror)
+	if(nerror > 0) return
+}
+
+# case 3: Move to "triangle 3"
+if(ntau==3) {
+	tau(1)  = tau(3)
+	#tau(2) = tau(2)
+	call succ(tau(3),tau(1),tau(2),nadj,madj,ntot,nerror)
+	if(nerror > 0) return
 }
 
 # We've moved to a new triangle; check if the point being added lies

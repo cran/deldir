@@ -1,39 +1,40 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine swap(j,k1,k2,shdswp,nadj,madj,x,y,ntot,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       logical shdswp
       call adjchk(k1,k2,shdswp,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23000
+      if(nerror .gt. 0)then
       return
-23000 continue
-      if(.not.(.not.shdswp))goto 23002
+      endif
+      if(.not.shdswp)then
       return
-23002 continue
+      endif
       call pred(k,k1,k2,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23004
+      if(nerror .gt. 0)then
       return
-23004 continue
+      endif
       call succ(kk,k2,k1,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23006
+      if(nerror .gt. 0)then
       return
-23006 continue
-      if(.not.(kk.ne.k))goto 23008
+      endif
+      if(kk.ne.k)then
       shdswp = .false.
       return
-23008 continue
+      endif
       call qtest(j,k1,k,k2,shdswp,x,y,ntot,eps,nerror)
-      if(.not.(nerror .gt. 0))goto 23010
+      if(nerror .gt. 0)then
       return
-23010 continue
-      if(.not.(shdswp))goto 23012
+      endif
+      if(shdswp)then
       call delet(k1,k2,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23014
+      if(nerror .gt. 0)then
       return
-23014 continue
+      endif
       call insrt(j,k,nadj,madj,x,y,ntot,nerror,eps)
-      if(.not.(nerror .gt. 0))goto 23016
+      if(nerror .gt. 0)then
       return
-23016 continue
-23012 continue
+      endif
+      endif
       return
       end

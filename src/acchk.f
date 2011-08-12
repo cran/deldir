@@ -1,25 +1,23 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine acchk(i,j,k,anticl,x,y,ntot,eps)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3)
       logical anticl
-      if(.not.(i.le.0))goto 23000
+      if(i.le.0)then
       i1 = 1
-      goto 23001
-23000 continue
+      else
       i1 = 0
-23001 continue
-      if(.not.(j.le.0))goto 23002
+      endif
+      if(j.le.0)then
       j1 = 1
-      goto 23003
-23002 continue
+      else
       j1 = 0
-23003 continue
-      if(.not.(k.le.0))goto 23004
+      endif
+      if(k.le.0)then
       k1 = 1
-      goto 23005
-23004 continue
+      else
       k1 = 0
-23005 continue
+      endif
       ijk = i1*4+j1*2+k1
       xt(1) = x(i)
       yt(1) = y(i)
@@ -28,11 +26,10 @@
       xt(3) = x(k)
       yt(3) = y(k)
       call cross(xt,yt,ijk,cprd)
-      if(.not.(cprd .gt. eps))goto 23006
+      if(cprd .gt. eps)then
       anticl = .true.
-      goto 23007
-23006 continue
+      else
       anticl = .false.
-23007 continue
+      endif
       return
       end

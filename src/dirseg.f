@@ -1,5 +1,6 @@
-      subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,
-     *nerror)
+C Output from Public domain Ratfor, version 1.0
+      subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror
+     *)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsgs(8,ndir), rw(4), ind(1)
@@ -26,22 +27,23 @@
       i = i+1
       x(i) = xmin-c
       y(i) = ymax+c
-      do 23000 j = nstt,ntot 
+      do23000 j = nstt,ntot 
       call addpt(j,nadj,madj,x,y,ntot,eps,nerror)
-      if(.not.(nerror .gt. 0))goto 23002
+      if(nerror .gt. 0)then
       return
-23002 continue
+      endif
 23000 continue
+23001 continue
       kseg = 0
-      do 23004 i1 = 2,npd 
+      do23004 i1 = 2,npd 
       i = ind(i1)
-      do 23006 j1 = 1,i1-1 
+      do23006 j1 = 1,i1-1 
       j = ind(j1)
       call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23008
+      if(nerror .gt. 0)then
       return
-23008 continue
-      if(.not.(adjace))goto 23010
+      endif
+      if(adjace)then
       xi = x(i)
       yi = y(i)
       xj = x(j)
@@ -49,79 +51,78 @@
       xij = 0.5*(xi+xj)
       yij = 0.5*(yi+yj)
       call pred(k,i,j,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23012
+      if(nerror .gt. 0)then
       return
-23012 continue
+      endif
       call circen(i,k,j,a,b,x,y,ntot,eps,collin,nerror)
-      if(.not.(nerror .gt. 0))goto 23014
+      if(nerror .gt. 0)then
       return
-23014 continue
-      if(.not.(collin))goto 23016
+      endif
+      if(collin)then
       nerror = 12
       return
-23016 continue
+      endif
       call dldins(a,b,xij,yij,ai,bi,rw,intfnd,bptab)
-      if(.not.(.not.intfnd))goto 23018
+      if(.not.intfnd)then
       nerror = 16
       return
-23018 continue
+      endif
       call succ(l,i,j,nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23020
+      if(nerror .gt. 0)then
       return
-23020 continue
+      endif
       call circen(i,j,l,c,d,x,y,ntot,eps,collin,nerror)
-      if(.not.(nerror .gt. 0))goto 23022
+      if(nerror .gt. 0)then
       return
-23022 continue
-      if(.not.(collin))goto 23024
+      endif
+      if(collin)then
       nerror = 12
       return
-23024 continue
+      endif
       call dldins(c,d,xij,yij,ci,di,rw,intfnd,bptcd)
-      if(.not.(.not.intfnd))goto 23026
+      if(.not.intfnd)then
       nerror = 16
       return
-23026 continue
+      endif
       goferit = .false.
-      if(.not.(bptab .and. bptcd))goto 23028
+      if(bptab .and. bptcd)then
       xm = 0.5*(ai+ci)
       ym = 0.5*(bi+di)
-      if(.not.(xmin.lt.xm.and.xm.lt.xmax.and.ymin.lt.ym.and.ym.lt.ymax))
-     *goto 23030
+      if(xmin.lt.xm.and.xm.lt.xmax.and.ymin.lt.ym.and.ym.lt.ymax)then
       goferit = .true.
-23030 continue
-23028 continue
-      if(.not.((.not.bptab).or.(.not.bptcd)))goto 23032
+      endif
+      endif
+      if((.not.bptab).or.(.not.bptcd))then
       goferit = .true.
-23032 continue
-      if(.not.(goferit))goto 23034
+      endif
+      if(goferit)then
       kseg = kseg + 1
-      if(.not.(kseg .gt. ndir))goto 23036
+      if(kseg .gt. ndir)then
       nerror = 15
       return
-23036 continue
+      endif
       dirsgs(1,kseg) = ai
       dirsgs(2,kseg) = bi
       dirsgs(3,kseg) = ci
       dirsgs(4,kseg) = di
       dirsgs(5,kseg) = i1
       dirsgs(6,kseg) = j1
-      if(.not.(bptab))goto 23038
+      if(bptab)then
       dirsgs(7,kseg) = 1.d0
-      goto 23039
-23038 continue
+      else
       dirsgs(7,kseg) = 0.d0
-23039 continue
-      if(.not.(bptcd))goto 23040
+      endif
+      if(bptcd)then
       dirsgs(8,kseg) = 1.d0
-      goto 23041
-23040 continue
+      else
       dirsgs(8,kseg) = 0.d0
-23041 continue
-23034 continue
-23010 continue
+      endif
+      endif
+      endif
 23006 continue
+23007 continue
 23004 continue
+23005 continue
       ndir = kseg
       return
       end

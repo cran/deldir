@@ -1,6 +1,6 @@
 subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror)
 
-# Output the endpoints of the segments of boundary of Dirichlet
+# Output the endpoints of the segments of boundaries of Dirichlet
 # tiles.  (Do it economically; each such segment once and only once.)
 # Called by master.
 

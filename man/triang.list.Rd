@@ -1,7 +1,7 @@
 \name{triang.list}
 \alias{triang.list}
 \title{
-  Produce a list of Delaunay triangles.
+  Create a list of Delaunay triangles
 }
 \description{
   From an object of class \dQuote{deldir} produces a list

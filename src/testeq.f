@@ -1,25 +1,26 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine testeq(a,b,eps,value)
       implicit double precision(a-h,o-z)
       logical value
-      if(.not.(abs(b).le.eps))goto 23000
-      if(.not.(abs(a).le.eps))goto 23002
+      one = 1.d0
+      ten = 1.d10
+      if(abs(b).le.eps)then
+      if(abs(a).le.eps)then
       value = .true.
-      goto 23003
-23002 continue
+      else
       value = .false.
-23003 continue
+      endif
       return
-23000 continue
-      if(.not.(abs(a).gt.10.*abs(b).or.abs(a).lt.0.1*abs(b)))goto 23004
+      endif
+      if(abs(a).gt.ten*abs(b).or.abs(a).lt.one*abs(b))then
       value = .false.
       return
-23004 continue
+      endif
       c = a/b
-      if(.not.(abs(c-1.).le.eps))goto 23006
+      if(abs(c-1.d0).le.eps)then
       value = .true.
-      goto 23007
-23006 continue
+      else
       value = .false.
-23007 continue
+      endif
       return
       end

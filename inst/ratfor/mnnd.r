@@ -1,4 +1,8 @@
 subroutine mnnd(x,y,n,dminbig,dminav)
+#
+# Mean nearest neighbour distance.  Called by .Fortran()
+# from mnnd.R.
+#
 implicit double precision(a-h,o-z)
 dimension x(n), y(n)
 
