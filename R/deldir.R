@@ -38,13 +38,14 @@ if(is.list(x)) {
 		x <- x$x
 	}
 	else {
-		cat('Error: called with list lacking both x and y elements\n')
+		stop("Argument \"x\" is a list but lacks x and/or y components.\n")
 		return()
 	}
 }
 
 # If a data window is specified, get its corner coordinates
-# and truncate the data by this window:
+# and truncate the data by this window.  Discard any constraint
+# segments either of whose endpoints fall outside this window.
 n <- length(x)
 if(n!=length(y)) stop('data lengths do not match')
 if(!is.null(rw)) {
@@ -139,7 +140,7 @@ repeat {
 			nerror=integer(1),
 			PACKAGE='deldir'
 		)
-	
+
 # Check for errors:
 	nerror <- tmp$nerror
 	if(nerror < 0) break
@@ -171,34 +172,35 @@ repeat {
 }
 
 # Collect up the results for return:
-ndel       <- tmp$ndel
-delsgs     <- round(t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel])),digits)
-delsum     <- matrix(tmp$delsum,ncol=4)
-del.area   <- sum(delsum[,4])
-delsum     <- round(cbind(delsum,delsum[,4]/del.area),digits)
-del.area   <- round(del.area,digits)
-ndir       <- tmp$ndir
-dirsgs     <- round(t(as.matrix(matrix(tmp$dirsgs,nrow=8)[,1:ndir])),digits)
-dirsgs     <- as.data.frame(dirsgs)
-dirsum     <- matrix(tmp$dirsum,ncol=3)
-dir.area   <- sum(dirsum[,3])
-dirsum     <- round(cbind(dirsum,dirsum[,3]/dir.area),digits)
-dir.area   <- round(dir.area,digits)
-allsum     <- cbind(delsum,dirsum)
-rw         <- round(rw,digits)
-
-# Name the columns of the results:
+ndel             <- tmp$ndel
+delsgs           <- round(t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel])),digits)
 dimnames(delsgs) <- list(NULL,c('x1','y1','x2','y2','ind1','ind2'))
+delsum           <- matrix(tmp$delsum,ncol=4)
+del.area         <- sum(delsum[,4])
+delsum           <- round(cbind(delsum,delsum[,4]/del.area),digits)
+del.area         <- round(del.area,digits)
+ndir             <- tmp$ndir
+dirsgs           <- round(t(as.matrix(matrix(tmp$dirsgs,nrow=8)[,1:ndir])),digits)
+dirsgs           <- as.data.frame(dirsgs)
+dirsum           <- matrix(tmp$dirsum,ncol=3)
+dir.area         <- sum(dirsum[,3])
+dirsum           <- round(cbind(dirsum,dirsum[,3]/dir.area),digits)
+dir.area         <- round(dir.area,digits)
 names(dirsgs)    <- c('x1','y1','x2','y2','ind1','ind2','bp1','bp2')
 mode(dirsgs$bp1) <- 'logical'
 mode(dirsgs$bp2) <- 'logical'
+allsum           <- cbind(delsum,dirsum)
 dimnames(allsum) <- list(NULL,c('x','y','n.tri','del.area','del.wts',
                                 'n.tside','nbpt','dir.area','dir.wts'))
+rw               <- round(rw,digits)
 
 # Aw' done!!!
 rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=n,
              n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw)
 class(rslt) <- 'deldir'
-if(plotit) plot(rslt,...)
-if(plotit) invisible(rslt) else rslt
+if(plotit) {
+	plot(rslt,...)
+	return(invisible(rslt))
+}
+rslt
 }

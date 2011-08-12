@@ -1,6 +1,6 @@
 subroutine initad(j,nadj,madj,x,y,ntot,eps,nerror)
 
-# Intial adding-in of a new point j.
+# Initial adding-in of a new point j.
 # Called by addpt.
 
 implicit double precision(a-h,o-z)
@@ -31,7 +31,7 @@ if(nedge!=0) {
 
 # Join the new point to each of the three vertices.
 do i = 1,3 {
-        call insrt(j,tau(i),nadj,madj,x,y,ntot,nerror,eps)
+	call insrt(j,tau(i),nadj,madj,x,y,ntot,nerror,eps)
 	if(nerror > 0) return
 }
 

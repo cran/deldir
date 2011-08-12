@@ -14,13 +14,14 @@ if(nerror > 0) return
 # Look at each `gap', i.e. pair of adjacent segments
 # emanating from the new point; they form two sides of a
 # quadrilateral; see whether the extant diagonal of this
-# quadrilateral should be swapped with its alternate
+# quadrilateral should be swapped with its alternative
 # (according to the LOP: local optimality principle).
 now = nadj(j,1)
 nxt = nadj(j,2)
 ngap = 0
+
 repeat {
-        call swap(j,now,nxt,didswp,nadj,madj,x,y,ntot,eps,nerror)
+	call swap(j,now,nxt,didswp,nadj,madj,x,y,ntot,eps,nerror)
 	if(nerror > 0) return
         n = nadj(j,0)
         if(!didswp) {         # If no swap of diagonals

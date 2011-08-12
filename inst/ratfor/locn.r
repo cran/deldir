@@ -3,8 +3,7 @@ subroutine locn(i,j,kj,nadj,madj,x,y,ntot,eps)
 # Find the appropriate location for j in the adjacency list
 # of i.  This is the index which j ***will*** have when
 # it is inserted into the adjacency list of i in the
-# appropriate place.
-# Called by insrt.
+# appropriate place.  Called by insrt.
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)

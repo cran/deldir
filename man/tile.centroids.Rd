@@ -2,7 +2,7 @@
 \Rdversion{1.1}
 \alias{tile.centroids}
 \title{
-Compute centroids of Voronoi/Dirchlet tiles.
+Compute centroids of Dirchlet (Voronoi) tiles
 }
 \description{
 Given a list of Dirichlet tiles, as produced by \code{tile.list()},

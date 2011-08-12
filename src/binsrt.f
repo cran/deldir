@@ -1,3 +1,4 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine binsrt(x,y,ntot,rw,npd,ind,tx,ty,ilst,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), tx(npd), ty(npd)
@@ -18,49 +19,52 @@
       ky = 1
       ink = 1
       k = 0
-      do 23000 i = 1,npd 
+      do23000 i = 1,npd 
       ilst(i) = 0 
 23000 continue
-23002 if(.not.(ky.le.kdiv))goto 23003
-      do 23004 i = 1,npd 
-      if(.not.(ilst(i).eq.1))goto 23006
+23001 continue
+23002 if(ky.le.kdiv)then
+      do23004 i = 1,npd 
+      if(ilst(i).eq.1)then
       goto 23004
-23006 continue
+      endif
       xt = x(i)
       yt = y(i)
       ix = 1+(xt-xmin)/dw
-      if(.not.(ix.gt.kdiv))goto 23008
+      if(ix.gt.kdiv)then
       ix = kdiv
-23008 continue
+      endif
       jy = 1+(yt-ymin)/dh
-      if(.not.(jy.gt.kdiv))goto 23010
+      if(jy.gt.kdiv)then
       jy = kdiv
-23010 continue
-      if(.not.(ix.eq.kx.and.jy.eq.ky))goto 23012
+      endif
+      if(ix.eq.kx.and.jy.eq.ky)then
       k = k+1
       ind(i) = k
       tx(k) = xt
       ty(k) = yt
       ilst(i) = 1
-23012 continue
+      endif
 23004 continue
+23005 continue
       kc = kx+ink
-      if(.not.((1.le.kc).and.(kc.le.kdiv)))goto 23014
+      if((1.le.kc).and.(kc.le.kdiv))then
       kx = kc
-      goto 23015
-23014 continue
+      else
       ky = ky+1
       ink = -ink
-23015 continue
+      endif
       goto 23002
+      endif
 23003 continue
-      if(.not.(k.ne.npd))goto 23016
+      if(k.ne.npd)then
       nerror = 2
       return
-23016 continue
-      do 23018 i = 1,npd 
+      endif
+      do23018 i = 1,npd 
       x(i) = tx(i)
       y(i) = ty(i)
 23018 continue
+23019 continue
       return
       end

@@ -1,10 +1,14 @@
 subroutine master(x,y,sort,rw,npd,ntot,nadj,madj,ind,tx,ty,ilst,eps,
                   delsgs,ndel,delsum,dirsgs,ndir,dirsum,nerror)
 
-# Master subroutine, to organize all the others.
+# Master subroutine:
+# One subroutine to rule them all,
+# One subroutine to find them.
+# One subroutine to bring them all in,
+# And in the darkness bind them.
 
 implicit double precision(a-h,o-z)
-logical sort
+logical sort, adj
 dimension x(-3:ntot), y(-3:ntot)
 dimension nadj(-3:ntot,0:madj)
 dimension ind(npd), tx(npd), ty(npd), ilst(npd), rw(4)
@@ -25,10 +29,11 @@ else {
 	}
 }
 
-# Initialize the adjacency list to 0.
+# Initialize the adjacency list; counts to 0, other entries to -99.
 do i = -3,ntot {
-	do j = 0,madj {
-		nadj(i,j) = 0
+	nadj(i,0) = 0
+	do j = 1,madj {
+		nadj(i,j) = -99
 	}
 }
 
@@ -77,8 +82,6 @@ if(nerror>0) return
 
 call dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror)
 if(nerror>0) return
-
 call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,ind,eps,nerror)
-
 return
 end

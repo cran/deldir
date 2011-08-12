@@ -1,41 +1,43 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine initad(j,nadj,madj,x,y,ntot,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       integer tau(3)
       call trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
-      if(.not.(nerror .gt. 0))goto 23000
+      if(nerror .gt. 0)then
       return
-23000 continue
-      if(.not.(nedge.ne.0))goto 23002
+      endif
+      if(nedge.ne.0)then
       ip = nedge
       i = ip-1
-      if(.not.(i.eq.0))goto 23004
+      if(i.eq.0)then
       i = 3
-23004 continue
+      endif
       call pred(k,tau(i),tau(ip),nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23006
+      if(nerror .gt. 0)then
       return
-23006 continue
+      endif
       call succ(kk,tau(ip),tau(i),nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23008
+      if(nerror .gt. 0)then
       return
-23008 continue
+      endif
       call delet(tau(i),tau(ip),nadj,madj,ntot,nerror)
-      if(.not.(nerror .gt. 0))goto 23010
+      if(nerror .gt. 0)then
       return
-23010 continue
-      if(.not.(k.eq.kk))goto 23012
+      endif
+      if(k.eq.kk)then
       call insrt(j,k,nadj,madj,x,y,ntot,nerror,eps)
-23012 continue
-      if(.not.(nerror .gt. 0))goto 23014
+      endif
+      if(nerror .gt. 0)then
       return
-23014 continue
-23002 continue
-      do 23016 i = 1,3 
+      endif
+      endif
+      do23016 i = 1,3 
       call insrt(j,tau(i),nadj,madj,x,y,ntot,nerror,eps)
-      if(.not.(nerror .gt. 0))goto 23018
+      if(nerror .gt. 0)then
       return
-23018 continue
+      endif
 23016 continue
+23017 continue
       return
       end

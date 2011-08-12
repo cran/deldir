@@ -28,7 +28,7 @@ do k = 1,n {
         }
 }
 
-# The adjacency list doesn't contain j.  Something's wrong; stop.
+# The adjacency list for i doesn't contain j.  Something's wrong; stop.
 nerror = 6
 return
 end

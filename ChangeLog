@@ -1,10 +1,25 @@
 
+ Version 0.0-15 (12 August 2011)
+
+ Fixed a bug in triang.list(); occasionally triangles would
+ appear in this list which were *not* Delaunay triangles but
+ rather the union of three congtiguous such triangles.  This
+ now no longer happens.
+
+ Fixed some minor infelicities in the Fortran (ratfor) code.
+
+ Removed switch() statements from the ratfor code (and replaced
+ them with a sequence of if's).  It appears that the ratfor
+ compiler that is currently available to me does not handle
+ switch statements properly.  The resulting Fortran code
+ compiled and loaded but led to errors when run.
+
                        *****************************
 
  Version 0.0-14 (22 June 2011)
 
-Put the startup messages into packageStartupMessage()
-rather than catting them.  At the request of Thierry Onkelinx.
+ Put the startup messages into packageStartupMessage()
+ rather than catting them.  At the request of Thierry Onkelinx.
 
                        *****************************
 

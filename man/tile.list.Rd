@@ -1,6 +1,6 @@
 \name{tile.list}
 \alias{tile.list}
-\title{ Create a list of tiles in a tessellation. }
+\title{ Create a list of tiles in a tessellation }
 \description{
 For each point in the set being tessellated produces a list
 entry describing the Dirichlet/Voronoi tile containing that
@@ -50,6 +50,11 @@ window and contains a corner of that window will have that
 corner added to its list of vertices.  Thus when the corresponding
 polygon is plotted, the result is the intersection of the tile
 with the enclosing rectangular window.
+
+If the \code{object} argument of this function was produced by
+a constrained triangulation then there is (as of this writing)
+no associated tessellation produced whence no list of tiles
+can be produced.  In this case an error is given. 
 }
 
 \seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}}

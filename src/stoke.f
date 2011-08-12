@@ -1,3 +1,4 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension rw(4)
@@ -5,25 +6,24 @@
       zero = 0.d0
       nerror = -1
       call testeq(x1,x2,eps,value)
-      if(.not.(value))goto 23000
+      if(value)then
       area = 0.
       s1 = 0.
       return
-23000 continue
-      if(.not.(x1.lt.x2))goto 23002
+      endif
+      if(x1.lt.x2)then
       xl = x1
       yl = y1
       xr = x2
       yr = y2
       s1 = -1.
-      goto 23003
-23002 continue
+      else
       xl = x2
       yl = y2
       xr = x1
       yr = y1
       s1 = 1.
-23003 continue
+      endif
       xmin = rw(1)
       xmax = rw(2)
       ymin = rw(3)
@@ -37,73 +37,70 @@
       y = yr+slope*(x-xr)
       xr = x
       yr = y
-      if(.not.(xr.le.xmin.or.xl.ge.xmax))goto 23004
+      if(xr.le.xmin.or.xl.ge.xmax)then
       area = 0.
       return
-23004 continue
+      endif
       ybot = min(yl,yr)
       ytop = max(yl,yr)
-      if(.not.(ymax.le.ybot))goto 23006
+      if(ymax.le.ybot)then
       area = (xr-xl)*(ymax-ymin)
       return
-23006 continue
-      if(.not.(ymin.le.ybot.and.ymax.le.ytop))goto 23008
+      endif
+      if(ymin.le.ybot.and.ymax.le.ytop)then
       call testeq(slope,zero,eps,value)
-      if(.not.(value))goto 23010
+      if(value)then
       w1 = 0.
       w2 = xr-xl
-      goto 23011
-23010 continue
+      else
       xit = xl+(ymax-yl)/slope
       w1 = xit-xl
       w2 = xr-xit
-      if(.not.(slope.lt.0.))goto 23012
+      if(slope.lt.0.)then
       tmp = w1
       w1 = w2
       w2 = tmp
-23012 continue
-23011 continue
+      endif
+      endif
       area = 0.5*w1*((ybot-ymin)+(ymax-ymin))+w2*(ymax-ymin)
       return
-23008 continue
-      if(.not.(ybot.le.ymin.and.ymax.le.ytop))goto 23014
+      endif
+      if(ybot.le.ymin.and.ymax.le.ytop)then
       xit = xl+(ymax-yl)/slope
       xib = xl+(ymin-yl)/slope
-      if(.not.(slope.gt.0.))goto 23016
+      if(slope.gt.0.)then
       w1 = xit-xib
       w2 = xr-xit
-      goto 23017
-23016 continue
+      else
       w1 = xib-xit
       w2 = xit-xl
-23017 continue
+      endif
       area = 0.5*w1*(ymax-ymin)+w2*(ymax-ymin)
       return
-23014 continue
-      if(.not.(ymin.le.ybot.and.ytop.le.ymax))goto 23018
+      endif
+      if(ymin.le.ybot.and.ytop.le.ymax)then
       area = 0.5*(xr-xl)*((ytop-ymin)+(ybot-ymin))
       return
-23018 continue
-      if(.not.(ybot.le.ymin.and.ymin.le.ytop))goto 23020
+      endif
+      if(ybot.le.ymin.and.ymin.le.ytop)then
       call testeq(slope,zero,eps,value)
-      if(.not.(value))goto 23022
+      if(value)then
       area = 0.
       return
-23022 continue
+      endif
       xib = xl+(ymin-yl)/slope
-      if(.not.(slope.gt.0.))goto 23024
+      if(slope.gt.0.)then
       w = xr-xib
-      goto 23025
-23024 continue
+      else
       w = xib-xl
-23025 continue
+      endif
       area = 0.5*w*(ytop-ymin)
       return
-23020 continue
-      if(.not.(ytop.le.ymin))goto 23026
+      endif
+      if(ytop.le.ymin)then
       area = 0.
       return
-23026 continue
+      endif
       nerror = 8
       return
       end

@@ -1,6 +1,6 @@
 \name{plot.tile.list}
 \alias{plot.tile.list}
-\title{ Plot Dirchlet/Voronoi tiles }
+\title{ Plot Dirchlet (Voronoi) tiles }
 \description{ A method for \code{plot}.  Plots (sequentially)
 the tiles associated with each point in the set being tessellated. }
 \usage{

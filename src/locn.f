@@ -1,37 +1,38 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine locn(i,j,kj,nadj,madj,x,y,ntot,eps)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       logical before
       n = nadj(i,0)
-      if(.not.(n.eq.0))goto 23000
+      if(n.eq.0)then
       kj = 1
       return
-23000 continue
-      do 23002 ks = 1,n 
+      endif
+      do23002 ks = 1,n 
       kj = ks
       k = nadj(i,kj)
       call acchk(i,j,k,before,x,y,ntot,eps)
-      if(.not.(before))goto 23004
+      if(before)then
       km = kj-1
-      if(.not.(km.eq.0))goto 23006
+      if(km.eq.0)then
       km = n
-23006 continue
+      endif
       k = nadj(i,km)
       call acchk(i,j,k,before,x,y,ntot,eps)
-      if(.not.(before))goto 23008
+      if(before)then
       goto 23002
-23008 continue
-      if(.not.(kj.eq.1))goto 23010
+      endif
+      if(kj.eq.1)then
       kj = n+1
-23010 continue
+      endif
       return
-23004 continue
+      endif
 23002 continue
-      if(.not.(before))goto 23012
+23003 continue
+      if(before)then
       kj = 1
-      goto 23013
-23012 continue
+      else
       kj = n+1
-23013 continue
+      endif
       return
       end

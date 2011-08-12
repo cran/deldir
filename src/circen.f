@@ -1,3 +1,4 @@
+C Output from Public domain Ratfor, version 1.0
       subroutine circen(i,j,k,x0,y0,x,y,ntot,eps,collin,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3)
@@ -11,12 +12,11 @@
       yt(3) = y(k)
       ijk = 0
       call cross(xt,yt,ijk,cprd)
-      if(.not.(abs(cprd) .lt. eps))goto 23000
+      if(abs(cprd) .lt. eps)then
       collin = .true.
-      goto 23001
-23000 continue
+      else
       collin = .false.
-23001 continue
+      endif
       a = x(j) - x(i)
       b = y(j) - y(i)
       c = x(k) - x(i)
@@ -27,14 +27,14 @@
       b = b/c1
       c = c/c2
       d = d/c2
-      if(.not.(collin))goto 23002
+      if(collin)then
       alpha = a*c+b*d
-      if(.not.(alpha.gt.0))goto 23004
+      if(alpha.gt.0)then
       nerror = 3
       return
-23004 continue
+      endif
       return
-23002 continue
+      endif
       crss = a*d - b*c
       x0 = x(i) + 0.5*(c1*d - c2*b)/crss
       y0 = y(i) + 0.5*(c2*a - c1*c)/crss
