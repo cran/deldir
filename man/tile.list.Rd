@@ -31,8 +31,8 @@ tile edge intersects the boundary of the enclosing rectangle}
 }
 \section{Acknowledgement}{
 The author expresses sincere thanks to Majid Yazdani who found and
-pointed out a serious bug in \code{tile.list} in the previous
-version (0.0-5) of the \code{deldir} package.
+pointed out a serious bug in \code{tile.list} in a previous version
+(0.0-5) of the \code{deldir} package.
 }
 
 \section{Warning}{
@@ -43,18 +43,13 @@ points'' are listed.
 Note that the enclosing rectangle may be specified by the user
 in the call to \code{\link{deldir}()}.
 
-In contrast to some previous versions of \code{deldir}, the
-corners of the enclosing rectangle are now include as vertices
-of tiles.  I.e. a tile which in fact extends beyond the rectangular
-window and contains a corner of that window will have that
-corner added to its list of vertices.  Thus when the corresponding
-polygon is plotted, the result is the intersection of the tile
-with the enclosing rectangular window.
+In contrast to some earlier versions of \code{deldir}, the corners
+of the enclosing rectangle are now include as vertices of tiles.
+I.e. a tile which in fact extends beyond the rectangular window and
+contains a corner of that window will have that corner added to its
+list of vertices.  Thus when the corresponding polygon is plotted,
+the result is the intersection of the tile with the enclosing
 
-If the \code{object} argument of this function was produced by
-a constrained triangulation then there is (as of this writing)
-no associated tessellation produced whence no list of tiles
-can be produced.  In this case an error is given. 
 }
 
 \seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}}
