@@ -1,7 +1,7 @@
-8cb1afb1ebf1c0050a99c87d22615e6d *ChangeLog
-741d8d5455d26e88fad2751e56392701 *DESCRIPTION
-043feeaa9a7d35f6bcba2179dadf4a50 *INDEX
-fb51d91422b50aaae63d1f02451db64c *R/First.R
+2e1ef11f54c3421cc58cd29fe28f7794 *ChangeLog
+02323b741b7932d476506ff8604e9d15 *DESCRIPTION
+e97c7b6e0d7f0eb3b8e1303451431001 *NAMESPACE
+2be471c79053d3be83da241c5ce15eff *R/First.R
 3bdbf4cf3acfd658268193724e0efdec *R/acw.R
 edd8569ba95fbb2f940d3c0c930b68df *R/deldir.R
 49c80e3a08359a356c1163646e8fbe26 *R/dumpts.R
@@ -55,12 +55,12 @@ a8636bf7b643eca192877bc38a6f2c87 *inst/ratfor/stoke.r
 728e4e2b3d69a1ea05c3373ce5c378f5 *inst/ratfor/triar.r
 dfb3a45af9e6414d3346857f860d753a *inst/ratfor/trifnd.r
 fc9b9d075d0f9b24101070e95fdab86c *man/deldir-internal.Rd
-80b4a747003021ae7493a5fac68941cd *man/deldir.Rd
-e5cfb5819d263e0a4234fe5622d5ea7d *man/plot.deldir.Rd
+f5382eba282fb0f9d886a6cb9a0329fe *man/deldir.Rd
+d1214a3c34bbbe10e233cba5afe9af23 *man/plot.deldir.Rd
 9ef567c4537bfd04c8564777efc7f2ec *man/plot.tile.list.Rd
 3a9854cf88c11e5acad7acbf0fa28b4a *man/plot.triang.list.Rd
 a8e9952334271b0cbdbb29bf638561e6 *man/tile.centroids.Rd
-90ffb87737fa8e74d36e919adea3a801 *man/tile.list.Rd
+9c1712b70ad8c310de6ea9bfe65942b3 *man/tile.list.Rd
 310c8266c51484603655ab4ac4149b6e *man/triang.list.Rd
 81abe4431670564231ae774a03692ea2 *src/acchk.f
 3b8d8e83cb031d112cf60c6652836777 *src/addpt.f

@@ -71,9 +71,11 @@ in question was added last.  Essentially this argument would get used
 only in a de-bugging process.
 }
 \item{plotit}{
-Logical argument; if \code{TRUE} a plot of the triangulation and
-(if the triangulation is unconstrained) the tessellation is produced;
-the default is \code{FALSE}.
+Logical argument; if \code{TRUE} a plot is produced.  The nature
+of the plot may be controlled by using the \code{\dots} argument
+to pass appropriate arguments to \code{plot.deldir()}.  Without
+\dQuote{further instruction} a plot of the points being triangulated
+and of both the triangulation and the tessellation is produced;
 }
 \item{digits}{
 The number of decimal places to which all numeric values in the

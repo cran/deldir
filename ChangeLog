@@ -1,4 +1,10 @@
 
+ Version 0.0-16 (04 November 2011)
+
+ Fixed some minor errors in the documentation.
+
+ Added a namespace.
+
  Version 0.0-15 (12 August 2011)
 
  Fixed a bug in triang.list(); occasionally triangles would

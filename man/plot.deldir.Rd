@@ -102,11 +102,6 @@ with dotted lines (lty=2).
 The points in the set being triangulated are plotted with distinguishing
 symbols.  By default the real points are plotted as circles (pch=1) and the
 dummy points are plotted as triangles (pch=2).
-
-If the triangulation that was produced was constrained, then no
-corresponding tessellation is produced (and hence cannot be plotted).
-If such a plot is requested (i.e. if \code{wlines} includes \dQuote{tess})
-then a warning is given).
 }
 \seealso{ \code{\link{deldir}()} }
 \author{Rolf Turner
