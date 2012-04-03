@@ -1,27 +1,7 @@
 triang.list <- function (object) 
 {
     stopifnot(inherits(object,"deldir"))
-    a <- object$delsgs[, 5]
-    b <- object$delsgs[, 6]
-    tlist <- matrix(integer(0), 0, 3)
-    for(i in seq(nrow(object$summary))) {
-      # find all Delaunay neighbours of i
-      jj <- c(b[a==i], a[b==i])
-      jj <- sort(unique(jj))
-      # select those with a higher index than i
-      jj <- jj[jj > i]
-      # find pairs of neighbours which are Delaunay neighbours
-      # (thus, triangles where the first numbered vertex is i)
-      if(length(jj) > 0)
-        for(j in jj) {
-          kk <- c(b[a == j], a[b == j])
-          kk <- kk[(kk %in% jj) & (kk > j)]
-          if(length(kk) > 0)
-            for(k in kk)
-              # add (i,j,k) to list of triangles (i < j < k)
-              tlist <- rbind(tlist, c(i, j, k))
-        }
-    }
+    tlist <- triMat(object)
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
     xtri <- matrix(x[tlist], nrow(tlist), 3)

@@ -59,7 +59,8 @@ the tiles associated with each point in the set being tessellated. }
   indeed perpendicular.  (And conversely can cause lines which
   are not perpendicular to appear as if they are.)
 
-  The argument \code{asp} is present ``just because it can be''.
+  The argument \code{asp} was added at the request of Zubin
+  Dowlaty.
 }
 \value{NULL; side effect is a plot.}
 \author{Rolf Turner

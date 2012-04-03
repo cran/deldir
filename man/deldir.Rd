@@ -193,18 +193,19 @@ and bug-fixes.
 }
 
 \section{Warning}{
-The process for determining if points are duplicated
-changed between versions 0.1-9 and 0.1-10.  Previously there
-was an argument \code{frac} for this function, which defaulted
-to 0.0001.  Points were deemed to be duplicates if the difference
-in \code{x}-coordinates was less than \code{frac} times the in
-\code{y}-coordinates was less than \code{frac} times the height
-of \code{rw}.  This process has been changed to one which uses
-\code{\link{duplicated}()} on the data frame whose columns are
-\code{x} and \code{y}.
+The process for determining if points are duplicated changed
+between versions 0.1-9 and 0.1-10.  Previously there was an
+argument \code{frac} for this function, which defaulted to
+0.0001.  Points were deemed to be duplicates if the difference in
+\code{x}-coordinates was less than \code{frac} times the width
+of \code{rw} and \code{y}-coordinates was less than \code{frac}
+times the height of \code{rw}.  This process has been changed to
+one which uses \code{\link{duplicated}()} on the data frame whose
+columns are \code{x} and \code{y}.
 
 As a result it may happen that points which were previously
-eliminated as duplicates will no longer be eliminated.
+eliminated as duplicates will no longer be eliminated.  (And
+possibly vice-versa.)
 }
 
 \author{Rolf Turner
