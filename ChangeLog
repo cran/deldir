@@ -1,3 +1,13 @@
+ Version 0.0-17 (03 April 2012)
+
+ Added the function triMat() at the suggestion of
+ Robin Hankin.
+
+ Fixed a glitch in the documentation of deldir()
+ (in the Warning section).
+
+ Tweaked the documentation of plot.tile.list(), plot.triang.list(),
+ and tile.list().
 
  Version 0.0-16 (04 November 2011)
 

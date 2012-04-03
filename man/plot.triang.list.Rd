@@ -47,7 +47,8 @@ a Delaunay triangulation of a set of points in the plane.}
   indeed perpendicular.  (And conversely can cause lines which
   are not perpendicular to appear as if they are.)
 
-  The argument \code{asp} is present ``just because it can be''.
+  The argument \code{asp} was added at the request of Zubin
+  Dowlaty.
 }
 \value{
    None.  This function has the side effect of producing (or

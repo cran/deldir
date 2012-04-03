@@ -45,11 +45,10 @@ in the call to \code{\link{deldir}()}.
 
 In contrast to some earlier versions of \code{deldir}, the corners
 of the enclosing rectangle are now include as vertices of tiles.
-I.e. a tile which in fact extends beyond the rectangular window and
-contains a corner of that window will have that corner added to its
-list of vertices.  Thus when the corresponding polygon is plotted,
-the result is the intersection of the tile with the enclosing
-
+I.e. a tile which in fact extends beyond the rectangular window
+and contains a corner of that window will have that corner added
+to its list of vertices.  Thus the corresponding polygon is the
+intersection of the tile with the enclosing rectangle.
 }
 
 \seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}}
