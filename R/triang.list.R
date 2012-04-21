@@ -4,20 +4,27 @@ triang.list <- function (object)
     tlist <- triMat(object)
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
+    if("z" %in% colnames(object$summary)) {
+	z <- object$summary[,"z"]
+	haveZ <- TRUE
+    } else haveZ <- FALSE
     xtri <- matrix(x[tlist], nrow(tlist), 3)
     ytri <- matrix(y[tlist], nrow(tlist), 3)
-    ztri <- ytri - min(y)
+    if(haveZ) ztri <- matrix(z[tlist], nrow(tlist), 3)
+    ctri <- ytri - min(y)
     dx <- cbind(xtri[, 2] - xtri[, 1], xtri[, 3] - xtri[, 2], 
         xtri[, 1] - xtri[, 3])
-    zm <- cbind(ztri[, 1] + ztri[, 2], ztri[, 2] + ztri[, 3], 
-        ztri[, 3] + ztri[, 1])
+    zm <- cbind(ctri[, 1] + ctri[, 2], ctri[, 2] + ctri[, 3], 
+        ctri[, 3] + ctri[, 1])
     negareas <- apply(dx * zm, 1, sum)
     clockwise <- (negareas > 0)
     if (any(clockwise)) {
         xc <- xtri[clockwise,,drop=FALSE]
         yc <- ytri[clockwise,,drop=FALSE]
+        if(haveZ) zc <- ztri[clockwise,,drop=FALSE]
         xtri[clockwise, ] <- xc[, c(1, 3, 2)]
         ytri[clockwise, ] <- yc[, c(1, 3, 2)]
+        if(haveZ) ztri[clockwise, ] <- zc[, c(1, 3, 2)]
     }
     rslt <- list()
     K <- 0
@@ -34,7 +41,11 @@ triang.list <- function (object)
 	)
 	if(tmp$okay) {
 		K <- K+1
-		rslt[[K]] <- data.frame(x=xtri[i,],y=ytri[i,])
+		rslt[[K]] <- if(haveZ) {
+                                data.frame(x=xtri[i,],y=ytri[i,],z=ztri[i,])
+                             } else { 
+                                data.frame(x=xtri[i,],y=ytri[i,])
+                             }
 	}
     }
     attr(rslt,"rw") <- object$rw

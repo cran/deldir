@@ -4,13 +4,13 @@ dumpts <- function(x,y,dpl,rw) {
 # data points.
 #
 
-ndm  <- 0
-xd   <- NULL
-yd   <- NULL
-xmin <- rw[1]
-xmax <- rw[2]
-ymin <- rw[3]
-ymax <- rw[4]
+ndm   <- 0
+xd    <- NULL
+yd    <- NULL
+xmin  <- rw[1]
+xmax  <- rw[2]
+ymin  <- rw[3]
+ymax  <- rw[4]
 
 # Points on radii of circles emanating from data points:
 if(!is.null(dpl$nrad)) {

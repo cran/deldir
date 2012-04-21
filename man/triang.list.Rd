@@ -17,10 +17,14 @@ triang.list(object)
 }
 }
 \value{
-  A list each of whose components is a 3-x-2 data frame corresponding
+  A list each of whose components is a \eqn{3 \times 2}{3 x 2}
+  or \eqn{3 \times 3}{3 x 3} data frame corresponding
   to one of the Delaunay triangles specified by \dQuote{object}.  The
   rows of each such data frame consist of the coordinates of the
-  vertices of the corresponding Delaunay triangle.
+  vertices of the corresponding Delaunay triangle, and possibly the
+  values of the \dQuote{auxilliary} variable or \dQuote{weight} \code{z}
+  associated with the vertices (if such values were supplied in the
+  call to \code{deldir()}).
 
   The returned value has an attribute \dQuote{rw} consisting of the
   enclosing rectangle of the triangulation.
@@ -39,9 +43,10 @@ triang.list(object)
 
 \examples{
 set.seed(42)
-x <- runif(20)
-y <- runif(20)
-d <- deldir(x,y)
+x   <- runif(20)
+y   <- runif(20)
+z   <- sample(1:100,20)
+d   <- deldir(x,y,z=z)
 ttt <- triang.list(d)
 }
 \keyword{spatial}

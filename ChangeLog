@@ -1,3 +1,13 @@
+ Version 0.0-18 (21 April 2012)
+
+ At the suggestion of Simon Greener, added the capacity to carry
+ along "auxilliary" variables or "weights" associated with the
+ points being triangulated.
+
+ If supplied these weights appear as a third column of the
+ data frames specifying the triangles in the triangulation,
+ as produced by the function triang.list().
+
  Version 0.0-17 (03 April 2012)
 
  Added the function triMat() at the suggestion of
