@@ -45,8 +45,8 @@ if(plot.dir) {
 	v2<-dirsgs[,4]
 }
 
-X<-x$summary[,1]
-Y<-x$summary[,2]
+X<-x$summary[,"x"]
+Y<-x$summary[,"y"]
 
 if(!add) {
 	pty.save <- par()$pty

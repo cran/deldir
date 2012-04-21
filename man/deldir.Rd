@@ -16,13 +16,16 @@ being triangulated.
 }
 \usage{
 deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
-       digits=6, \dots)
+       digits=6, z=NULL, zdum=NULL, \dots)
 }
 \arguments{
 \item{x,y}{
 The coordinates of the point set being triangulated. These can be
 given by two arguments x and y which are vectors or by a single
-argument x which is a list with components \code{x} and \code{y}.
+argument x which is a list with components \code{x} and \code{y},
+and possibly \code{z} (which would consists of a vector of
+\dQuote{auxilliary} values or \dQuote{weights} associated with
+the respective points.
 }
 \item{dpl}{
 A list describing the structure of the dummy points to be added to
@@ -81,6 +84,14 @@ and of both the triangulation and the tessellation is produced;
 The number of decimal places to which all numeric values in the
 returned list should be rounded.  Defaults to 6.
 }
+\item{z}{
+An optional vector of \dQuote{auxilliary} values or \dQuote{weights}
+associated with the respective points.
+}
+\item{zdum}{
+Values of \code{z} to be associated with any dummy points that are
+created. See \bold{Warnings}.
+}
 \item{...}{
 Auxilliary arguments add, wlines, wpoints, number, nex, col, lty,
 pch, xlim, and ylim (and possibly other plotting parameters) may be
@@ -91,10 +102,10 @@ passed to plot.deldir through \code{\dots} if plotit=\code{TRUE}.
 A list (of class \code{deldir}), invisible if plotit=\code{TRUE}, with components:
 
 \item{delsgs}{
-a matrix with 6 columns.  The first 4 entries of each row are the
-coordinates of the points joined by an edge of a Delaunay
-triangle, in the order (x1,y1,x2,y2).  The last two entries are the
-indices of the two points which are joined.
+a data frame with 6 columns.  The first 4 entries of each row are the
+coordinates of the points joined by an edge of a Delaunay triangle,
+in the order (x1,y1,x2,y2).  The last two entries are the indices
+of the two points which are joined.
 }
 \item{dirsgs}{
 a data frame with 8 columns.  The first 4 entries of each row are
@@ -108,20 +119,22 @@ of the corresponding edge of a Dirichlet tile is a boundary point
 the eighth entry and the second endpoint of the edge.
 }
 \item{summary}{
-a matrix with 9 columns and \code{n.data + n.dum}rows (see below).
-The rows correspond to the points in the set being triangulated.
-The column names are \code{x} (the x-coordinate of the point),
-\code{y} (the y-coordinate), \code{n.tri} (the number of Delaunay
-triangles emanating from the point), \code{del.area} (1/3 of the
-total area of all the Delaunay triangles emanating from the point),
-\code{del.wts} (the corresponding entry of the \code{del.area}
-column divided by the sum of this column); \code{n.tside} (the
-number of sides --- within the rectangular window --- of the
-Dirichlet tile surrounding the point), \code{nbpt} (the number of
-points in which the Dirichlet tile intersects the boundary of the
-rectangular window), \code{dir.area} (the area of the Dirichlet tile
-surrounding the point), and \code{dir.wts} (the corresponding entry
-of the \code{dir.area} column divided by the sum of this column).
+a data frame with 9 or 10 columns and \code{n.data + n.dum}rows
+(see below).  The rows correspond to the points in the set being
+triangulated.  The column names are \code{x} (the x-coordinate of
+the point), \code{y} (the y-coordinate), \code{z} (the auxilliary
+values or weights if these were specified), \code{n.tri} (the number
+of Delaunay triangles emanating from the point), \code{del.area}
+(1/3 of the total area of all the Delaunay triangles emanating
+from the point), \code{del.wts} (the corresponding entry of
+the \code{del.area} column divided by the sum of this column);
+\code{n.tside} (the number of sides --- within the rectangular
+window --- of the Dirichlet tile surrounding the point), \code{nbpt}
+(the number of points in which the Dirichlet tile intersects the
+boundary of the rectangular window), \code{dir.area} (the area
+of the Dirichlet tile surrounding the point), and \code{dir.wts}
+(the corresponding entry of the \code{dir.area} column divided by
+the sum of this column).
 
 Note that the factor of 1/3 associated with the del.area column
 arises because each triangle occurs three times --- once for
@@ -192,12 +205,13 @@ See the \code{ChangeLog} for information about further revisions
 and bug-fixes.
 }
 
-\section{Warning}{
-The process for determining if points are duplicated changed
-between versions 0.1-9 and 0.1-10.  Previously there was an
-argument \code{frac} for this function, which defaulted to
-0.0001.  Points were deemed to be duplicates if the difference in
-\code{x}-coordinates was less than \code{frac} times the width
+\section{Warnings}{
+\enumerate{
+\item The process for determining if points are duplicated
+changed between versions 0.1-9 and 0.1-10.  Previously there
+was an argument \code{frac} for this function, which defaulted
+to 0.0001.  Points were deemed to be duplicates if the difference
+in \code{x}-coordinates was less than \code{frac} times the width
 of \code{rw} and \code{y}-coordinates was less than \code{frac}
 times the height of \code{rw}.  This process has been changed to
 one which uses \code{\link{duplicated}()} on the data frame whose
@@ -206,6 +220,16 @@ columns are \code{x} and \code{y}.
 As a result it may happen that points which were previously
 eliminated as duplicates will no longer be eliminated.  (And
 possibly vice-versa.)
+
+\item If any dummy points are created, and if a vector \code{z}, of
+\dQuote{auxilliary} values or \dQuote{weights} associated with the
+points being triangulated, is supplied, then it is up to the user to
+supply the corresponding auxilliary values or weights associated with
+the dummy points.  These values should be supplied as \code{zdum}.
+If \code{zdum} is not supplied then the auxilliary values or weights
+associated with the dummy points are all taken to be missing values
+(i.e. \code{NA}).
+}
 }
 
 \author{Rolf Turner
@@ -224,14 +248,19 @@ Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 plot.deldir
 }
 \examples{
-x   <- c(2.3,3.0,7.0,1.0,3.0,8.0)
-y   <- c(2.3,3.0,2.0,5.0,8.0,9.0)
-try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
 # Puts dummy points at the corners of the rectangular
 # window, i.e. at (0,0), (10,0), (10,10), and (0,10)
-\dontrun{
-try <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
-}
+x    <- c(2.3,3.0,7.0,1.0,3.0,8.0)
+y    <- c(2.3,3.0,2.0,5.0,8.0,9.0)
+tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
 # Plots the triangulation which was created (but not the tesselation).
+\dontrun{
+tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
+}
+# Auxilliary values associated with points; 4 dummy points to be
+# added so 4 dummy "z-values" provided.
+z    <- sample(1:100,6)
+zdum <- rep(-99,4)
+tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),z=z,zdum=zdum)
 }
 \keyword{spatial}

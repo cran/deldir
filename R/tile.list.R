@@ -19,7 +19,7 @@ tile.list <- function (object)
         m1 <- cbind(m[, 1:2, drop = FALSE], 0 + bp1)
         m2 <- cbind(m[, 3:4, drop = FALSE], 0 + bp2)
         m <- rbind(m1, m2)
-        pt <- sss[i, 1:2]
+        pt <- unlist(sss[i, c("x","y")])
         theta <- atan2(m[, 2] - pt[2], m[, 1] - pt[1])
         theta <- ifelse(theta > 0, theta, theta + 2 * pi)
         theta.0 <- sort(unique(theta))

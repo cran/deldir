@@ -1,5 +1,5 @@
-deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,
-                   sort=TRUE,plotit=FALSE,digits=6,...) {
+deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
+                   plotit=FALSE,digits=6,z=NULL, zdum=NULL,...) {
 # Function deldir
 #
 #   Copyright (C) 1996 by T. Rolf Turner
@@ -31,10 +31,12 @@ deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,
 # infinite Dirichlet tiles) with corners (xmin,ymin) etc.  This rectangle
 # is referred to elsewhere as `the' rectangular window.
 
-# If the first argument is a list, extract components x and y:
+# If the first argument is a list, extract components x and y (and
+# possibly z.
 if(is.list(x)) {
 	if(all(!is.na(match(c('x','y'),names(x))))) {
 		y <- x$y
+                z <- x$z
 		x <- x$x
 	}
 	else {
@@ -42,12 +44,19 @@ if(is.list(x)) {
 		return()
 	}
 }
+haveZ <- !is.null(z)
+
+# Check that lengths match.
+n <- length(x)
+if(n!=length(y)) stop("Lengths \"x\" and \"y\" do not match.\n")
+if(haveZ) {
+	if(n!=length(z))
+		stop("Length of \"z\" does not match lengths of \"x\" and \"y\".\n")
+}
 
 # If a data window is specified, get its corner coordinates
 # and truncate the data by this window.  Discard any constraint
 # segments either of whose endpoints fall outside this window.
-n <- length(x)
-if(n!=length(y)) stop('data lengths do not match')
 if(!is.null(rw)) {
 	xmin <- rw[1]
 	xmax <- rw[2]
@@ -82,6 +91,16 @@ if(!is.null(dpl)) {
 	dpts <- dumpts(x,y,dpl,rw)
 	x    <- dpts$x
 	y    <- dpts$y
+        if(haveZ) {
+		ndum <- length(x)-length(z)
+		if(!is.null(zdum)) {
+			if(length(zdum) != ndum)
+				stop("The z dummy points are of the wrong length.\n")
+		} else {
+			zdum <- rep(NA,ndum)
+		}
+		z <- c(z,zdum)
+	}
 }
 
 # Eliminate duplicate points:
@@ -174,7 +193,8 @@ repeat {
 # Collect up the results for return:
 ndel             <- tmp$ndel
 delsgs           <- round(t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel])),digits)
-dimnames(delsgs) <- list(NULL,c('x1','y1','x2','y2','ind1','ind2'))
+delsgs           <- as.data.frame(delsgs)
+names(delsgs)    <- c('x1','y1','x2','y2','ind1','ind2')
 delsum           <- matrix(tmp$delsum,ncol=4)
 del.area         <- sum(delsum[,4])
 delsum           <- round(cbind(delsum,delsum[,4]/del.area),digits)
@@ -189,9 +209,10 @@ dir.area         <- round(dir.area,digits)
 names(dirsgs)    <- c('x1','y1','x2','y2','ind1','ind2','bp1','bp2')
 mode(dirsgs$bp1) <- 'logical'
 mode(dirsgs$bp2) <- 'logical'
-allsum           <- cbind(delsum,dirsum)
-dimnames(allsum) <- list(NULL,c('x','y','n.tri','del.area','del.wts',
-                                'n.tside','nbpt','dir.area','dir.wts'))
+allsum           <- as.data.frame(cbind(delsum,dirsum))
+names(allsum)    <- c('x','y','n.tri','del.area','del.wts',
+                              'n.tside','nbpt','dir.area','dir.wts')
+if(haveZ) allsum <- cbind(allsum[,1:2],z=z,allsum[,3:9])
 rw               <- round(rw,digits)
 
 # Aw' done!!!
