@@ -16,7 +16,7 @@ get.cnrind(x,y,rw)
 acw(xxx)
 }
 \details{
-  These functions are auxilliary and are not intended to be called by
+  These functions are auxiliary and are not intended to be called by
   the user.
 }
 \keyword{internal}

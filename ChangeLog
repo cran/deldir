@@ -1,3 +1,16 @@
+ Version 0.0-19 (23 April 2012)
+
+ Added warnings in respect of change of "summary" and "delsgs"
+ from matrices to data frames.
+
+ Corrected spelling of "auxiliary" in various places.
+
+ Fixed up the "see also"-s in tile.list() and plot.tile.list().
+
+ Fixed a typo in the help for plot.tile.list().
+
+ Fixed up the "see also" in the help for deldir().
+
  Version 0.0-18 (21 April 2012)
 
  At the suggestion of Simon Greener, added the capacity to carry
