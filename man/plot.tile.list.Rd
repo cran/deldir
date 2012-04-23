@@ -32,7 +32,7 @@ the tiles associated with each point in the set being tessellated. }
    Logical scalar; show the enclosing rectangle \code{rw} (see
    \code{\link{deldir}()}) be plotted?}
   \item{add}{
-   Logical scalar; should the plot of the triangles be added
+   Logical scalar; should the plot of the tiles be added
    to an existing plot?  }
   \item{asp}{The aspect ratio of the plot; integer scalar or
   \code{NA}.  Set this argument equal to \code{NA} to allow the data
@@ -67,9 +67,8 @@ the tiles associated with each point in the set being tessellated. }
   \email{r.turner@auckland.ac.nz}
   \url{http://www.math.unb.ca/~rolf}
 }
-\seealso{
-\code{\link{tile.list}()}
-}
+\seealso{ \code{\link{deldir}()}, \code{\link{tile.list}()}
+          \code{\link{triang.list}()} \code{\link{plot.triang.list}()} }
 \examples{
   x <- runif(20)
   y <- runif(20)

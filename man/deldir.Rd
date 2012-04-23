@@ -24,13 +24,13 @@ The coordinates of the point set being triangulated. These can be
 given by two arguments x and y which are vectors or by a single
 argument x which is a list with components \code{x} and \code{y},
 and possibly \code{z} (which would consists of a vector of
-\dQuote{auxilliary} values or \dQuote{weights} associated with
+\dQuote{auxiliary} values or \dQuote{weights} associated with
 the respective points.
 }
 \item{dpl}{
 A list describing the structure of the dummy points to be added to
 the data being triangulated.  The addition of these dummy points
-is effected by the auxilliary function dumpts().  The list may
+is effected by the auxiliary function dumpts().  The list may
 have components:
 \itemize{
 \item \code{ndx}: The x-dimension of a rectangular grid; if either
@@ -43,7 +43,7 @@ each data point, along which dummy points are to be added.
 \item \code{fctr}: A factor determining the length of each spoke;
 each spoke is of length equal to fctr times the mean nearest
 neighbour distance of the data.  (This distance is calculated by
-the auxilliary function mnnd().)
+the auxiliary function mnnd().)
 \item \code{x}: A vector of x-coordinates of \dQuote{ad hoc} dummy points
 \item \code{y}: A vector of the corresponding y-coordinates of
 \dQuote{ad hoc} dummy points
@@ -85,7 +85,7 @@ The number of decimal places to which all numeric values in the
 returned list should be rounded.  Defaults to 6.
 }
 \item{z}{
-An optional vector of \dQuote{auxilliary} values or \dQuote{weights}
+An optional vector of \dQuote{auxiliary} values or \dQuote{weights}
 associated with the respective points.
 }
 \item{zdum}{
@@ -93,7 +93,7 @@ Values of \code{z} to be associated with any dummy points that are
 created. See \bold{Warnings}.
 }
 \item{...}{
-Auxilliary arguments add, wlines, wpoints, number, nex, col, lty,
+Auxiliary arguments add, wlines, wpoints, number, nex, col, lty,
 pch, xlim, and ylim (and possibly other plotting parameters) may be
 passed to plot.deldir through \code{\dots} if plotit=\code{TRUE}.
 }
@@ -122,7 +122,7 @@ the eighth entry and the second endpoint of the edge.
 a data frame with 9 or 10 columns and \code{n.data + n.dum}rows
 (see below).  The rows correspond to the points in the set being
 triangulated.  The column names are \code{x} (the x-coordinate of
-the point), \code{y} (the y-coordinate), \code{z} (the auxilliary
+the point), \code{y} (the y-coordinate), \code{z} (the auxiliary
 values or weights if these were specified), \code{n.tri} (the number
 of Delaunay triangles emanating from the point), \code{del.area}
 (1/3 of the total area of all the Delaunay triangles emanating
@@ -222,13 +222,21 @@ eliminated as duplicates will no longer be eliminated.  (And
 possibly vice-versa.)
 
 \item If any dummy points are created, and if a vector \code{z}, of
-\dQuote{auxilliary} values or \dQuote{weights} associated with the
+\dQuote{auxiliary} values or \dQuote{weights} associated with the
 points being triangulated, is supplied, then it is up to the user to
-supply the corresponding auxilliary values or weights associated with
+supply the corresponding auxiliary values or weights associated with
 the dummy points.  These values should be supplied as \code{zdum}.
-If \code{zdum} is not supplied then the auxilliary values or weights
+If \code{zdum} is not supplied then the auxiliary values or weights
 associated with the dummy points are all taken to be missing values
 (i.e. \code{NA}).
+
+\item The components \code{delsgs} and \code{summary} of the value
+returned by \code{deldir()} are now \emph{data frames} rather than
+matrices.  The component \code{summary} was changed to allow the
+\dQuote{auxiliary} values \code{z} to be of arbitrary mode (i.e.
+not necessarily numeric).  The component \code{delsgs} was then
+changed for consistency.  Note that the other \dQuote{matrix-like}
+component \code{dirsgs} has been a data frame since time immemorial.
 }
 }
 
@@ -245,7 +253,7 @@ Vol. 9, No. 3, 1980, pp. 219 -- 242.
 Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 }
 \seealso{
-plot.deldir
+  \code{\link{plot.deldir}()} \code{\link{tile.list}()} \code{\link{triang.list}()}
 }
 \examples{
 # Puts dummy points at the corners of the rectangular
@@ -257,7 +265,7 @@ tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
 \dontrun{
 tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
 }
-# Auxilliary values associated with points; 4 dummy points to be
+# Auxiliary values associated with points; 4 dummy points to be
 # added so 4 dummy "z-values" provided.
 z    <- sample(1:100,6)
 zdum <- rep(-99,4)

@@ -22,7 +22,7 @@ triang.list(object)
   to one of the Delaunay triangles specified by \dQuote{object}.  The
   rows of each such data frame consist of the coordinates of the
   vertices of the corresponding Delaunay triangle, and possibly the
-  values of the \dQuote{auxilliary} variable or \dQuote{weight} \code{z}
+  values of the \dQuote{auxiliary} variable or \dQuote{weight} \code{z}
   associated with the vertices (if such values were supplied in the
   call to \code{deldir()}).
 

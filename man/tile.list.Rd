@@ -51,7 +51,8 @@ to its list of vertices.  Thus the corresponding polygon is the
 intersection of the tile with the enclosing rectangle.
 }
 
-\seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}}
+\seealso{ \code{\link{deldir}()}, \code{\link{plot.tile.list}()}
+          \code{\link{triang.list}()} \code{\link{plot.triang.list}()} }
 
 \examples{
 	x <- runif(20)
