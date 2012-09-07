@@ -16,7 +16,7 @@ being triangulated.
 }
 \usage{
 deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
-       digits=6, z=NULL, zdum=NULL, \dots)
+       digits=6, z=NULL, zdum=NULL, suppressMsge=FALSE, \dots)
 }
 \arguments{
 \item{x,y}{
@@ -92,6 +92,11 @@ associated with the respective points.
 Values of \code{z} to be associated with any dummy points that are
 created. See \bold{Warnings}.
 }
+\item{suppressMsge}{
+Logical scalar indicating whether a message (alerting the user to
+changes from previous versions of \code{deldir}) should be
+suppressed.
+}
 \item{...}{
 Auxiliary arguments add, wlines, wpoints, number, nex, col, lty,
 pch, xlim, and ylim (and possibly other plotting parameters) may be
@@ -164,7 +169,7 @@ as formed by summing the \code{dir.area} column of \code{summary}.
 the specification of the corners of the rectangular window enclosing
 the data, in the order (xmin, xmax, ymin, ymax).
 }}
-\note{
+\section{Remark:}{
 If ndx >= 2 and ndy >= 2, then the rectangular window IS the convex
 hull, and so the values of del.area and dir.area (if the latter is
 not \code{NULL}) are identical.
@@ -221,6 +226,28 @@ As a result it may happen that points which were previously
 eliminated as duplicates will no longer be eliminated.  (And
 possibly vice-versa.)
 
+\item The components \code{delsgs} and \code{summary} of the value
+returned by \code{deldir()} are now \emph{data frames} rather than
+matrices.  The component \code{summary} was changed to allow the
+\dQuote{auxiliary} values \code{z} to be of arbitrary mode (i.e.
+not necessarily numeric).  The component \code{delsgs} was then
+changed for consistency.  Note that the other \dQuote{matrix-like}
+component \code{dirsgs} has been a data frame since time immemorial.
+
+A message alerting the user to the foregoing two items is printed
+out the first time that \code{deldir()} is called with
+\code{suppressMsge=FALSE} in a given session.  In succeeding
+calls to \code{deldir()} in the same session, no message is printed.
+(I.e. the \dQuote{alerting} message is printed \emph{at most once}
+in any given session.)
+
+The \dQuote{alerting} message is \emph{not} produced via the
+\code{warning()} function, so \code{suppressWarnings()} will
+\emph{not} suppress its appearance.  To effect such suppression
+(necessary only on the first call to \code{deldir()} in a
+given session) one must set the \code{suppressMsge} argument of
+\code{deldir} equal to \code{TRUE}.
+
 \item If any dummy points are created, and if a vector \code{z}, of
 \dQuote{auxiliary} values or \dQuote{weights} associated with the
 points being triangulated, is supplied, then it is up to the user to
@@ -229,14 +256,6 @@ the dummy points.  These values should be supplied as \code{zdum}.
 If \code{zdum} is not supplied then the auxiliary values or weights
 associated with the dummy points are all taken to be missing values
 (i.e. \code{NA}).
-
-\item The components \code{delsgs} and \code{summary} of the value
-returned by \code{deldir()} are now \emph{data frames} rather than
-matrices.  The component \code{summary} was changed to allow the
-\dQuote{auxiliary} values \code{z} to be of arbitrary mode (i.e.
-not necessarily numeric).  The component \code{delsgs} was then
-changed for consistency.  Note that the other \dQuote{matrix-like}
-component \code{dirsgs} has been a data frame since time immemorial.
 }
 }
 
@@ -258,13 +277,16 @@ Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 \examples{
 # Puts dummy points at the corners of the rectangular
 # window, i.e. at (0,0), (10,0), (10,10), and (0,10)
+# An "alerting note" is printed.
 x    <- c(2.3,3.0,7.0,1.0,3.0,8.0)
 y    <- c(2.3,3.0,2.0,5.0,8.0,9.0)
 tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
+
 # Plots the triangulation which was created (but not the tesselation).
 \dontrun{
 tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
 }
+
 # Auxiliary values associated with points; 4 dummy points to be
 # added so 4 dummy "z-values" provided.
 z    <- sample(1:100,6)

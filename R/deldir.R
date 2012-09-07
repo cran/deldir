@@ -1,5 +1,10 @@
-deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
-                   plotit=FALSE,digits=6,z=NULL, zdum=NULL,...) {
+deldir <- local({
+
+EnvSupp <- new.env()
+
+function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
+                   plotit=FALSE,digits=6,z=NULL, zdum=NULL,
+                   suppressMsge=FALSE,...) {
 # Function deldir
 #
 #   Copyright (C) 1996 by T. Rolf Turner
@@ -30,9 +35,20 @@ deldir <- function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
 # It is also enclosed in a finite rectangle (whose boundaries truncate any
 # infinite Dirichlet tiles) with corners (xmin,ymin) etc.  This rectangle
 # is referred to elsewhere as `the' rectangular window.
+if(exists("deldirMsgeDone",envir=EnvSupp)) suppressMsge <- TRUE
+if(!suppressMsge){
+    cat(paste("\n     PLEASE NOTE:  The components \"delsgs\" and \"summary\"",
+        "of the", "\n     object returned by deldir() are now",
+        "DATA FRAMES rather than","\n     matrices (as they were prior",
+        "to release 0.0-18).",    "\n     See help(\"deldir\").\n",
+        "\n     PLEASE NOTE: The process that deldir() uses for determining\n",
+        "    duplicated points has changed from that used in version\n",
+        "    0.0-9 of this package (and previously). See help(\"deldir\").\n\n"))
+    assign("deldirMsgeDone","xxx",envir=EnvSupp)
+}
 
 # If the first argument is a list, extract components x and y (and
-# possibly z.
+# possibly z).
 if(is.list(x)) {
 	if(all(!is.na(match(c('x','y'),names(x))))) {
 		y <- x$y
@@ -222,6 +238,7 @@ class(rslt) <- 'deldir'
 if(plotit) {
 	plot(rslt,...)
 	return(invisible(rslt))
+} else return(rslt)
 }
-rslt
 }
+)
