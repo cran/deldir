@@ -120,7 +120,7 @@ if(!is.null(dpl)) {
 }
 
 # Eliminate duplicate points:
-iii <- !duplicated(data.frame(x,y))
+iii <- !duplicatedxy(x,y)
 ndm <- sum(iii[-(1:n)])
 n   <- sum(iii[1:n])
 x   <- x[iii]

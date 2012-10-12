@@ -1,12 +1,20 @@
 
+ Version 0.0-21 (12 October 2012)
+
+  Added the function duplicatedxy() to determine duplicated
+  points, to make it convenient for the user to eliminate
+  duplicates from a point set before calling deldir().
+  Done at the request of Adrian Baddeley.
+
  Version 0.0-20 (07 September 2012)
 
-Removed the elaborate startup message referring to changes
-from previous versions of "deldir".  Replace this with
-message produced by deldir() itself, the first time that
-it is called in any given session.  Added an argument
-"suppressMsge" to deldir() allowing the user to keep this
-message from appearing.
+ Removed the elaborate startup message referring to changes
+ from previous versions of "deldir".  Replaced this with
+ message produced by deldir() itself, the first time that
+ it is called in any given session.  Added an argument
+ "suppressMsge" to deldir() allowing the user to keep this
+ message from appearing.
+  Done at the request of Adrian Baddeley.
 
  Version 0.0-19 (23 April 2012)
 
