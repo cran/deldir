@@ -32,7 +32,7 @@ tile.list <- function (object)
 	xx <- c(xx,x.crnrs[ii])
 	yy <- c(yy,y.crnrs[ii])
         bp <- c(bp,rep(TRUE,sum(ii)))
-        rslt[[i]] <- acw(list(pt=pt, x = unname(xx), y = unname(yy), bp = bp))
+        rslt[[i]] <- acw(list(ptNum=i, pt=pt, x = unname(xx), y = unname(yy), bp = bp))
     }
     class(rslt) <- "tile.list"
     attr(rslt,"rw") <- object$rw

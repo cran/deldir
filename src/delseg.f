@@ -1,9 +1,10 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine delseg(delsgs,ndel,nadj,madj,x,y,ntot,ind,nerror)
+      subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,ind,nerror)
       implicit double precision(a-h,o-z)
-      dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension delsgs(6,1), ind(1)
       logical value
+      integer tdel
+      dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
+      dimension delsgs(6,ndel), ind(npd)
       npd = ntot-4
       kseg = 0
       do23000 i1 = 2,npd 

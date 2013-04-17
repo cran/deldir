@@ -1,13 +1,14 @@
-subroutine delseg(delsgs,ndel,nadj,madj,x,y,ntot,ind,nerror)
+subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,ind,nerror)
 
 # Output the endpoints of the line segments joining the
 # vertices of the Delaunay triangles.
 # Called by master.
 
 implicit double precision(a-h,o-z)
-dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension delsgs(6,1), ind(1)
 logical value
+integer tdel
+dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
+dimension delsgs(6,ndel), ind(npd)
 
 # For each distinct pair of points i and j, if they are adjacent
 # then put their endpoints into the output array.

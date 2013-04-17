@@ -52,7 +52,7 @@ if(!suppressMsge){
 if(is.list(x)) {
 	if(all(!is.na(match(c('x','y'),names(x))))) {
 		y <- x$y
-                z <- x$z
+                z <- if(!is.null(x$z)) x$z else z
 		x <- x$x
 	}
 	else {

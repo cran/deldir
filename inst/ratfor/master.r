@@ -74,13 +74,13 @@ do j = 2,npd {
 }
 
 # Obtain the description of the triangulation.
-call delseg(delsgs,ndel,nadj,madj,x,y,ntot,ind,nerror)
+call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,ind,nerror)
 if(nerror>0) return
 
 call delout(delsum,nadj,madj,x,y,ntot,npd,ind,nerror)
 if(nerror>0) return
 
-call dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror)
+call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
 if(nerror>0) return
 call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,ind,eps,nerror)
 return

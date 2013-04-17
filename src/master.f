@@ -63,7 +63,7 @@ C Output from Public domain Ratfor, version 1.0
       endif
 23020 continue
 23021 continue
-      call delseg(delsgs,ndel,nadj,madj,x,y,ntot,ind,nerror)
+      call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,ind,nerror)
       if(nerror.gt.0)then
       return
       endif
@@ -71,7 +71,7 @@ C Output from Public domain Ratfor, version 1.0
       if(nerror.gt.0)then
       return
       endif
-      call dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror)
+      call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
       if(nerror.gt.0)then
       return
       endif

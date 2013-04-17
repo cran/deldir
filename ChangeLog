@@ -1,5 +1,18 @@
+ Version 0.0-22 (17 April 2013)
+
+  Fixed the dimensioning of delsgs, dirsgs, and ind in
+  delsegs.r and dirsegs.r.  Had used a "1" as the last
+  dimension and this now throws a "subscript out of range"
+  warning from the compiler.
 
  Version 0.0-21 (12 October 2012)
+
+  Fixed glitch w.r.t. the z-argument of deldir() --- if
+  "x" was a list with "x" and "y" components, and if "z"
+  was supplied as a separate argument, then "z" got ignored.
+
+  Added a "point number" component to the list produced for
+  each Delaunay triangle by triang.list().
 
   Added the function duplicatedxy() to determine duplicated
   points, to make it convenient for the user to eliminate

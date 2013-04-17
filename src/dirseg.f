@@ -1,10 +1,10 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror
-     *)
+      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,ne
+     *rror)
       implicit double precision(a-h,o-z)
-      dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension dirsgs(8,ndir), rw(4), ind(1)
       logical collin, adjace, intfnd, bptab, bptcd, goferit
+      dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
+      dimension dirsgs(8,ndir), rw(4), ind(npd)
       nerror = -1
       xmin = rw(1)
       xmax = rw(2)
