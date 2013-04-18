@@ -1,13 +1,13 @@
-subroutine dirseg(dirsgs,ndir,nadj,madj,x,y,ntot,rw,eps,ind,nerror)
+subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
 
 # Output the endpoints of the segments of boundaries of Dirichlet
 # tiles.  (Do it economically; each such segment once and only once.)
 # Called by master.
 
 implicit double precision(a-h,o-z)
-dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension dirsgs(8,ndir), rw(4), ind(1)
 logical collin, adjace, intfnd, bptab, bptcd, goferit
+dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
+dimension dirsgs(8,ndir), rw(4), ind(npd)
 
 nerror = -1
 

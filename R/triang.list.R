@@ -21,9 +21,11 @@ triang.list <- function (object)
     if (any(clockwise)) {
         xc <- xtri[clockwise,,drop=FALSE]
         yc <- ytri[clockwise,,drop=FALSE]
+        tc <- tlist[clockwise,,drop=FALSE]
         if(haveZ) zc <- ztri[clockwise,,drop=FALSE]
         xtri[clockwise, ] <- xc[, c(1, 3, 2)]
         ytri[clockwise, ] <- yc[, c(1, 3, 2)]
+        tlist[clockwise,] <- tc[, c(1, 3, 2)]
         if(haveZ) ztri[clockwise, ] <- zc[, c(1, 3, 2)]
     }
     rslt <- list()
@@ -41,12 +43,11 @@ triang.list <- function (object)
 	)
 	if(tmp$okay) {
 		K <- K+1
-		rslt[[K]] <- if(haveZ) {
-                                data.frame(x=xtri[i,],y=ytri[i,],z=ztri[i,])
-                             } else { 
-                                data.frame(x=xtri[i,],y=ytri[i,])
-                             }
-	}
+		rslt[[K]] <- data.frame(ptNum=tlist[i,],x=xtri[i,],y=ytri[i,])
+                if(haveZ) {
+                    rslt[[K]] <- cbind(rslt[[K]],z=ztri[i,])
+                }
+        }
     }
     attr(rslt,"rw") <- object$rw
     class(rslt) <- "triang.list"
