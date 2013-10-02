@@ -1,71 +1,98 @@
 plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
-                            polycol = NA, showpoints = TRUE, showrect=FALSE,
-                            add=FALSE, asp = 1, xlab = "x", ylab = "y", main = "", ...) 
-{
+                            fillcol = getCol(x,warn=warn), col.pts=NULL,
+                            border=NULL, showpoints = TRUE, add = FALSE,
+                            asp = 1, clipwin=NULL, xlab = "x", ylab = "y",
+                            main = "", warn=FALSE, use.gpclib=FALSE, ...) {
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
-    n <- length(object)
-    if(showrect) {
-	rw <- attr(object,"rw")
-        rx <- rw[1:2]
-        ry <- rw[3:4]
-    } else {
-        x.all <- unlist(lapply(object, function(w) {
-            c(w$pt[1], w$x)
-        }))
-        y.all <- unlist(lapply(object, function(w) {
-            c(w$pt[2], w$y)
-        }))
-        rx <- range(x.all)
-        ry <- range(y.all)
+    clip <- !is.null(clipwin)
+    if(clip) {
+        require(spatstat)
+        verifyclass(clipwin,"owin")
+        if(use.gpclib) {
+            oso <- spatstat.options(gpclib=TRUE)
+            on.exit(spatstat.options(oso))
+       } else {
+            oso <- spatstat.options(gpclib=FALSE)
+            on.exit(spatstat.options(oso))
+       }
     }
+    n <- length(object)
+    rw <- attr(object, "rw")
+    rx <- rw[1:2]
+    ry <- rw[3:4]
     x.pts <- unlist(lapply(object, function(w) {
         w$pt[1]
     }))
     y.pts <- unlist(lapply(object, function(w) {
         w$pt[2]
     }))
-    if(!add) plot(0, 0, type = "n", asp = asp, xlim=rx, ylim=ry, xlab = xlab,
-                  ylab = ylab, main = main)
-    polycol <- apply(col2rgb(polycol,TRUE),2,
-                     function(x){do.call(rgb,as.list(x/255))})
-    polycol <- rep(polycol, length = length(object))
-    hexbla  <- do.call(rgb,as.list(col2rgb("black",TRUE)/255))
-    hexwhi  <- do.call(rgb,as.list(col2rgb("white",TRUE)/255))
-    ptcol <- ifelse(polycol == hexbla,hexwhi,hexbla)
-    lnwid <- ifelse(polycol == hexbla, 2, 1)
-    for (i in 1:n) {
-        inner <- !any(object[[i]]$bp)
-        if (close | inner) 
-            polygon(object[[i]], col = polycol[i], border = ptcol[i], 
-                lwd = lnwid[i])
-        else {
-            x <- object[[i]]$x
-            y <- object[[i]]$y
-            bp <- object[[i]]$bp
-            ni <- length(x)
-            for (j in 1:ni) {
-                jnext <- if (j < ni) 
-                  j + 1
-                else 1
-                do.it <- mid.in(x[c(j, jnext)], y[c(j, jnext)], 
-                  rx, ry)
-                if (do.it) 
-                  segments(x[j], y[j], x[jnext], y[jnext], col = ptcol[i], 
-                    lwd = lnwid[i])
-            }
+    if (!add) 
+        plot(0, 0, type = "n", asp = asp, xlim = rx, ylim = ry, 
+            xlab = xlab, ylab = ylab, main = main)
+    fillcol <- apply(col2rgb(fillcol, TRUE), 2, function(x) {
+        do.call(rgb, as.list(x/255))
+    })
+    fillcol <- rep(fillcol, length = length(object))
+    hexbla <- do.call(rgb, as.list(col2rgb("black", TRUE)/255))
+    hexwhi <- do.call(rgb, as.list(col2rgb("white", TRUE)/255))
+    if(is.null(col.pts)){
+        col.pts <- ifelse(fillcol == hexbla, hexwhi, hexbla)
+    } else {
+        col.pts <- apply(col2rgb(col.pts, TRUE), 2, function(x) {
+            do.call(rgb, as.list(x/255))
+        })
+        col.pts <- rep(col.pts, length = length(object))
+    }
+    if(is.null(border))
+        border <- if(all(fillcol == hexbla)) hexwhi else hexbla
+    else if(length(border) > 1)
+        stop("Argument \"border\" must be a scalar or NULL.\n")
+    lnwid <- if(all(fillcol == hexbla)) 2 else 1
+    pch <- rep(pch,n)
+    okn <- logical(n)
+    for(i in 1:n) {
+        if(clip) {
+            pgon <- owin(poly=as.data.frame(object[[i]][c("x","y")]))
+            pgon <- intersect.owin(pgon,clipwin,fatal=FALSE)
+            ok   <- !is.empty(pgon)
+            if(is.polygonal(pgon)) pgon <- pgon$bdry
+        } else {
+            pgon <- list(object[[i]])
+            ok <- TRUE
         }
-        if (verbose & showpoints) 
-            points(object[[i]]$pt[1], object[[i]]$pt[2], pch = pch, 
-                col = ptcol[i])
-        if (verbose & i < n) 
-            readline("Go? ")
+        okn[i] <- ok
+        inner <- !any(object[[i]]$bp)
+        if(inherits(pgon,"owin")) {
+            plot(pgon,add=TRUE,col=fillcol[i],box=FALSE)
+        } else {
+            for(ii in seq(along=pgon)){
+                ptmp <- pgon[[ii]]
+                polygon(ptmp,col=fillcol[i],border=NA)
+                if (close | inner) { 
+                    polygon(ptmp,col = NA, border = border, lwd = lnwid)
+                } else {
+                    x <- ptmp$x
+                    y <- ptmp$y
+                    ni <- length(x)
+                    for (j in 1:ni) {
+                        jnext <- if (j < ni) j + 1 else 1
+                        do.it <- mid.in(x[c(j, jnext)], y[c(j, jnext)], rx, ry)
+                        if (do.it) 
+                            segments(x[j], y[j], x[jnext], y[jnext],
+                                     col = border, lwd = lnwid)
+                    }
+                }
+             }
+        }
+        if(ok & verbose & showpoints) 
+            points(object[[i]]$pt[1], object[[i]]$pt[2], pch = pch[i], 
+                   col = col.pts[i])
+        if(ok & verbose & i < n) 
+            readline(paste("i = ",i,"; Go? ",sep=""))
     }
     if (showpoints & !verbose) 
-        points(x.pts, y.pts, pch = pch, col = ptcol)
-    if(showrect) {
-	do.call(rect,as.list(rw)[c(1,3,2,4)])
-    }
+        points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn])
     invisible()
 }

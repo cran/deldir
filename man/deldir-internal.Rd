@@ -1,19 +1,23 @@
 \name{deldir-internal}
+\alias{acw}
 \alias{dumpts}
+\alias{get.cnrind}
+\alias{getCol}
 \alias{mid.in}
 \alias{mnnd}
-\alias{get.cnrind}
-\alias{acw}
+\alias{tilePerim0}
 \title{Internal deldir functions}
 \description{
   Internal deldir functions.
 }
 \usage{
+acw(xxx)
 dumpts(x,y,dpl,rw)
+get.cnrind(x,y,rw)
+getCol(x,warn=FALSE)
 mid.in(x,y,rx,ry)
 mnnd(x,y)
-get.cnrind(x,y,rw)
-acw(xxx)
+tilePerim0(object,inclbdry=TRUE)
 }
 \details{
   These functions are auxiliary and are not intended to be called by
