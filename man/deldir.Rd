@@ -20,12 +20,23 @@ deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
 }
 \arguments{
 \item{x,y}{
-The coordinates of the point set being triangulated. These can be
-given by two arguments x and y which are vectors or by a single
-argument x which is a list with components \code{x} and \code{y},
-and possibly \code{z} (which would consists of a vector of
-\dQuote{auxiliary} values or \dQuote{weights} associated with
-the respective points.
+The coordinates of the point set being triangulated. These
+can be given by two arguments x and y which are vectors or by a
+single argument x which is either a data frame or a generic list.
+If \code{x} is a data frame then the \code{x} coordinates of the
+points to be triangulated are taken to be the first column of this
+data frame and the \code{y} coordinates to be the second column.
+If there is a third column and if argument \code{z} is NULL, then
+this third column is taken to be the value of \code{z}.  If \code{x}
+is a list (but not a data frame) then it must have components
+named \code{x} and \code{y}, and possibly a component named \code{z}.
+
+The \code{x} and \code{y} components give the \code{x} and \code{y}
+coordinates respectively of the points to be triangulated, and
+the component \code{z} if present (and if argument \code{z} is
+\code{NULL}) is taken to be the value of \code{z} (i.e. of a vector
+of \dQuote{auxiliary} values or \dQuote{weights} associated with
+the respective points).
 }
 \item{dpl}{
 A list describing the structure of the dummy points to be added to
@@ -86,7 +97,10 @@ returned list should be rounded.  Defaults to 6.
 }
 \item{z}{
 An optional vector of \dQuote{auxiliary} values or \dQuote{weights}
-associated with the respective points.
+associated with the respective points.  If this argument is left
+\code{NULL} then it is taken to be the third column of \code{x},
+if \code{x} is a data frame or to be the \code{z} component of
+\code{x} if \code{x} is a generic list.
 }
 \item{zdum}{
 Values of \code{z} to be associated with any dummy points that are
@@ -261,7 +275,7 @@ associated with the dummy points are all taken to be missing values
 
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.math.unb.ca/~rolf}
+  \url{http://www.stat.auckland.ac.nz/~rolf}
 }
 
 \references{

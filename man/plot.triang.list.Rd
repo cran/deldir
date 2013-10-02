@@ -56,7 +56,7 @@ a Delaunay triangulation of a set of points in the plane.}
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.math.unb.ca/~rolf}
+  \url{http://www.stat.auckland.ac.nz/~rolf}
 }
 
 \seealso{ \code{\link{deldir}()} \code{\link{plot.triang.list}()}

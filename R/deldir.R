@@ -47,12 +47,21 @@ if(!suppressMsge){
     assign("deldirMsgeDone","xxx",envir=EnvSupp)
 }
 
-# If the first argument is a list, extract components x and y (and
-# possibly z).
-if(is.list(x)) {
+# If the first argument is a data frame, take the first column
+# to be the "x coordinates" and the second column to be the
+# "y coordinates".
+
+if(is.data.frame(x)) {
+	y <- x[,2]
+	z <- if(is.null(z)) x[,3] else z
+	x <- x[,1]
+
+# If the first argument is a list (but not a data frame) extract
+# components x and y (and possibly z).
+} else if(is.list(x)) {
 	if(all(!is.na(match(c('x','y'),names(x))))) {
 		y <- x$y
-                z <- if(!is.null(x$z)) x$z else z
+                z <- if(is.null(z)) x$z else z
 		x <- x$x
 	}
 	else {

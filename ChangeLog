@@ -1,4 +1,28 @@
- Version 0.1-1 (02 October 2013)
+ Version 0.1-3
+
+ Uploaded to CRAN 30/01/2014
+
+ Fixed up references to my web page to refer to my
+ New Zealand web page. (28/01/2014)
+
+ Version 0.1-2
+
+ Uploaded to CRAN 01/10/2013.
+
+ Adjusted code to allow the x argument of deldir() to be
+ a data frame whose names do *not* necessarily include "x",
+ "y", and "z".  In this case the x coordinates are taken to
+ be the first column of the data frame, the y coordinates to
+ be the second column, and z to be the third column if that
+ column exists.
+
+ Adjusted the behaviour of the function plot.tile.list()
+ when verbose=TRUE, very slightly.
+
+ Removed the use.gpclib argument to plot.tile.list()
+ (in accordance with the new behaviour of spatstat).
+
+ Version 0.1-1
 
  Revised the function "plot.tile.list", changing the behaviour of
  the colouring of tiles and added the argument "clipwin".
@@ -12,7 +36,7 @@
  Added the function "tilePerim" and the internal function
  "tilePerim0".  Request of Haozhe Zhang.
 
- Uploaded to CRAN.
+ Uploaded to CRAN 02 October 2013
 
  Version 0.0-22 (17 April 2013)
 
@@ -153,7 +177,7 @@
 
  Version 0.0-10 (16 November 2009)
 
- Got rid of the call to ind.dup() used a very rough
+ Got rid of the call to ind.dup() which used a very rough
  bit of Fortran code to detect duplicated points, and
  replaced it with a call to duplicated().
 
