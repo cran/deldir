@@ -1,22 +1,14 @@
 plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                             fillcol = getCol(x,warn=warn), col.pts=NULL,
                             border=NULL, showpoints = TRUE, add = FALSE,
-                            asp = 1, clipwin=NULL, xlab = "x", ylab = "y",
-                            main = "", warn=FALSE, use.gpclib=FALSE, ...) {
+                            asp = 1, clipp=NULL, xlab = "x", ylab = "y",
+                            main = "", warn=FALSE, ...) {
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
-    clip <- !is.null(clipwin)
+    clip <- !is.null(clipp)
     if(clip) {
-        require(spatstat)
-        verifyclass(clipwin,"owin")
-        if(use.gpclib) {
-            oso <- spatstat.options(gpclib=TRUE)
-            on.exit(spatstat.options(oso))
-       } else {
-            oso <- spatstat.options(gpclib=FALSE)
-            on.exit(spatstat.options(oso))
-       }
+        require(polyclip)
     }
     n <- length(object)
     rw <- attr(object, "rw")
@@ -54,45 +46,40 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
     okn <- logical(n)
     for(i in 1:n) {
         if(clip) {
-            pgon <- owin(poly=as.data.frame(object[[i]][c("x","y")]))
-            pgon <- intersect.owin(pgon,clipwin,fatal=FALSE)
-            ok   <- !is.empty(pgon)
-            if(is.polygonal(pgon)) pgon <- pgon$bdry
+            pgon <- polyclip(object[[i]],clipp)
+            ok   <- length(pgon) > 0
         } else {
             pgon <- list(object[[i]])
             ok <- TRUE
         }
         okn[i] <- ok
         inner <- !any(object[[i]]$bp)
-        if(inherits(pgon,"owin")) {
-            plot(pgon,add=TRUE,col=fillcol[i],box=FALSE)
-        } else {
-            for(ii in seq(along=pgon)){
-                ptmp <- pgon[[ii]]
-                polygon(ptmp,col=fillcol[i],border=NA)
-                if (close | inner) { 
-                    polygon(ptmp,col = NA, border = border, lwd = lnwid)
-                } else {
-                    x <- ptmp$x
-                    y <- ptmp$y
-                    ni <- length(x)
-                    for (j in 1:ni) {
-                        jnext <- if (j < ni) j + 1 else 1
-                        do.it <- mid.in(x[c(j, jnext)], y[c(j, jnext)], rx, ry)
-                        if (do.it) 
-                            segments(x[j], y[j], x[jnext], y[jnext],
-                                     col = border, lwd = lnwid)
-                    }
+        for(ii in seq(along=pgon)){
+            ptmp <- pgon[[ii]]
+            polygon(ptmp,col=fillcol[i],border=NA)
+            if (close | inner) { 
+                polygon(ptmp,col = NA, border = border, lwd = lnwid)
+            } else {
+                x <- ptmp$x
+                y <- ptmp$y
+                ni <- length(x)
+                for (j in 1:ni) {
+                    jnext <- if (j < ni) j + 1 else 1
+                    do.it <- mid.in(x[c(j, jnext)], y[c(j, jnext)], rx, ry)
+                    if (do.it) 
+                        segments(x[j], y[j], x[jnext], y[jnext],
+                                 col = border, lwd = lnwid)
                 }
-             }
-        }
-        if(ok & verbose & showpoints) 
-            points(object[[i]]$pt[1], object[[i]]$pt[2], pch = pch[i], 
-                   col = col.pts[i])
-        if(ok & verbose & i < n) 
-            readline(paste("i = ",i,"; Go? ",sep=""))
+            }
+            if(ok & verbose & i < n) 
+                readline(paste("i = ",i,"; Go? ",sep=""))
+            if(ok & verbose & i == n) cat("i = ",i,"\n",sep="")
+         }
+    if(ok & verbose & showpoints) 
+        points(object[[i]]$pt[1], object[[i]]$pt[2], pch = pch[i], 
+               col = col.pts[i])
     }
     if (showpoints & !verbose) 
-        points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn])
+    points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn])
     invisible()
 }
