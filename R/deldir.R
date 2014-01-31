@@ -47,14 +47,29 @@ if(!suppressMsge){
     assign("deldirMsgeDone","xxx",envir=EnvSupp)
 }
 
-# If the first argument is a data frame, take the first column
-# to be the "x coordinates" and the second column to be the
-# "y coordinates".
-
+# If the first argument is a data frame, extract the column
+# named "z", if there is one, to be the "z weights".  Remove
+# this column from the first argument.  Extract the column named
+# "x", if there is one, to be the "x" coordinates, otherwise take
+# the "x" coordinates to be the first column which is isn't named
+# "y".  Extract the column named "y", if there is one, to be the
+# "y" coordinates, otherwise take the "y" coordinates to be the
+# first column which is isn't named "x".
 if(is.data.frame(x)) {
-	y <- x[,2]
-	z <- if(is.null(z)) x[,3] else z
-	x <- x[,1]
+        if(ncol(x) < 2)
+            stop(paste("If \"x\" is a data frame it must have\n",
+                       "at least two columns.\n"))
+        j  <- match("z",names(x))
+        if(!is.na(j)) {
+            if(is.null(z)) z <- x[,j]
+            x <- x[,-j]
+        }
+        j <- match(c("x","y"),names(x))
+        if(all(is.na(j))) j <- 1:2
+        if(is.na(j[2])) j[2] <- if(j[1]==1) 2 else 1
+        if(is.na(j[1])) j[1] <- if(j[2]==1) 2 else 1
+        y <- x[,j[2]]
+        x <- x[,j[1]]
 
 # If the first argument is a list (but not a data frame) extract
 # components x and y (and possibly z).
