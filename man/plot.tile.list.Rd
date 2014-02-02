@@ -138,10 +138,12 @@ the tiles associated with each point in the set being tessellated. }
   ccc <- heat.colors(20) # Or topo.colors(20), or terrain.colors(20)
                          # or cm.colors(20), or rainbow(20).
   plot(w,fillcol=ccc,close=TRUE)
-  CP <- list(x=c(0.49,0.35,0.15,0.20,0.35,0.42,
+  if(require(polyclip)) {
+     CP <- list(x=c(0.49,0.35,0.15,0.20,0.35,0.42,
                           0.43,0.62,0.46,0.63,0.82,0.79),
                       y=c(0.78,0.86,0.79,0.54,0.58,0.70,
                           0.51,0.46,0.31,0.20,0.37,0.54))
-  plot(w,clipp=CP,showpoints=FALSE,fillcol=topo.colors(20))
+     plot(w,clipp=CP,showpoints=FALSE,fillcol=topo.colors(20))
+  }
 }
 \keyword{ hplot }

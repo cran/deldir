@@ -1,3 +1,16 @@
+ Version 0.1-5
+
+ Uploaded to CRAN 02/02/2014
+
+ In the help for plot.tile.list() the call this function that
+ made use of the "clipp" argument has been wrapped in
+   if(require(polyclip)) {
+       ...
+   }
+ so as to avoid errors when the deldir package is used by older
+ versions of R which do not provide the polyclip package.
+ (Change made at the behest of Uwe Ligges.)
+
  Version 0.1-4
 
  Uploaded to CRAN 31/01/2014
