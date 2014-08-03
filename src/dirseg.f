@@ -2,7 +2,7 @@ C Output from Public domain Ratfor, version 1.0
       subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,ne
      *rror)
       implicit double precision(a-h,o-z)
-      logical collin, adjace, intfnd, bptab, bptcd, goferit
+      logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsgs(8,ndir), rw(4), ind(npd)
       nerror = -1
@@ -44,12 +44,6 @@ C Output from Public domain Ratfor, version 1.0
       return
       endif
       if(adjace)then
-      xi = x(i)
-      yi = y(i)
-      xj = x(j)
-      yj = y(j)
-      xij = 0.5*(xi+xj)
-      yij = 0.5*(yi+yj)
       call pred(k,i,j,nadj,madj,ntot,nerror)
       if(nerror .gt. 0)then
       return
@@ -60,11 +54,6 @@ C Output from Public domain Ratfor, version 1.0
       endif
       if(collin)then
       nerror = 12
-      return
-      endif
-      call dldins(a,b,xij,yij,ai,bi,rw,intfnd,bptab)
-      if(.not.intfnd)then
-      nerror = 16
       return
       endif
       call succ(l,i,j,nadj,madj,ntot,nerror)
@@ -79,7 +68,23 @@ C Output from Public domain Ratfor, version 1.0
       nerror = 12
       return
       endif
-      call dldins(c,d,xij,yij,ci,di,rw,intfnd,bptcd)
+      xi = x(i)
+      xj = x(j)
+      yi = y(i)
+      yj = y(j)
+      if(yi.ne.yj)then
+      slope = (xi - xj)/(yj - yi)
+      rwu = .true.
+      else
+      slope = 0.d0
+      rwu = .false.
+      endif
+      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+      if(.not.intfnd)then
+      nerror = 16
+      return
+      endif
+      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
       if(.not.intfnd)then
       nerror = 16
       return

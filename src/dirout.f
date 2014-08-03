@@ -3,7 +3,7 @@ C Output from Public domain Ratfor, version 1.0
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsum(npd,3), ind(npd), rw(4)
-      logical collin, intfnd, bptab, bptcd
+      logical collin, intfnd, bptab, bptcd, rwu
       xmin = rw(1)
       xmax = rw(2)
       ymin = rw(3)
@@ -14,14 +14,8 @@ C Output from Public domain Ratfor, version 1.0
       npt = 0
       i = ind(i1)
       np = nadj(i,0)
-      xi = x(i)
-      yi = y(i)
       do23002 j1 = 1,np 
       j = nadj(i,j1)
-      xj = x(j)
-      yj = y(j)
-      xij = 0.5*(xi+xj)
-      yij = 0.5*(yi+yj)
       call pred(k,i,j,nadj,madj,ntot,nerror)
       if(nerror .gt. 0)then
       return
@@ -51,9 +45,20 @@ C Output from Public domain Ratfor, version 1.0
       return
       endif
       area = area+sn*tmp
-      call dldins(a,b,xij,yij,ai,bi,rw,intfnd,bptab)
+      xi = x(i)
+      xj = x(j)
+      yi = y(i)
+      yj = y(j)
+      if(yi.ne.yj)then
+      slope = (xi - xj)/(yj - yi)
+      rwu = .true.
+      else
+      slope = 0.d0
+      rwu = .false.
+      endif
+      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
       if(intfnd)then
-      call dldins(c,d,xij,yij,ci,di,rw,intfnd,bptcd)
+      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
       if(.not.intfnd)then
       nerror = 17
       return
@@ -72,11 +77,11 @@ C Output from Public domain Ratfor, version 1.0
       endif
       endif
       endif
+23002 continue
+23003 continue
       dirsum(i1,1) = npt
       dirsum(i1,2) = nbpt
       dirsum(i1,3) = area
-23002 continue
-23003 continue
 23000 continue
 23001 continue
       return

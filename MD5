@@ -1,5 +1,5 @@
-0c077a49d19ac531887e0170df60cb44 *ChangeLog
-4f02779c045ed68927c8b061ce4fcc5f *DESCRIPTION
+6d17665357e950e0fdd5319708979f2d *ChangeLog
+a4765c8eeb6927a6702eed36a33e8d52 *DESCRIPTION
 e97c7b6e0d7f0eb3b8e1303451431001 *NAMESPACE
 276c474998f3b1b2af301365f41b4171 *R/First.R
 3bdbf4cf3acfd658268193724e0efdec *R/acw.R
@@ -11,7 +11,7 @@ fb4fd373dd2a698f4b5db76ad9bd4a48 *R/getCol.R
 e55af1ae6eb1861a0e7e2ea8a68c8444 *R/mid.in.R
 1b5b733f3c50e6d240bfadeef5917761 *R/mnnd.R
 13c76fff4f354977a02f5f64881b6ec1 *R/plot.deldir.R
-d588ff08093443930929a77697531a33 *R/plot.tile.list.R
+d35089d5fee75da04efb9211795299b0 *R/plot.tile.list.R
 43bc52079e34162f82800bdbc143746e *R/plot.triang.list.R
 3d4ae286693d20b4f89a5f408d6d76fb *R/tile.centroids.R
 ffadc4e1f056b45ac7ebea2b5c944142 *R/tile.list.R
@@ -39,9 +39,9 @@ f6e55e5c74ed60b802cb2a827e597603 *inst/ratfor/circen.r
 2aa853d7aaac39e955f2c8d7f44bee60 *inst/ratfor/delet1.r
 22b1b7d68d94d8d179663d3d7dbee446 *inst/ratfor/delout.r
 5f7e60979680de4e62ca74de22c21baa *inst/ratfor/delseg.r
-4e775ebb151b3b47656718f9f6aefb8c *inst/ratfor/dirout.r
-790e55eeb7bf4c81e18bd75e9480162d *inst/ratfor/dirseg.r
-77454183e29dd932e494e9f363e7c7a0 *inst/ratfor/dldins.r
+a30c095ef8d652ea7b8c8ca3dcde6fd9 *inst/ratfor/dirout.r
+978f7de7eb5c3f8ff107a698154c66c0 *inst/ratfor/dirseg.r
+06828c7cda4fef9c5851f54025b4133e *inst/ratfor/dldins.r
 75332c0a3586d888708d68a231c0c185 *inst/ratfor/initad.r
 793f31965fd00d91904dc1145e5a5e95 *inst/ratfor/insrt.r
 8d92aa51712ce4e98089b46daa29614f *inst/ratfor/insrt1.r
@@ -63,7 +63,7 @@ c62cb8e014d2db780d45a29129f81b60 *man/deldir-internal.Rd
 179f5f371ab71fb529b2eb5a2cabbbf6 *man/deldir.Rd
 eb99262c18907d7eb513bce3d732a987 *man/duplicatedxy.Rd
 e3cb87a2baca2519e2182eafd46aba4e *man/plot.deldir.Rd
-fe5923df3a98534fbbd230e458ab8690 *man/plot.tile.list.Rd
+1e21ddd38b6c120f45234cda4558f26c *man/plot.tile.list.Rd
 9601271e313555cd96a963c67108b5f8 *man/plot.triang.list.Rd
 057188a904c3f18beed6f4f359b18687 *man/tile.centroids.Rd
 c9e204babe038125fe7c356def962de9 *man/tile.list.Rd
@@ -80,9 +80,9 @@ de044147dd6ebe0c4ff5bd0f6112203e *src/binsrt.f
 09ad43b86616d7d5b73bcde6f80c97e9 *src/delet1.f
 fed96287bb1385ff76d76d3eeb5bfa70 *src/delout.f
 aa16e6342c8cb9171d7246b9fc8bb80c *src/delseg.f
-51a925ab12dffd27589b3adc2a347d65 *src/dirout.f
-279615dfd26ae81eff9b61dc3740f447 *src/dirseg.f
-7e5a013b9cf320c79b5eaefe1cd8fa91 *src/dldins.f
+b2a36447f268463c835e9a1856b08174 *src/dirout.f
+4e0014caa9d5a47af596147bbe94ea07 *src/dirseg.f
+cc02e9a59e41f094d87817e780189ce6 *src/dldins.f
 21d927015f09e0a13b5bf21f51ceb575 *src/initad.f
 a17d1356bc31d8cdb942aea473242ca5 *src/insrt.f
 33a636ee10efff1a859064df2b8fd952 *src/insrt1.f

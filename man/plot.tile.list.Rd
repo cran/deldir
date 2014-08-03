@@ -104,22 +104,32 @@ the tiles associated with each point in the set being tessellated. }
   \item The arguments \code{border}, \code{clipp}, and \code{warn}
   are new as of release 0.1-1.
 
-  \item The user is \emph{strongly advised} not to set the value of
-  \code{asp} but rather to leave \code{asp} equal to its default
-  value of \code{1}.  Any other value distorts the tesselation
-  and destroys the perpendicular appearance of lines which are
-  indeed perpendicular.  (And conversely can cause lines which
-  are not perpendicular to appear as if they are.)
+  \item Users, unless they \emph{really} understand what they are
+  doing and why they are doing it, are \emph{strongly advised}
+  not to set the value of \code{asp} but rather to leave \code{asp}
+  equal to its default value of \code{1}.  Any other value distorts
+  the tesselation and destroys the perpendicular appearance of lines
+  which are indeed perpendicular.  (And conversely can cause lines
+  which are not perpendicular to appear as if they are.)
   }
 }
 \section{Notes}{
+  \itemize{
+  \item If \code{clipp} is not \code{NULL} and \code{showpoints}
+  is \code{TRUE} then it is possible that some of the points
+  \dQuote{shown} will not fall inside any of the plotted tiles.
+  (This will happen if the parts of the tiles in which they fall
+  have been \dQuote{clipped} out.)  If a tile is clipped out
+  \emph{completely} then the point which determines that tile is
+  \emph{not} plotted irrespective of the value of \code{showpoints}.
 
-  The new behaviour in respect of the colours with which to fill
+  \item The new behaviour in respect of the colours with which to fill
   the plotted tiles, and the argument \code{clipp} were added at
   the request of Chris Triggs.
 
-  The argument \code{asp} was added at the request of Zubin
+  \item The argument \code{asp} was added at the request of Zubin
   Dowlaty.
+  }
 }
 \value{NULL; side effect is a plot.}
 \author{Rolf Turner

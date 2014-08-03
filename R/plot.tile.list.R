@@ -71,13 +71,13 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                                  col = border, lwd = lnwid)
                 }
             }
-            if(ok & verbose & i < n) 
-                readline(paste("i = ",i,"; Go? ",sep=""))
-            if(ok & verbose & i == n) cat("i = ",i,"\n",sep="")
          }
-    if(ok & verbose & showpoints) 
-        points(object[[i]]$pt[1], object[[i]]$pt[2], pch = pch[i], 
-               col = col.pts[i])
+         if(ok & verbose) {
+             if(showpoints) points(object[[i]]$pt[1], object[[i]]$pt[2],
+                                   pch = pch[i], col = col.pts[i])
+             if(i < n) readline(paste("i = ",i,"; Go? ",sep=""))
+             if(i == n) cat("i = ",i,"\n",sep="")
+         }
     }
     if (showpoints & !verbose) 
     points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn])

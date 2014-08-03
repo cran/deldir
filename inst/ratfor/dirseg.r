@@ -5,7 +5,7 @@ subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
 # Called by master.
 
 implicit double precision(a-h,o-z)
-logical collin, adjace, intfnd, bptab, bptcd, goferit
+logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
 dimension dirsgs(8,ndir), rw(4), ind(npd)
 
@@ -63,32 +63,12 @@ do i1 = 2,npd {
                 call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
 		if(nerror > 0) return
                 if(adjace) {
-                        xi = x(i)
-                        yi = y(i)
-                        xj = x(j)
-                        yj = y(j)
-                        # Let (xij,yij) be the midpoint of the segment joining
-                        # (xi,yi) to (xj,yj).
-                        xij = 0.5*(xi+xj)
-                        yij = 0.5*(yi+yj)
                         call pred(k,i,j,nadj,madj,ntot,nerror)
 			if(nerror > 0) return
                         call circen(i,k,j,a,b,x,y,ntot,eps,collin,nerror)
 			if(nerror > 0) return
                         if(collin) {
 				nerror = 12
-				return
-			}
-
-                        # If a circumcentre is outside the rectangular window
-                        # of interest, draw a line joining it to the mid-point
-                        # of (xi,yi)->(xj,yj).  Find the intersection of this
-                        # line with the boundary of the window; for (a,b),
-                        # call the point of intersection (ai,bi).  For (c,d),
-                        # call it (ci,di).
-                        call dldins(a,b,xij,yij,ai,bi,rw,intfnd,bptab)
-			if(!intfnd) {
-				nerror = 16
 				return
 			}
                         call succ(l,i,j,nadj,madj,ntot,nerror)
@@ -99,7 +79,29 @@ do i1 = 2,npd {
 				nerror = 12
 				return
 			}
-                        call dldins(c,d,xij,yij,ci,di,rw,intfnd,bptcd)
+                        # If a circumcentre is outside the rectangular window
+                        # of interest, draw a line joining it to the other
+                        # circumcentre.  Find the intersection of this line with
+                        # the boundary of the window; for (a,b) and call the point
+                        # of intersection (ai,bi).  For (c,d), call it (ci,di).
+                        # Note: rwu = "right way up".
+                        xi = x(i)
+                        xj = x(j)
+                        yi = y(i)
+                        yj = y(j)
+                        if(yi!=yj) {
+                            slope = (xi - xj)/(yj - yi)
+                            rwu   = .true.
+                        } else {
+                            slope = 0.d0
+                            rwu = .false.
+                        }
+                        call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+			if(!intfnd) {
+				nerror = 16
+				return
+			}
+                        call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
 			if(!intfnd) {
 				nerror = 16
 				return

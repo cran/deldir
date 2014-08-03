@@ -1,8 +1,36 @@
+ Version 0.1-6
+ Uploaded to CRAN 03/08/2014
+
+ Corrected the ratfor code dirseg.r and dirout.r.  A rarely occuring
+ bug was possible due to the way the code was previously written.
+ The code made use of the ray joining a circumcentre to the
+ midpoint of an edge of a Delaunay triangle.  It is *possible* for
+ the circumcentre and that midpoint to coincide.  In such a case
+ Fortran seemed to calculate the slope of the ray (zero over zero)
+ to be equal to one.  The result was wrong of course and an error
+ with number nerror = 17 was (fortunately!) thrown.  In retrospect
+ it is "obvious" that the ray should have been taken to join the two
+ circumcentres on opposite sides of the Delaunay edge.  But since
+ these two circumcentres could conceivably coincide it is better
+ to take the slope of the ray to be the negative reciprocal of the
+ slope of the Delaunay edge.  The code now uses this slope.
+
+ Thanks to Pierre Legendre for drawing this bug to my attention.
+ (03/08/2014)
+
+ Slight adjustment to plot.tile.list.R (so that when verbose=TRUE
+ and showpoints=TRUE, the points get plotted "at the right time"
+ rather than when the *next* tile gets plotted).
+ (18/05/2014)
+
+ Slight adjustment made to plot.tile.list.Rd
+ (18/05/2014)
+
  Version 0.1-5
 
  Uploaded to CRAN 02/02/2014
 
- In the help for plot.tile.list() the call this function that
+ In the help for plot.tile.list() the call to this function that
  made use of the "clipp" argument has been wrapped in
    if(require(polyclip)) {
        ...
