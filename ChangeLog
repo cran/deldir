@@ -1,3 +1,23 @@
+ Version 0.1-7
+ Uploaded to CRAN 26/11/2014
+
+ Fixed bug with respect to the z "weights"; if there were duplicated
+ points, there was a mismatch of numbers between the z "weights"
+ and the unique collection of points that deldir() works with.
+ Fixed.  Thanks to Ron Peterson for drawing this bug to my attention.
+ (26/11/2014)
+
+ Changed the procedure for issuing a message from the initial
+ invocation of deldir() so that it no longer uses cat() but rather
+ calls message().  Requested by Bob O'Hara.
+ (21/08/2014)
+
+ Added some material to the description of the "z" argument to deldir()
+ to make it clear that these weights do not affect the tessellation and
+ that deldir does *not* do weighted tessellation.  (Prompted by an
+ enquiry from Garry Gelade.)
+ (26/08/2014)
+
  Version 0.1-6
  Uploaded to CRAN 03/08/2014
 

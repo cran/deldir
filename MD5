@@ -1,9 +1,10 @@
-6d17665357e950e0fdd5319708979f2d *ChangeLog
-a4765c8eeb6927a6702eed36a33e8d52 *DESCRIPTION
+5aa00b2404b04fa5f0f8267910d3cebb *ChangeLog
+ea272f1602236791efaf734a7169af60 *DESCRIPTION
 e97c7b6e0d7f0eb3b8e1303451431001 *NAMESPACE
 276c474998f3b1b2af301365f41b4171 *R/First.R
 3bdbf4cf3acfd658268193724e0efdec *R/acw.R
-e3cb5890ae4cb08a8a1d05ead30fb6b4 *R/deldir.R
+b6ce2424906cdb8aebd34022f238d57a *R/declareGlobals.R
+ba2d0ba6310820fc212b993df200550f *R/deldir.R
 f194a0f1c61521ea628b87b02c0c0977 *R/dumpts.R
 993ce9e5a7e061fba1847c6f029def08 *R/duplicatedxy.R
 3e37aaac8530922a03f0cc05eee1a13e *R/get.cnrind.R
@@ -60,7 +61,7 @@ a8636bf7b643eca192877bc38a6f2c87 *inst/ratfor/stoke.r
 728e4e2b3d69a1ea05c3373ce5c378f5 *inst/ratfor/triar.r
 dfb3a45af9e6414d3346857f860d753a *inst/ratfor/trifnd.r
 c62cb8e014d2db780d45a29129f81b60 *man/deldir-internal.Rd
-179f5f371ab71fb529b2eb5a2cabbbf6 *man/deldir.Rd
+a58711d70d601d88af6ad452e267c52c *man/deldir.Rd
 eb99262c18907d7eb513bce3d732a987 *man/duplicatedxy.Rd
 e3cb87a2baca2519e2182eafd46aba4e *man/plot.deldir.Rd
 1e21ddd38b6c120f45234cda4558f26c *man/plot.tile.list.Rd

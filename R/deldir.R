@@ -37,13 +37,15 @@ function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
 # is referred to elsewhere as `the' rectangular window.
 if(exists("deldirMsgeDone",envir=EnvSupp)) suppressMsge <- TRUE
 if(!suppressMsge){
-    cat(paste("\n     PLEASE NOTE:  The components \"delsgs\" and \"summary\"",
-        "of the", "\n     object returned by deldir() are now",
-        "DATA FRAMES rather than","\n     matrices (as they were prior",
-        "to release 0.0-18).",    "\n     See help(\"deldir\").\n",
-        "\n     PLEASE NOTE: The process that deldir() uses for determining\n",
-        "    duplicated points has changed from that used in version\n",
-        "    0.0-9 of this package (and previously). See help(\"deldir\").\n\n"))
+    mess <- paste("\n     PLEASE NOTE:  The components \"delsgs\"",
+                  "and \"summary\" of the\n object returned by deldir()",
+                  "are now DATA FRAMES rather than\n matrices (as they",
+                  "were prior to release 0.0-18).\n See help(\"deldir\").\n",
+                  "\n     PLEASE NOTE: The process that deldir() uses for",
+                  "determining\n duplicated points has changed from that",
+                  "used in version\n 0.0-9 of this package (and previously).",
+                  "See help(\"deldir\").\n\n")
+    message(mess)
     assign("deldirMsgeDone","xxx",envir=EnvSupp)
 }
 
@@ -95,8 +97,7 @@ if(haveZ) {
 }
 
 # If a data window is specified, get its corner coordinates
-# and truncate the data by this window.  Discard any constraint
-# segments either of whose endpoints fall outside this window.
+# and truncate the data by this window.
 if(!is.null(rw)) {
 	xmin <- rw[1]
 	xmax <- rw[2]
@@ -106,6 +107,7 @@ if(!is.null(rw)) {
 	if(length(drop)>0) {
 		x <- x[-drop]
 		y <- y[-drop]
+                if(haveZ) z <- z[-drop]
 		n <- length(x)
 	}
 }
@@ -131,24 +133,36 @@ if(!is.null(dpl)) {
 	dpts <- dumpts(x,y,dpl,rw)
 	x    <- dpts$x
 	y    <- dpts$y
+        ndm  <- length(x) - n
         if(haveZ) {
-		ndum <- length(x)-length(z)
 		if(!is.null(zdum)) {
-			if(length(zdum) != ndum)
+			if(length(zdum) != ndm)
 				stop("The z dummy points are of the wrong length.\n")
 		} else {
-			zdum <- rep(NA,ndum)
+			zdum <- rep(NA,ndm)
 		}
 		z <- c(z,zdum)
 	}
-}
+} else ndm <- 0
 
 # Eliminate duplicate points:
-iii <- !duplicatedxy(x,y)
-ndm <- sum(iii[-(1:n)])
-n   <- sum(iii[1:n])
-x   <- x[iii]
-y   <- y[iii]
+iii <- duplicatedxy(x,y)
+if(any(iii)) {
+    kkk <- !iii
+    ndm <- sum(kkk[-(1:n)])
+    n   <- sum(kkk[1:n])
+    if(haveZ) {
+        jjj <- duplicated(data.frame(x=x,y=y,z=z))
+        if(sum(jjj) < sum(iii)) {
+            whinge <- paste("There were different z \"weights\" corresponding to\n",
+                            "duplicated points.\n",sep="")
+            warning(whinge)
+        }
+        z   <- z[kkk]
+    }
+    x   <- x[kkk]
+    y   <- y[kkk]
+}
 
 # Make space for the total number of points (real and dummy) as
 # well as 4 ideal points and 4 extra corner points which get used

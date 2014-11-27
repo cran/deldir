@@ -105,7 +105,12 @@ returned list should be rounded.  Defaults to 6.
 }
 \item{z}{
 An optional vector of \dQuote{auxiliary} values or \dQuote{weights}
-associated with the respective points.  If this argument is left
+associated with the respective points. (\bold{NOTE:} These
+\dQuote{weights} are values associated with the points and hence with
+the tiles of the tessellation produced.  They \bold{DO NOT} affect
+the tessellation, i.e.  the tessellation produced is the same as
+is it would be if there were no weights.  The \code{deldir} package
+\bold{DOES NOT} do weighted tessellation.)  If this argument is left
 \code{NULL} then it is taken to be the third column of \code{x},
 if \code{x} is a data frame or to be the \code{z} component of
 \code{x} if \code{x} is a generic list.
