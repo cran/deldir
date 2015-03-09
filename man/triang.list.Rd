@@ -31,7 +31,7 @@ triang.list(object)
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \note{
    The code of this function was taken more-or-less directly

@@ -1,3 +1,59 @@
+ Version 0.1-9
+ Uploaded to CRAN 09/03/2015.
+
+ Removed period from end of title in the DESCRIPTION file.
+
+ Changed NAMESPACE file to "register" S3 methods.
+
+ Removed "require("polyclip") in plot.tile.list() and
+ change code to use:
+     if(requireNamespace("polyclip",quietly=TRUE)) ....
+ instead.
+
+ Changed URL from http://www.stat.auckland.ac.nz to
+ https://www.stat.auckland.ac.nz in help files and in
+ the DESCRIPTION file.
+
+ The 4 foregoing changes made at the behest of Uwe Ligges.
+
+ Done 09/03/2015.
+
+ Version 0.1-8
+ Uploaded to CRAN 09/03/2015.
+
+ Added a "[.tile.list" method so that tile lists can be
+ subsetted and still retain their class and "rw" attribute.
+ Prompted by an enquiry to R-help from Raphael Päbst, 15/01/2015.
+ Done 09/03/2015.
+
+ Added a component "ind.orig" to the object returned by deldir().
+ This consists of the indices of the points in the original set
+ of (x,y) coordinates provided to the function (before any duplicated
+ points were removed).  Prompted by an enquiry from Daniel
+ McCloy 29/12/14. He wanted the triangle descriptions produced
+ by triang.list() to show these original indices --- as the help
+ file claims they show --- rather than the indices in the set of
+ coordinates after the removal of duplicates.
+ Done 09/03/2015.
+
+ Changed triang.list() to make use of the "original coordinates"
+ referred to above.
+ Done 09/03/2015.
+
+ Revised plot.triang.list() so that it actually tries to plot
+ the (x,y) coordinates of the triangle vertices rather than trying
+ to use (ptNum,x) (!!!) as it previously did.  The problem was
+ caused by xy.coords(tri) using the first two columns of "tri" as
+ the (x,y) coordinates rather than the columns named "x" and "y".
+ I'm ***sure*** that plot.triang.list() *used* to work, i.e. that
+ the columns named "x" and "y" were extracted.  (If "tri" were a
+ list, then components named "x" and "y" would be extracted, and
+ since data frames are lists with components equal to the columns,
+ I would have expected this to work, but it doesn't.  Moreover the
+ help for xy.coords() clearly says that it doesn't.  Go figure.)
+ Prompted by an enquiry from Yinghui Liu, 09/03/2015.
+ Done 09/03/2015.
+
  Version 0.1-7
  Uploaded to CRAN 26/11/2014
 
@@ -5,18 +61,18 @@
  points, there was a mismatch of numbers between the z "weights"
  and the unique collection of points that deldir() works with.
  Fixed.  Thanks to Ron Peterson for drawing this bug to my attention.
- (26/11/2014)
+ Done 26/11/2014.
 
  Changed the procedure for issuing a message from the initial
  invocation of deldir() so that it no longer uses cat() but rather
  calls message().  Requested by Bob O'Hara.
- (21/08/2014)
+ Done 21/08/2014.
 
  Added some material to the description of the "z" argument to deldir()
  to make it clear that these weights do not affect the tessellation and
  that deldir does *not* do weighted tessellation.  (Prompted by an
  enquiry from Garry Gelade.)
- (26/08/2014)
+ Done 26/08/2014.
 
  Version 0.1-6
  Uploaded to CRAN 03/08/2014
@@ -36,15 +92,15 @@
  slope of the Delaunay edge.  The code now uses this slope.
 
  Thanks to Pierre Legendre for drawing this bug to my attention.
- (03/08/2014)
+ Done 03/08/2014.
 
  Slight adjustment to plot.tile.list.R (so that when verbose=TRUE
  and showpoints=TRUE, the points get plotted "at the right time"
  rather than when the *next* tile gets plotted).
- (18/05/2014)
+ Done 18/05/2014.
 
  Slight adjustment made to plot.tile.list.Rd
- (18/05/2014)
+ Done 18/05/2014.
 
  Version 0.1-5
 

@@ -162,7 +162,8 @@ if(any(iii)) {
     }
     x   <- x[kkk]
     y   <- y[kkk]
-}
+    ind.orig <- which(!iii)
+} else ind.orig <- seq_along(iii)
 
 # Make space for the total number of points (real and dummy) as
 # well as 4 ideal points and 4 extra corner points which get used
@@ -271,7 +272,8 @@ rw               <- round(rw,digits)
 
 # Aw' done!!!
 rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=n,
-             n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw)
+             n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw,
+             ind.orig=ind.orig)
 class(rslt) <- 'deldir'
 if(plotit) {
 	plot(rslt,...)

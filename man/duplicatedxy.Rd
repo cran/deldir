@@ -44,7 +44,7 @@ duplicatedxy(x, y)
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \note{
   The real work is done by the base \bold{R} function \code{\link{duplicated}()}.

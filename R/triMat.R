@@ -6,8 +6,8 @@ triMat <- function (object) {
 # the number of Delaunay triangles in the triangulation.
 # 
     stopifnot(inherits(object, "deldir"))
-    a <- object$delsgs[, 5]
-    b <- object$delsgs[, 6]
+    a  <- object$delsgs[, 5]
+    b  <- object$delsgs[, 6]
     tlist <- matrix(integer(0), 0, 3)
     for (i in seq(nrow(object$summary))) {
         jj <- c(b[a == i], a[b == i])

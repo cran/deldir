@@ -42,3 +42,9 @@ tile.list <- function (object)
     attr(rslt, "rw") <- object$rw
     rslt
 }
+"[.tile.list" <- function(x,i,...){
+    y <- unclass(x)[i]
+    class(y) <- "tile.list"
+    attr(y,"rw") <- attr(x,"rw")
+y
+}

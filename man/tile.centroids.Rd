@@ -25,7 +25,7 @@ URL http://en.wikipedia.org/wiki/Centroid
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 
 \seealso{ \code{\link{tile.list}()} }

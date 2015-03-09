@@ -6,14 +6,11 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
-    clip <- !is.null(clipp)
-    if(clip) {
-        require(polyclip)
-    }
-    n <- length(object)
-    rw <- attr(object, "rw")
-    rx <- rw[1:2]
-    ry <- rw[3:4]
+    clip  <- !is.null(clipp)
+    n     <- length(object)
+    rw    <- attr(object, "rw")
+    rx    <- rw[1:2]
+    ry    <- rw[3:4]
     x.pts <- unlist(lapply(object, function(w) {
         w$pt[1]
     }))
@@ -46,8 +43,12 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
     okn <- logical(n)
     for(i in 1:n) {
         if(clip) {
-            pgon <- polyclip(object[[i]],clipp)
-            ok   <- length(pgon) > 0
+            if(requireNamespace("polyclip",quietly=TRUE)) {
+                pgon <- polyclip::polyclip(object[[i]],clipp)
+                ok   <- length(pgon) > 0
+            } else {
+                stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
+            }
         } else {
             pgon <- list(object[[i]])
             ok <- TRUE

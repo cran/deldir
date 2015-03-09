@@ -27,7 +27,7 @@ tile edge intersects the boundary of the enclosing rectangle}
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \section{Acknowledgement}{
 The author expresses sincere thanks to Majid Yazdani who found and

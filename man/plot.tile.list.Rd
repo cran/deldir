@@ -134,7 +134,7 @@ the tiles associated with each point in the set being tessellated. }
 \value{NULL; side effect is a plot.}
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \seealso{ \code{\link{deldir}()}, \code{\link{tile.list}()}
           \code{\link{triang.list}()} \code{\link{plot.triang.list}()} }

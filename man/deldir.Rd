@@ -195,6 +195,11 @@ as formed by summing the \code{dir.area} column of \code{summary}.
 \item{rw}{
 the specification of the corners of the rectangular window enclosing
 the data, in the order (xmin, xmax, ymin, ymax).
+}
+\item{ind.orig}{A vector of the indices of the points (x,y) in the
+set of coordinates initially supplied to \code{deldir()} before
+duplicate points (if any) were removed.  These coordinates are used
+by \code{\link{triang.list}()}.
 }}
 \section{Remark:}{
 If ndx >= 2 and ndy >= 2, then the rectangular window IS the convex
@@ -288,7 +293,7 @@ associated with the dummy points are all taken to be missing values
 
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 
 \references{

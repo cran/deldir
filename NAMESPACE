@@ -1,3 +1,7 @@
 
 # Export everything
 exportPattern("*")
+S3method(plot,deldir)
+S3method(plot,tile.list)
+S3method(plot,triang.list)
+S3method("[",tile.list)

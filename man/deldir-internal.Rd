@@ -1,4 +1,5 @@
 \name{deldir-internal}
+\alias{[.tile.list}
 \alias{acw}
 \alias{dumpts}
 \alias{get.cnrind}
@@ -11,6 +12,7 @@
   Internal deldir functions.
 }
 \usage{
+\method{[}{tile.list}(x,i,\dots)
 acw(xxx)
 dumpts(x,y,dpl,rw)
 get.cnrind(x,y,rw)

@@ -7,7 +7,7 @@ if(!add) {
              xlab=xlab,ylab=ylab,main=main,asp=asp)
 }
 for(tri in x) {
-	polygon(tri,...)
+	polygon(as.list(tri),...)
 }
 if(showrect) do.call(rect,as.list(rw)[c(1,3,2,4)])
 invisible()

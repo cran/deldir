@@ -1,6 +1,7 @@
 triang.list <- function (object) 
 {
     stopifnot(inherits(object,"deldir"))
+    io <- object$ind.orig
     tlist <- triMat(object)
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
@@ -43,7 +44,7 @@ triang.list <- function (object)
 	)
 	if(tmp$okay) {
 		K <- K+1
-		rslt[[K]] <- data.frame(ptNum=tlist[i,],x=xtri[i,],y=ytri[i,])
+		rslt[[K]] <- data.frame(ptNum=io[tlist[i,]],x=xtri[i,],y=ytri[i,])
                 if(haveZ) {
                     rslt[[K]] <- cbind(rslt[[K]],z=ztri[i,])
                 }

@@ -39,7 +39,7 @@ tilePerim(object,inclbdry=TRUE)
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{http://www.stat.auckland.ac.nz/~rolf}
+  \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \note{
    Function added at the request of Haozhe Zhang.
