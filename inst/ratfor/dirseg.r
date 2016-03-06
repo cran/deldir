@@ -1,4 +1,4 @@
-subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
+subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,nerror)
 
 # Output the endpoints of the segments of boundaries of Dirichlet
 # tiles.  (Do it economically; each such segment once and only once.)
@@ -7,7 +7,7 @@ subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,nerror)
 implicit double precision(a-h,o-z)
 logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension dirsgs(8,ndir), rw(4), ind(npd)
+dimension dirsgs(10,ndir), rw(4)
 
 nerror = -1
 
@@ -56,10 +56,8 @@ do j = nstt,ntot {
 # adjacent.  If so, find the circumcentres of the triangles lying on each
 # side of the segment joining them.
 kseg = 0
-do i1 = 2,npd {
-	i = ind(i1)
-        do j1 = 1,i1-1 {
-		j = ind(j1)
+do i = 2,npd {
+        do j = 1,i-1 {
                 call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
 		if(nerror > 0) return
                 if(adjace) {
@@ -96,12 +94,12 @@ do i1 = 2,npd {
                             slope = 0.d0
                             rwu = .false.
                         }
-                        call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+                        call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab,nedgeab)
 			if(!intfnd) {
 				nerror = 16
 				return
 			}
-                        call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
+                        call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedgecd)
 			if(!intfnd) {
 				nerror = 16
 				return
@@ -125,12 +123,16 @@ do i1 = 2,npd {
 				dirsgs(2,kseg) = bi
 				dirsgs(3,kseg) = ci
 				dirsgs(4,kseg) = di
-				dirsgs(5,kseg) = i1
-				dirsgs(6,kseg) = j1
+				dirsgs(5,kseg) = i
+				dirsgs(6,kseg) = j
 				if(bptab) dirsgs(7,kseg) = 1.d0
 				else dirsgs(7,kseg) = 0.d0
 				if(bptcd) dirsgs(8,kseg) = 1.d0
 				else dirsgs(8,kseg) = 0.d0
+                                if(bptab) dirsgs(9,kseg) = -nedgeab
+                                else dirsgs(9,kseg) = k
+                                if(bptcd) dirsgs(10,kseg) = -nedgecd
+                                else dirsgs(10,kseg) = l
 			}
                 }
         }

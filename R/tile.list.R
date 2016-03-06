@@ -2,6 +2,7 @@ tile.list <- function (object)
 {
     if (!inherits(object, "deldir")) 
         stop("Argument \"object\" is not of class \"deldir\".\n")
+    ptp <- object$summary$pt.type
     rw <- object$rw
     x.crnrs <- rw[c(1, 2, 2, 1)]
     y.crnrs <- rw[c(3, 3, 4, 4)]
@@ -34,8 +35,12 @@ tile.list <- function (object)
         xx <- c(xx, x.crnrs[ii])
         yy <- c(yy, y.crnrs[ii])
         bp <- c(bp, rep(TRUE, sum(ii)))
-        rslt[[i]] <- acw(list(ptNum = i, pt = pt, x = unname(xx), 
-            y = unname(yy), bp = bp))
+        tmp <- list(ptNum = i, pt = pt, x = unname(xx), y = unname(yy), bp = bp)
+        if(length(ptp)) {
+            tmp <- append(tmp,values=ptp[i],after=2)
+            names(tmp)[3] <- "ptType"
+        }
+        rslt[[i]] <- acw(tmp)
         if(haveZ) rslt[[i]]["z"] <- z[i]
     }
     class(rslt) <- "tile.list"

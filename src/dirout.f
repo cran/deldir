@@ -1,18 +1,17 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,ind,eps,nerror)
+      subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension dirsum(npd,3), ind(npd), rw(4)
+      dimension dirsum(npd,3), rw(4)
       logical collin, intfnd, bptab, bptcd, rwu
       xmin = rw(1)
       xmax = rw(2)
       ymin = rw(3)
       ymax = rw(4)
-      do23000 i1 = 1,npd 
+      do23000 i = 1,npd 
       area = 0.
       nbpt = 0
       npt = 0
-      i = ind(i1)
       np = nadj(i,0)
       do23002 j1 = 1,np 
       j = nadj(i,j1)
@@ -56,9 +55,9 @@ C Output from Public domain Ratfor, version 1.0
       slope = 0.d0
       rwu = .false.
       endif
-      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab,nedge)
       if(intfnd)then
-      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
+      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedge)
       if(.not.intfnd)then
       nerror = 17
       return
@@ -79,9 +78,9 @@ C Output from Public domain Ratfor, version 1.0
       endif
 23002 continue
 23003 continue
-      dirsum(i1,1) = npt
-      dirsum(i1,2) = nbpt
-      dirsum(i1,3) = area
+      dirsum(i,1) = npt
+      dirsum(i,2) = nbpt
+      dirsum(i,3) = area
 23000 continue
 23001 continue
       return

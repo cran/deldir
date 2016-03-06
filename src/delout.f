@@ -1,11 +1,10 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine delout(delsum,nadj,madj,x,y,ntot,npd,ind,nerror)
+      subroutine delout(delsum,nadj,madj,x,y,ntot,npd,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension delsum(npd,4), ind(npd)
-      do23000 i1 = 1,npd 
+      dimension delsum(npd,4)
+      do23000 i = 1,npd 
       area = 0.
-      i = ind(i1)
       np = nadj(i,0)
       xi = x(i)
       yi = y(i)
@@ -40,10 +39,10 @@ C Output from Public domain Ratfor, version 1.0
       area = area+tmp/3.
 23008 continue
 23009 continue
-      delsum(i1,1) = xi
-      delsum(i1,2) = yi
-      delsum(i1,3) = npt
-      delsum(i1,4) = area
+      delsum(i,1) = xi
+      delsum(i,2) = yi
+      delsum(i,3) = npt
+      delsum(i,4) = area
 23000 continue
 23001 continue
       return

@@ -1,10 +1,10 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ind,ne
-     *rror)
+      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,nerror
+     *)
       implicit double precision(a-h,o-z)
       logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension dirsgs(8,ndir), rw(4), ind(npd)
+      dimension dirsgs(10,ndir), rw(4)
       nerror = -1
       xmin = rw(1)
       xmax = rw(2)
@@ -35,10 +35,8 @@ C Output from Public domain Ratfor, version 1.0
 23000 continue
 23001 continue
       kseg = 0
-      do23004 i1 = 2,npd 
-      i = ind(i1)
-      do23006 j1 = 1,i1-1 
-      j = ind(j1)
+      do23004 i = 2,npd 
+      do23006 j = 1,i-1 
       call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
       if(nerror .gt. 0)then
       return
@@ -79,12 +77,12 @@ C Output from Public domain Ratfor, version 1.0
       slope = 0.d0
       rwu = .false.
       endif
-      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+      call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab,nedgeab)
       if(.not.intfnd)then
       nerror = 16
       return
       endif
-      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
+      call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedgecd)
       if(.not.intfnd)then
       nerror = 16
       return
@@ -110,8 +108,8 @@ C Output from Public domain Ratfor, version 1.0
       dirsgs(2,kseg) = bi
       dirsgs(3,kseg) = ci
       dirsgs(4,kseg) = di
-      dirsgs(5,kseg) = i1
-      dirsgs(6,kseg) = j1
+      dirsgs(5,kseg) = i
+      dirsgs(6,kseg) = j
       if(bptab)then
       dirsgs(7,kseg) = 1.d0
       else
@@ -121,6 +119,16 @@ C Output from Public domain Ratfor, version 1.0
       dirsgs(8,kseg) = 1.d0
       else
       dirsgs(8,kseg) = 0.d0
+      endif
+      if(bptab)then
+      dirsgs(9,kseg) = -nedgeab
+      else
+      dirsgs(9,kseg) = k
+      endif
+      if(bptcd)then
+      dirsgs(10,kseg) = -nedgecd
+      else
+      dirsgs(10,kseg) = l
       endif
       endif
       endif

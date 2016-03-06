@@ -1,3 +1,72 @@
+ Version 0.1-12
+
+ Changed the "binsrt" procedure back to using Fortran/Ratfor
+ code but with the code being called directly by .Fortran(),
+ outside of the .Fortran() call to "master".
+
+ Adjusted the code in binsrt.r to calculate "rind" as well as
+ "ind".
+ Done 05/03/2016
+
+ Version 0.1-11
+ Never installed on CRAN
+
+ Changed deldir to do "binsrt" in R code rather than Fortran/Ratfor.
+ Thus we now get the Fortran code to work just with the re-ordered
+ data as if they were the original data, and then adjust the
+ order after the return from the Fortran call.
+ Done 04/03/2016.
+
+ Changed the code of deldir so that the data frame "dirsgs"
+ in the returned list has two new columns "thirdv1" and "thirdv2"
+ which along with "ind1" and "ind2" serve to provide unique
+ identifiers for the endpoints of the tile edges.
+ Done 04/03/2016.
+
+ The code of deldir now explicitly recognises if the argument "x"
+ is of class "ppp" (i.e. is a spatstat planar point pattern) and
+ if "x" is marked and the marks are a vector or a factor and if "z"
+ is NULL, then it sets z equal to the marks.
+ Done 04/03/2016.
+
+ Added function divchain() (generic), divchain.default() and
+ divchain.deldir() to calculate the dividing chain for a tesslation
+ that has been provided with a vector of categorical "weights".
+ Done 04/03/2016.
+
+ Also added a plot method plot.divchain() to plot dividing chains.
+ Done 04/03/2016.
+
+ Fixed the "rw" argument to accept a couple of forms other than
+ c(xmin,xmax,ymin,ymax).  Explicitly a spatstat "owin" object and
+ a matrix such as determines a bounding box for a set of polygons
+ in the "sp" package. (Suggestion of Michael Chirico, 23,24/09/2015.)
+ Done 04/03/2016.
+
+ Version 0.1-10
+ Never installed on CRAN
+
+ To do: Fix the "rw" argument to accept forms other than
+ c(xmin,xmax,ymin,ymax).  (Suggestion of Michael Chirico,
+ 23,24/09/2015.)
+
+ Amended the examples in deldir.Rd to alleviate a possible point
+ of confusion pointed out by Samuel Ackerman.
+ Done 01/08/2015.
+
+ Fixed some typos in deldir.Rd, duplicated.Rd, plot.tile.list.Rd
+ and plot.triang.list.Rd.
+ Done 09/03/2015.
+
+ Added "point type" ("data" or "dummy") information to the lists
+ produced by tile.list() and triang.list().  (This information is
+ present only if there are dummy points specified in the call to
+ deldir().
+ Done 10/03/2015.
+
+ Fixed a few more glitches in the documentation.
+ Done 10/03/2015.
+
  Version 0.1-9
  Uploaded to CRAN 09/03/2015.
 

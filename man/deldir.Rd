@@ -20,31 +20,44 @@ deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
 }
 \arguments{
 \item{x,y}{
-The coordinates of the point set being triangulated. These
-can be given by two arguments x and y which are vectors or by a
-single argument x which is either a data frame or a generic list.
+These arguments specify the coordinates of the point set being
+triangulated or tessellated. These can be given by two separate
+arguments x and y which are vectors or by a single argument x
+which is either a data frame or a generic list, possibly one of
+class \code{ppp}.  (See package \code{spatstat}.)
 
 If \code{x} is a data frame then the \code{x} coordinates of the
-points to be triangulated are taken to be the column of this data
-frame which is named \dQuote{x} if there is one, else the first
-column of the data frame which is not named either \dQuote{y} or
-\dQuote{z}. The \code{y} coordinates are taken to be the column of
-this data frame which is named \dQuote{y} if there is one, else the
-first column of the data frame which is not named either \dQuote{x}
-or \dQuote{x}.
+points to be triangulated or tessellated are taken to be the column
+of this data frame which is named \dQuote{x} if there is one,
+else the first column of the data frame which is not named either
+\dQuote{y} or \dQuote{z}. The \code{y} coordinates are taken to be
+the column of this data frame which is named \dQuote{y} if there is
+one.  If there is no column named \dQuote{y} but there are columns
+named \dQuote{x} and \dQuote{z} then the \code{y} coordinates
+are taken to be the first \dQuote{other} column.  If there no
+columns named either \dQuote{x} or \dQuote{y}, then the \code{x}
+coordinates are taken to be the first column not named \dQuote{z}
+and the \code{y} coordinates are taken to be the \emph{second}
+column not named \dQuote{z}.
 
 If there is a column named \dQuote{z} and if the argument \code{z}
-is NULL, then this the column named \dQuote{z} is taken to be the
-value of \code{z}.
+(see below) is NULL, then this the column named \dQuote{z} is taken
+to be the value of \code{z}.
 
 If \code{x} is a list (but not a data frame) then it must have
 components named \code{x} and \code{y}, and possibly a component
 named \code{z}.  The \code{x} and \code{y} components give the
-\code{x} and \code{y} coordinates respectively of the points to be
-triangulated, and the component \code{z} if present (and if argument
-\code{z} is \code{NULL}) is taken to be the value of \code{z}
-(i.e. of a vector of \dQuote{auxiliary} values or \dQuote{weights}
-associated with the respective points).
+\code{x} and \code{y} coordinates respectively of the points to
+be triangulated or tessellated. If \code{x} is \emph{not} of class
+\code{ppp}, if it has a component \code{z} and if argument \code{z}
+is \code{NULL}, then the \code{z} argument is set equal to this
+component \code{z}.  If \code{x} \emph{is} of class \dQuote{ppp}, if
+the argument \code{z} is \code{NULL}, if \code{x} is \dQuote{marked}
+(see package \code{spatstat}) and if the marks of \code{x} are a
+vector or a factor (as opposed to a data frame) then the \code{z}
+argument is set equal to these marks.  In this case \code{x}
+should \emph{not} have a component \code{z}, and at any rate such
+a component would be ignored.
 }
 \item{dpl}{
 A list describing the structure of the dummy points to be added to
@@ -59,10 +72,10 @@ grid.
 \item \code{nrad}: The number of radii or \dQuote{spokes}, emanating from
 each data point, along which dummy points are to be added.
 \item \code{nper}: The number of dummy points per spoke.
-\item \code{fctr}: A factor determining the length of each spoke;
-each spoke is of length equal to fctr times the mean nearest
-neighbour distance of the data.  (This distance is calculated by
-the auxiliary function mnnd().)
+\item \code{fctr}: A numeric \dQuote{multiplicative factor}
+determining the length of each spoke; each spoke is of length equal
+to fctr times the mean nearest neighbour distance of the data.
+(This distance is calculated by the auxiliary function mnnd().)
 \item \code{x}: A vector of x-coordinates of \dQuote{ad hoc} dummy points
 \item \code{y}: A vector of the corresponding y-coordinates of
 \dQuote{ad hoc} dummy points
@@ -86,7 +99,7 @@ of eps upward or downward.
 Logical argument; if \code{TRUE} (the default) the data (including dummy
 points) are sorted into a sequence of \dQuote{bins} prior to triangulation;
 this makes the algorithm slightly more efficient.  Normally one would
-set sort equal to \code{FALSE} only if one wished to observe some of the
+set \code{sort} equal to \code{FALSE} only if one wished to observe some of the
 fine detail of the way in which adding a point to a data set affected
 the triangulation, and therefore wished to make sure that the point
 in question was added last.  Essentially this argument would get used
@@ -106,14 +119,20 @@ returned list should be rounded.  Defaults to 6.
 \item{z}{
 An optional vector of \dQuote{auxiliary} values or \dQuote{weights}
 associated with the respective points. (\bold{NOTE:} These
-\dQuote{weights} are values associated with the points and hence with
-the tiles of the tessellation produced.  They \bold{DO NOT} affect
-the tessellation, i.e.  the tessellation produced is the same as
-is it would be if there were no weights.  The \code{deldir} package
-\bold{DOES NOT} do weighted tessellation.)  If this argument is left
-\code{NULL} then it is taken to be the third column of \code{x},
-if \code{x} is a data frame or to be the \code{z} component of
-\code{x} if \code{x} is a generic list.
+\dQuote{weights} are values associated with the points and hence
+with the tiles of the tessellation produced.  They \bold{DO NOT}
+affect the tessellation, i.e.  the tessellation produced is the
+same as is it would be if there were no weights.  The \code{deldir}
+package \bold{DOES NOT} do weighted tessellation.  The so-called
+weights in fact need not be numeric.)
+
+If \code{z} is left \code{NULL} then it is taken to be the third
+column of \code{x}, if \code{x} is a data frame or to be the \code{z}
+component of \code{x} if \code{x} is a generic list. If \code{z}
+is left \code{NULL} and if \code{x} is of class \dQuote{ppp} and is
+\dQuote{marked} (see package \code{spatstat}) and if in addition
+the marks are atomic (i.e. \emph{not} a data frame) then \code{z}
+is taken to be the marks of \code{x}.
 }
 \item{zdum}{
 Values of \code{z} to be associated with any dummy points that are
@@ -125,48 +144,83 @@ changes from previous versions of \code{deldir}) should be
 suppressed.
 }
 \item{...}{
-Auxiliary arguments add, wlines, wpoints, number, nex, col, lty,
-pch, xlim, and ylim (and possibly other plotting parameters) may be
-passed to plot.deldir through \code{\dots} if plotit=\code{TRUE}.
+Auxiliary arguments \code{add}, \code{wlines}, \code{wpoints},
+\code{number}, \code{nex}, \code{col}, \code{lty}, \code{pch},
+\code{xlim}, and \code{ylim} (and possibly other plotting parameters)
+may be passed to \code{\link{plot.deldir}()} through \code{\dots}
+if \code{plotit=TRUE}.
 }
 }
 \value{
-A list (of class \code{deldir}), invisible if plotit=\code{TRUE}, with components:
+A list (of class \code{deldir}), invisible if \code{plotit=TRUE}, with components:
 
 \item{delsgs}{
-a data frame with 6 columns.  The first 4 entries of each row are the
+A data frame with 6 columns.  The first 4 entries of each row are the
 coordinates of the points joined by an edge of a Delaunay triangle,
-in the order (x1,y1,x2,y2).  The last two entries are the indices
+in the order \code{(x1,y1,x2,y2)}.  The last two entries are the indices
 of the two points which are joined.
 }
 \item{dirsgs}{
-a data frame with 8 columns.  The first 4 entries of each row are
-the coordinates of the endpoints of one the edges of a Dirichlet
-tile, in the order (x1,y1,x2,y2).  The fifth and sixth entries
+A data frame with 10 columns.  The first 4 entries of each
+row are the coordinates of the endpoints of one the edges of a
+Dirichlet tile, in the order \code{(x1,y1,x2,y2)}.  The fifth and
+sixth entries, in the columns named \code{ind1} and \code{ind2},
 are the indices of the two points, in the set being triangulated,
-which are separated by that edge. The seventh and eighth entries are
-logical values.  The seventh indicates whether the first endpoint
+which are separated by that edge. The seventh and eighth entries,
+in the columns named \code{bp1} and \code{bp2} are logical values.
+The entry in column \code{bp1} indicates whether the first endpoint
 of the corresponding edge of a Dirichlet tile is a boundary point
 (a point on the boundary of the rectangular window).  Likewise for
-the eighth entry and the second endpoint of the edge.
+the entry in column \code{bp2} and the second endpoint of the edge.
+
+The nineth and tenth entries, in columns named \code{thirdv1} and
+\code{thirdv2} are the indices of the third vertex of the Delaunay
+triangle whose circumcentre constitutes the corresponding vertex of
+the edge under consideration.  (The other two vertices are indexed
+by the entries of columns \code{ind1} and \code{ind2}.)
+
+The entries of columns \code{thirdv1} and \code{thirdv2} may (also)
+take the values $-1, -2, -3$, and $-4$.  This will be the case
+if the circumcentre in question lies outside of the rectangular
+window \code{rw}.  In these circumstances the corresponding endpoint
+of the tile edge is the intersection of the line joining the two
+circumcentres with the boundary of \code{rw}, and the numeric
+value of the entry of column \dQuote{vi3} indicates which side.
+The numbering follows the convention for numbering the sides of a
+plot region in \code{R}: 1 for the bottom side, 2 for the left side,
+3 for the top side and 4 for the right side.
+
+Note that the entry in column \code{thirdv1} will be negative if and
+only if the corresponding entry in column \code{bp1} is \code{TRUE}.
+Similarly for columns \code{thirdv2} and \code{bp2}.
 }
+
 \item{summary}{
-a data frame with 9 or 10 columns and \code{n.data + n.dum}rows
+a data frame with 9, 10 or 11 columns and \code{n.data + n.dum} rows
 (see below).  The rows correspond to the points in the set being
-triangulated.  The column names are \code{x} (the x-coordinate of
-the point), \code{y} (the y-coordinate), \code{z} (the auxiliary
-values or weights if these were specified), \code{n.tri} (the number
-of Delaunay triangles emanating from the point), \code{del.area}
-(1/3 of the total area of all the Delaunay triangles emanating
-from the point), \code{del.wts} (the corresponding entry of
-the \code{del.area} column divided by the sum of this column);
-\code{n.tside} (the number of sides --- within the rectangular
-window --- of the Dirichlet tile surrounding the point), \code{nbpt}
-(the number of points in which the Dirichlet tile intersects the
-boundary of the rectangular window), \code{dir.area} (the area
-of the Dirichlet tile surrounding the point), and \code{dir.wts}
-(the corresponding entry of the \code{dir.area} column divided by
-the sum of this column).
+triangulated.  The columns are:
+\itemize{
+\item \code{x} (the \eqn{x}-coordinate of the point)
+\item \code{y} (the \eqn{y}-coordinate of the point)
+\item \code{pt.type} (a character vector with entries \dQuote{data}
+and \dQuote{dummy}; present only if \code{n.dum > 0})
+\item \code{z} (the auxiliary values or weights; present only if
+these were specified)
+\item \code{n.tri} (the number of Delaunay triangles emanating from
+the point)
+\item \code{del.area} (1/3 of the total area of all the Delaunay
+triangles emanating from the point)
+\item \code{del.wts} (the corresponding entry of the \code{del.area}
+column divided by the sum of this column)
+\item \code{n.tside} (the number of sides --- within the rectangular
+window --- of the Dirichlet tile surrounding the point)
+\item \code{nbpt} (the number of points in which the Dirichlet tile
+intersects the boundary of the rectangular window)
+\item \code{dir.area} (the area of the Dirichlet tile surrounding
+the point)
+\item \code{dir.wts} (the corresponding entry of the \code{dir.area}
+column divided by the sum of this column).
+}
 
 Note that the factor of 1/3 associated with the del.area column
 arises because each triangle occurs three times --- once for
@@ -197,9 +251,9 @@ the specification of the corners of the rectangular window enclosing
 the data, in the order (xmin, xmax, ymin, ymax).
 }
 \item{ind.orig}{A vector of the indices of the points (x,y) in the
-set of coordinates initially supplied to \code{deldir()} before
-duplicate points (if any) were removed.  These coordinates are used
-by \code{\link{triang.list}()}.
+set of coordinates initially supplied (as data points or as dummy
+points) to \code{deldir()} before duplicate points (if any) were
+removed.  These indices are used by \code{\link{triang.list}()}.
 }}
 \section{Remark:}{
 If ndx >= 2 and ndy >= 2, then the rectangular window IS the convex
@@ -207,8 +261,8 @@ hull, and so the values of del.area and dir.area (if the latter is
 not \code{NULL}) are identical.
 }
 \section{Side Effects}{
-If plotit==\code{TRUE} a plot of the triangulation and/or tessellation is produced
-or added to an existing plot.
+If \code{plotit=TRUE} a plot of the triangulation and/or tessellation
+is produced or added to an existing plot.
 }
 \details{
 This package is a (straightforward) adaptation of the Splus library
@@ -224,9 +278,9 @@ Further revisions were made December 1996. The author gratefully
 acknowledges the contributions, assistance, and guidance of Mark
 Berman, of D.M.S., CSIRO, in collaboration with whom this project
 was originally undertaken.  The author also acknowledges much useful
-advice from Adrian Baddeley, formerly of D.M.S., CSIRO (now of CMIS,
-CSIRO and Adjunct Professor of Statistics at the University of
-Western Australia).  Daryl Tingley of the Department of Mathematics
+advice from Adrian Baddeley, formerly of D.M.S., CSIRO (now
+Professor of Statistics at Curtin University).
+Daryl Tingley of the Department of Mathematics
 and Statistics, University of New Brunswick provided some helpful
 insight.  Special thanks are extended to Alan Johnson, of the
 Alaska Fisheries Science Centre, who supplied two data sets which
@@ -293,7 +347,7 @@ associated with the dummy points are all taken to be missing values
 
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{https://www.stat.auckland.ac.nz/~rolf}
+% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 
 \references{
@@ -304,25 +358,31 @@ Vol. 9, No. 3, 1980, pp. 219 -- 242.
 Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 }
 \seealso{
-  \code{\link{plot.deldir}()} \code{\link{tile.list}()} \code{\link{triang.list}()}
+  \code{\link{plot.deldir}()}, \code{\link{tile.list}()}, \code{\link{triang.list}()}
 }
 \examples{
-# Puts dummy points at the corners of the rectangular
-# window, i.e. at (0,0), (10,0), (10,10), and (0,10)
-# An "alerting note" is printed.
 x    <- c(2.3,3.0,7.0,1.0,3.0,8.0)
 y    <- c(2.3,3.0,2.0,5.0,8.0,9.0)
-tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10))
+# An "alerting note" is printed.; let deldir() choose the
+# rectangular window.
+dxy1 <- deldir(x,y)
 
-# Plots the triangulation which was created (but not the tesselation).
+# User chooses the rectangular window.
+dxy2 <- deldir(x,y,rw=c(0,10,0,10))
+
+# Put dummy points at the corners of the rectangular
+# window, i.e. at (0,0), (10,0), (10,10), and (0,10)
+dxy3 <- deldir(x,y,dpl=list(ndx=2,ndy=2),rw=c(0,10,0,10))
+
+# Plot the triangulation created (but not the tesselation).
 \dontrun{
-tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),plot=TRUE,wl='tr')
+dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl='tr')
 }
 
 # Auxiliary values associated with points; 4 dummy points to be
 # added so 4 dummy "z-values" provided.
-z    <- sample(1:100,6)
-zdum <- rep(-99,4)
-tv   <- deldir(x,y,list(ndx=2,ndy=2),c(0,10,0,10),z=z,zdum=zdum)
+z    <- c(1.63,0.79,2.84,1.56,0.22,1.07)
+zdum <- rep(42,4)
+dxy4 <- deldir(x,y,dpl=list(ndx=2,ndy=2),rw=c(0,10,0,10),z=z,zdum=zdum)
 }
 \keyword{spatial}

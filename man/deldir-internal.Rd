@@ -1,6 +1,8 @@
 \name{deldir-internal}
 \alias{[.tile.list}
+\alias{[.triang.list}
 \alias{acw}
+\alias{binsrt}
 \alias{dumpts}
 \alias{get.cnrind}
 \alias{getCol}
@@ -13,8 +15,10 @@
 }
 \usage{
 \method{[}{tile.list}(x,i,\dots)
+\method{[}{triang.list}(x,i,\dots)
 acw(xxx)
 dumpts(x,y,dpl,rw)
+binsrt(x,y,rw)
 get.cnrind(x,y,rw)
 getCol(x,warn=FALSE)
 mid.in(x,y,rx,ry)

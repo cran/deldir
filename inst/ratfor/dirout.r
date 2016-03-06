@@ -1,4 +1,4 @@
-subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,ind,eps,nerror)
+subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps,nerror)
 
 # Output the description of the Dirichlet tile centred at point
 # i for i = 1, ..., npd.  Do this in the original order of the
@@ -7,7 +7,7 @@ subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,ind,eps,nerror)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension dirsum(npd,3), ind(npd), rw(4)
+dimension dirsum(npd,3), rw(4)
 logical collin, intfnd, bptab, bptcd, rwu
 
 # Note that at this point some Delaunay neighbours may be
@@ -25,13 +25,12 @@ xmax = rw(2)
 ymin = rw(3)
 ymax = rw(4)
 
-do i1 = 1,npd {
+do i = 1,npd {
         area = 0. # Initialize the area of the ith tile to zero.
 	nbpt = 0  # Initialize the number of boundary points of
                   # the ith tile to zero.
         npt = 0   # Initialize the number of tile boundaries to zero.
 
-        i = ind(i1)
         np = nadj(i,0)
 
         # Output the point number, its coordinates, and the number of
@@ -86,9 +85,9 @@ do i1 = 1,npd {
                     slope = 0.d0
                     rwu = .false.
                 }
-                call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab)
+                call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab,nedge)
                 if(intfnd) {
-                        call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd)
+                        call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedge)
                 	if(!intfnd) {
 				nerror = 17
 				return
@@ -107,9 +106,9 @@ do i1 = 1,npd {
 			}
 		}
 	}
-        dirsum(i1,1) = npt
-        dirsum(i1,2) = nbpt
-        dirsum(i1,3) = area
+        dirsum(i,1) = npt
+        dirsum(i,2) = nbpt
+        dirsum(i,3) = area
 }
 
 return

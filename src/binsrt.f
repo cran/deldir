@@ -1,7 +1,8 @@
 C Output from Public domain Ratfor, version 1.0
-      subroutine binsrt(x,y,ntot,rw,npd,ind,tx,ty,ilst,nerror)
+      subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst,nerror)
       implicit double precision(a-h,o-z)
-      dimension x(-3:ntot), y(-3:ntot), tx(npd), ty(npd)
+      dimension x(npd), y(npd), tx(npd), ty(npd)
+      integer rind(npd)
       dimension ind(npd), ilst(npd)
       dimension rw(4)
       nerror = -1
@@ -41,6 +42,7 @@ C Output from Public domain Ratfor, version 1.0
       if(ix.eq.kx.and.jy.eq.ky)then
       k = k+1
       ind(i) = k
+      rind(k) = i
       tx(k) = xt
       ty(k) = yt
       ilst(i) = 1

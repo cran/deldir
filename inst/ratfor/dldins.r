@@ -1,4 +1,4 @@
-subroutine dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bpt)
+subroutine dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bpt,nedge)
 
 # Get a point ***inside*** the rectangular window on the ray from
 # one circumcentre to the next one.  I.e. if the `next one' is
@@ -40,6 +40,7 @@ if(xmin<=a&a<=xmax&ymin<=b&b<=ymax) {
         ai = a
         bi = b
 	bpt = .false.
+        nedge = 0
         return
 }
 
@@ -53,11 +54,13 @@ if(!rwu) {
     if(b < ymin) {
             ai = a
             bi = ymin
+            nedge = 1
             if(xmin<=ai&ai<=xmax) return
     }
     if(b > ymax) {
             ai = a
             bi = ymax
+            nedge = 3
             if(xmin<=ai&ai<=xmax) return
     }
     intfnd = .false.
@@ -68,6 +71,7 @@ if(!rwu) {
 if(a<xmin) {
         ai = xmin
         bi = b + slope*(ai-a)
+        nedge = 2
         if(ymin<=bi&bi<=ymax) return
 }
 
@@ -75,6 +79,7 @@ if(a<xmin) {
 if(b<ymin) {
         bi = ymin
         ai = a + (bi-b)/slope
+        nedge = 1
         if(xmin<=ai&ai<=xmax) return
 }
 
@@ -82,6 +87,7 @@ if(b<ymin) {
 if(a>xmax) {
         ai = xmax
         bi = b + slope*(ai-a)
+        nedge = 4
         if(ymin<=bi&bi<=ymax) return
 }
 
@@ -89,6 +95,7 @@ if(a>xmax) {
 if(b>ymax) {
         bi = ymax
         ai = a + (bi-b)/slope
+        nedge = 3
         if(xmin<=ai&ai<=xmax) return
 }
 

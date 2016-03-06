@@ -67,24 +67,39 @@ if(is.data.frame(x)) {
             x <- x[,-j]
         }
         j <- match(c("x","y"),names(x))
-        if(all(is.na(j))) j <- 1:2
-        if(is.na(j[2])) j[2] <- if(j[1]==1) 2 else 1
-        if(is.na(j[1])) j[1] <- if(j[2]==1) 2 else 1
+        if(all(is.na(j))){
+            j <- 1:2
+        } else {
+            if(is.na(j[2])) j[2] <- if(j[1]==1) 2 else 1
+            if(is.na(j[1])) j[1] <- if(j[2]==1) 2 else 1
+        }
         y <- x[,j[2]]
         x <- x[,j[1]]
+} else if(inherits(x,"ppp")) {
+
+# If the first argument is an object of class "ppp", extract the x and y
+# coordinates from this object. If this object is "marked" and
+# if the marks are a vector or a factor and if z is NULL, then set
+# z equal to the marks.
+    if(is.null(z)) {
+        marx <- x$marks
+        ok   <- !is.null(marx) && (is.vector(marx) | is.factor(marx))
+        if(ok) z <- x$marks
+    }
+    y <- x$y
+    x <- x$x
+} else if(is.list(x)) {
 
 # If the first argument is a list (but not a data frame) extract
 # components x and y (and possibly z).
-} else if(is.list(x)) {
-	if(all(!is.na(match(c('x','y'),names(x))))) {
-		y <- x$y
-                z <- if(is.null(z)) x$z else z
-		x <- x$x
-	}
-	else {
-		stop("Argument \"x\" is a list but lacks x and/or y components.\n")
-		return()
-	}
+    if(all(!is.na(match(c('x','y'),names(x))))) {
+       	y <- x$y
+        z <- if(is.null(z) && !inherits(x,"ppp")) x$z else z
+        x <- x$x
+    }
+    else {
+        stop("Argument \"x\" is a list but lacks x and/or y components.\n")
+    }
 }
 haveZ <- !is.null(z)
 
@@ -96,7 +111,25 @@ if(haveZ) {
 		stop("Length of \"z\" does not match lengths of \"x\" and \"y\".\n")
 }
 
-# If a data window is specified, get its corner coordinates
+# If a data window is specified, turn it into a 4-tuple (if necessary).
+# Otherwise, if x is of class "ppp", form the data window as the bounding
+# box of the window of that
+if(!is.null(rw)) {
+   if(inherits(rw,"owin")) {
+       xr <- rw$window$xrange
+       yr <- rw$window$yrange
+       rw <- c(xr,yr)
+   }
+
+# Apparently --- according to Michael Chirico 24/09/2015 --- the
+# following will accommodate the bounding box of a collection of
+# polygons as structured in the "sp" package.
+   if(is.matrix(rw)) rw <- as.vector(t(rw))
+} else if(inherits(x,"ppp")) {
+   rw <- c(x$window$xrange, x$window$yrange)
+}
+
+# If a data window now exists, get its corner coordinates
 # and truncate the data by this window.
 if(!is.null(rw)) {
 	xmin <- rw[1]
@@ -107,13 +140,19 @@ if(!is.null(rw)) {
 	if(length(drop)>0) {
 		x <- x[-drop]
 		y <- y[-drop]
-                if(haveZ) z <- z[-drop]
 		n <- length(x)
+        if(n == 0 & is.null(dpl)) {
+            whinge <- paste("There are no points inside the given rectangular window\n",
+                            "and no dummy points are specified.  Thus there are\n",
+                            "no points to triangulate/tessellate.\n")
+            stop(whinge)
+        }
+                if(haveZ) z <- z[-drop]
 	}
 }
 
-# If corners of the window are not specified, form them from
-# the minimum and maximum of the data +/- 10%:
+# If the rectangular window is not specified, form its corners
+# from the minimum and maximum of the data +/- 10%:
 else {
 	xmin <- min(x)
 	xmax <- max(x)
@@ -165,12 +204,38 @@ if(any(iii)) {
     ind.orig <- which(!iii)
 } else ind.orig <- seq_along(iii)
 
+# Toadal length of coordinate vectors ("n plus dummy").
+npd  <- n + ndm
+
+# Sort the coordinates into "bins".  There are approximately
+# sqrt(npd) such bins.  The vector "ind" (index) keeps track of the
+# re-ordering; if ind[i] == j then i is the index of a point in
+# the original sequence of points and j is the index of the same
+# point in the bin sorted sequence.  The vector "rind" (reverse
+# index) does the opposite; if rind[i] == j then i is the position
+# of a point in the bin sorted sequence and j is its position in
+# the original sequence.  Thus ind[rind[k]] = k and rind[ind[k]] = k
+# for all k.  So xs[ind] (where xs is the bin sorted sequence of
+# x's) is equal to x, he original sequence of x's.  Likewise ys[ind]
+# (where ys is the bin sorted sequence of y's) is equal to y, the
+# original sequence of y's. Conversely x[rind] = xs and y[rind] = ys.
+#
+if(sort) {
+    xy   <- binsrt(x,y,rw)
+    x    <- xy$x
+    y    <- xy$y
+    ind  <- xy$ind
+    rind <- xy$rind
+} else {
+    ind  <- 1:npd
+    rind <- 1:npd
+}
+
 # Make space for the total number of points (real and dummy) as
 # well as 4 ideal points and 4 extra corner points which get used
 # (only) by subroutines dirseg and dirout in the ``output'' process
 # (returning a description of the triangulation after it has been
 # calculated):
-npd  <- n + ndm
 ntot <- npd + 4               # ntot includes the 4 ideal points but
                               # but NOT the 4 extra corners
 x <- c(rep(0,4),x,rep(0,4))
@@ -186,7 +251,7 @@ tadj <- (madj+1)*(ntot+4)
 ndel <- madj*(madj+1)/2
 tdel <- 6*ndel
 ndir <- ndel
-tdir <- 8*ndir
+tdir <- 10*ndir
 
 # Call the master subroutine to do the work:
 repeat {
@@ -194,16 +259,13 @@ repeat {
 			'master',
 			x=as.double(x),
 			y=as.double(y),
-			sort=as.logical(sort),
 			rw=as.double(rw),
 			npd=as.integer(npd),
 			ntot=as.integer(ntot),
 			nadj=integer(tadj),
 			madj=as.integer(madj),
-			ind=integer(npd),
 			tx=double(npd),
 			ty=double(npd),
-			ilist=integer(npd),
 			eps=as.double(eps),
 			delsgs=double(tdel),
 			ndel=as.integer(ndel),
@@ -255,20 +317,45 @@ del.area         <- sum(delsum[,4])
 delsum           <- round(cbind(delsum,delsum[,4]/del.area),digits)
 del.area         <- round(del.area,digits)
 ndir             <- tmp$ndir
-dirsgs           <- round(t(as.matrix(matrix(tmp$dirsgs,nrow=8)[,1:ndir])),digits)
+dirsgs           <- round(t(as.matrix(matrix(tmp$dirsgs,nrow=10)[,1:ndir])),digits)
 dirsgs           <- as.data.frame(dirsgs)
 dirsum           <- matrix(tmp$dirsum,ncol=3)
 dir.area         <- sum(dirsum[,3])
 dirsum           <- round(cbind(dirsum,dirsum[,3]/dir.area),digits)
 dir.area         <- round(dir.area,digits)
-names(dirsgs)    <- c('x1','y1','x2','y2','ind1','ind2','bp1','bp2')
+names(dirsgs)    <- c('x1','y1','x2','y2','ind1','ind2','bp1','bp2',
+                      'thirdv1','thirdv2')
 mode(dirsgs$bp1) <- 'logical'
 mode(dirsgs$bp2) <- 'logical'
 allsum           <- as.data.frame(cbind(delsum,dirsum))
 names(allsum)    <- c('x','y','n.tri','del.area','del.wts',
                               'n.tside','nbpt','dir.area','dir.wts')
-if(haveZ) allsum <- cbind(allsum[,1:2],z=z,allsum[,3:9])
-rw               <- round(rw,digits)
+
+# The foregoing results are in terms of the indices of the bin sorted coordinates.
+# Put things in terms of the indices of the original coordinates.
+delsgs$ind1 <- rind[delsgs$ind1]
+delsgs$ind2 <- rind[delsgs$ind2]
+dirsgs$ind1 <- rind[dirsgs$ind1]
+dirsgs$ind2 <- rind[dirsgs$ind2]
+dirsgs$thirdv1  <- with(dirsgs,ifelse(thirdv1<0,thirdv1,rind[abs(thirdv1)]))
+dirsgs$thirdv2  <- with(dirsgs,ifelse(thirdv2<0,thirdv2,rind[abs(thirdv2)]))
+allsum          <- allsum[ind,]
+
+# Put in an indicator of point type if there were any
+# dummy points added.
+i1 <- if(ndm > 0) {
+    data.frame(pt.type=c(rep("data",n),rep("dummy",ndm)))
+} else {
+    as.data.frame(matrix(nrow=n,ncol=0))
+}
+i2 <- if(haveZ) {
+    data.frame(z=z)
+} else {
+    as.data.frame(matrix(nrow=n+ndm,ncol=0))
+}
+
+allsum <- cbind(allsum[,1:2],i1,i2,allsum[,3:9])
+rw     <- round(rw,digits)
 
 # Aw' done!!!
 rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=n,

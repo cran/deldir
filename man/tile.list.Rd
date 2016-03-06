@@ -17,17 +17,23 @@ being tesselated.  Each entry is in turn a list with
 components
 
 \item{pt}{The coordinates of the point whose tile is being described.}
+\item{ptType}{The \dQuote{type} of the \code{pt}, either \dQuote{data}
+or \dQuote{dummy}.  Present only if any dummy points were specified
+in the call to \code{deldir()}.}
 \item{x}{The \code{x} coordinates of the vertices of the tile, in
 anticlockwise order.}
 \item{y}{The \code{y} coordinates of the vertices of the tile, in
 anticlockwise order.}
 \item{bp}{Vector of logicals indicating whether the tile vertex is a
 ``real'' vertex, or a \emph{boundary point}, i.e. a point where the
-tile edge intersects the boundary of the enclosing rectangle}
+tile edge intersects the boundary of the enclosing rectangle.}
+\item{z}{The \dQuote{auxiliary value} or \dQuote{weight} associated
+with the \code{pt}; present only if such values were supplied in
+the call to \code{deldir()}.}
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{https://www.stat.auckland.ac.nz/~rolf}
+% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \section{Acknowledgement}{
 The author expresses sincere thanks to Majid Yazdani who found and

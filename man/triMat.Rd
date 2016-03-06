@@ -36,7 +36,7 @@ triMat(object)
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{https://www.stat.auckland.ac.nz/~rolf}
+% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \seealso{ \code{\link{deldir}()}
           \code{\link{triang.list}()}

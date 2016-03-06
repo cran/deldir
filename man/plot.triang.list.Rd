@@ -56,11 +56,11 @@ a Delaunay triangulation of a set of points in the plane.}
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{https://www.stat.auckland.ac.nz/~rolf}
+% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 
-\seealso{ \code{\link{deldir}()} \code{\link{plot.triang.list}()}
-          \code{\link{tile.list}()} \code{\link{plot.tile.list}()} }
+\seealso{ \code{\link{deldir}()}, \code{\link{plot.triang.list}()},
+          \code{\link{tile.list}()}, \code{\link{plot.tile.list}()} }
 \examples{
 set.seed(42)
 x <- runif(20)

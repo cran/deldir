@@ -28,23 +28,25 @@ duplicatedxy(x, y)
    the tile.  This becomes problematic if there are \emph{duplicate}
    points in the set being tessellated/triangulated.  Duplicated
    points are automatically eliminated \dQuote{internally} by
-   \code{deldir()} but the association between tiles and the indices
-   of the original set of points is lost.
+   \code{deldir()}.  The association between tiles and the indices
+   of the original set of points is now preserved by the component
+   \code{ind.orig} of the object returned by \code{deldir()}.
+   However confusion could still arise.
 
-   If it \emph{is} of interest to associate Dirichlet tiles with the
-   points determining them it is better to proceed by eliminating
-   duplicate points to start with.  This function provides a convenient
-   way of doing so.
+   If it is of interest to associate Dirichlet tiles with the
+   points determining them, then it is better to proceed by
+   eliminating duplicate points to start with.  This function
+   (\code{duplicatedxy()}) provides a convenient way of doing so.
 }
 \value{
    A logical vector of length equal to the (original) number
-   of points being considered, with entries \code{TRUE} is the
+   of points being considered, with entries \code{TRUE} if the
    corresponding point is a duplicate of a point with a smaller
    index, and \code{FALSE} otherwise.
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-  \url{https://www.stat.auckland.ac.nz/~rolf}
+% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 \note{
   The real work is done by the base \bold{R} function \code{\link{duplicated}()}.
@@ -57,7 +59,7 @@ duplicatedxy(x, y)
 }
 
 \seealso{
-\code{\link{duplicated}()} \code{\link{deldir}()}
+\code{\link{duplicated}()}, \code{\link{deldir}()}
 }
 \examples{
    set.seed(42)
