@@ -34,6 +34,19 @@ triMat(object)
   Delaunay triangle.  The indices are listed in increasing numeric
   order in each row.
 }
+\section{Note}{
+  Earlier versions of this function (prior to release 0.1-14
+  of \bold{deldir}) could sometimes give incorrect results.
+  This happened if the union of three contiguous Delaunay triangles
+  happened to constitute another triangle.  This latter triangle
+  would appear in the list of triangles produced by \code{triMat()}
+  but is \emph{not} itself a Delaunay triangle.  The updated version
+  of \code{triMat()} now checks for this possibility and gives
+  (\emph{I think!}) correct results.
+
+  Many thanks to Jay Call, who pointed out this bug to me.
+}
+
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
 % \url{https://www.stat.auckland.ac.nz/~rolf}

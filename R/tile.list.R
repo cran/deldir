@@ -15,6 +15,7 @@ tile.list <- function (object)
     haveZ <- !is.null(z)
     i.crnr <- get.cnrind(x, y, rw)
     rslt <- list()
+    ind.orig <- object$ind.orig
     for (i in 1:npts) {
         m <- as.matrix(rbind(ddd[ddd$ind1 == i, 1:4], ddd[ddd$ind2 == 
             i, 1:4]))
@@ -35,7 +36,8 @@ tile.list <- function (object)
         xx <- c(xx, x.crnrs[ii])
         yy <- c(yy, y.crnrs[ii])
         bp <- c(bp, rep(TRUE, sum(ii)))
-        tmp <- list(ptNum = i, pt = pt, x = unname(xx), y = unname(yy), bp = bp)
+        tmp <- list(ptNum = ind.orig[i], pt = pt, x = unname(xx),
+                    y = unname(yy), bp = bp, area = sss[i,"dir.area"])
         if(length(ptp)) {
             tmp <- append(tmp,values=ptp[i],after=2)
             names(tmp)[3] <- "ptType"
@@ -51,5 +53,5 @@ tile.list <- function (object)
     y <- unclass(x)[i]
     class(y) <- "tile.list"
     attr(y,"rw") <- attr(x,"rw")
-y
+    y
 }

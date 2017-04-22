@@ -1,4 +1,4 @@
-mnnd <- function(x,y) {
+mnndR <- function(x,y) {
 #
 # Function mnnd to calculate the mean nearest neighbour distance
 # between the points whose coordinates are stored in x and y.

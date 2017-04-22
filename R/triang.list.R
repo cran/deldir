@@ -3,7 +3,7 @@ triang.list <- function (object)
     stopifnot(inherits(object,"deldir"))
     io <- object$ind.orig
     pt <- object$summary$pt.type
-    tlist <- triMat(object)
+    tlist <- prelimtlist(object)
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
     if("z" %in% colnames(object$summary)) {

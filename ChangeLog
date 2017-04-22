@@ -1,3 +1,61 @@
+ Version 0.1-14
+
+ Corrected a mild infelicity in respect of the rownames
+ of the "summary" component of the object returned by deldir.
+ Made a corresponding adjustment to tile.list.R (triang.list.R
+ was already OK) and tidied up the help files.
+
+ Added a "..." argument to plot.tile.list() (to be passed
+ on to points() and/or text()).
+
+ Added function tileInfo to summarise information about tiles,
+ at the request of John Bothwell.
+ 20/03/2017.
+
+ Added a facility to plot.tile.list() to append the point
+ *numbers* to the plot, with a reasonably minimal amount
+ of effort.
+
+ Added a print method to objects of class "tileInfo".
+
+ Made some corrections and amendments to the help files 
+ tile.list.Rd and plot.tile.list.Rd.
+
+ Wrote help files for tileInfo() and print.tileInfo().
+ 21/03/2017
+
+ Made a minor adjustment to tileInfo(), making the "indivTiles"
+ component of the returned value into a *named* list (with
+ names of the form "tile.ptNum").
+
+ Adjusted the help file for tileInfo() accordingly.
+ 27/03/2017
+
+ Rewrote triMat() after a bug in it was pointed out to me
+ by Jay Call.
+ 22/04/2017
+
+ Installed on CRAN 06/03/2016.
+
+ Version 0.1-13
+ Never installed on CRAN (??? !!!)
+
+ Documented the function which.tile() --- !!!
+ Done 01/11/2016.
+
+ Added the function which.tile() at the request of "RAY".
+ Done 27/08/2016.
+
+ Corrected the rownames of the "summary" component of the
+ object returned by deldir().  Previously these were the indices
+ of the points in their bin-sorted order; when "allsum" gets
+ sorted back into the order of the original points the rownames
+ were retained, in their sorted order.  This made them look
+ anomalous.  Thanks to Pablo Araya-Melo for pointing out this
+ problem.
+ Done 21/07/2016.
+
+ 
  Version 0.1-12
 
  Changed the "binsrt" procedure back to using Fortran/Ratfor
@@ -7,6 +65,8 @@
  Adjusted the code in binsrt.r to calculate "rind" as well as
  "ind".
  Done 05/03/2016
+
+ Installed on CRAN 06/03/2016.
 
  Version 0.1-11
  Never installed on CRAN

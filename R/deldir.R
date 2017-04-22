@@ -216,12 +216,17 @@ npd  <- n + ndm
 # of a point in the bin sorted sequence and j is its position in
 # the original sequence.  Thus ind[rind[k]] = k and rind[ind[k]] = k
 # for all k.  So xs[ind] (where xs is the bin sorted sequence of
-# x's) is equal to x, he original sequence of x's.  Likewise ys[ind]
+# x's) is equal to x, the original sequence of x's.  Likewise ys[ind]
 # (where ys is the bin sorted sequence of y's) is equal to y, the
 # original sequence of y's. Conversely x[rind] = xs and y[rind] = ys.
 #
+# Added 20/03/2017:  I think I rather made a meal of this.  The
+# vector of indices "rind" is just order(ind); ind is a permutation
+# of 1, 2, ..., npd.  Thus rind[ind] = ind[rind] = 1, 2, ..., npd.
+# However there's no real harm done, so I won't change the shaganappi
+# code at this stage.
 if(sort) {
-    xy   <- binsrt(x,y,rw)
+    xy   <- binsrtR(x,y,rw)
     x    <- xy$x
     y    <- xy$y
     ind  <- xy$ind
@@ -339,7 +344,24 @@ dirsgs$ind1 <- rind[dirsgs$ind1]
 dirsgs$ind2 <- rind[dirsgs$ind2]
 dirsgs$thirdv1  <- with(dirsgs,ifelse(thirdv1<0,thirdv1,rind[abs(thirdv1)]))
 dirsgs$thirdv2  <- with(dirsgs,ifelse(thirdv2<0,thirdv2,rind[abs(thirdv2)]))
+
+# The points in "allsum" appear in bin-sorted order; rearrange
+# the rows of "allsum" so that the points appear in the original order.
 allsum          <- allsum[ind,]
+
+# The follwing is a furphy --- it just makes the rownames into
+# 1, 2, ..., n.  At this point the rownames of "allsum" were
+# (1:n)[ind].  So we're getting (1:n)[ind])[rind] = ind[rind]
+# = 1:n !!!
+# rownames(allsum) <- rownames(allsum)[rind]
+# So we could just set rownames(allsum) <- 1:nrow(allsum) and
+# get the same effect.  However that does not take account of
+# *duplicated* points.  So it is better to use ind.orig.  Note that
+# the resulting rowname corresponding to a point is the index (in
+# the original sequence of points) of the *first* in its sequence
+# of duplicated points.
+
+rownames(allsum) <- ind.orig
 
 # Put in an indicator of point type if there were any
 # dummy points added.

@@ -198,14 +198,20 @@ Similarly for columns \code{thirdv2} and \code{bp2}.
 \item{summary}{
 a data frame with 9, 10 or 11 columns and \code{n.data + n.dum} rows
 (see below).  The rows correspond to the points in the set being
-triangulated.  The columns are:
+triangulated.  Note that the row names are the indices of the points
+in the orginal sequence of points being triangulated/tessellated.
+Usually these will be the sequence 1, 2, ..., npd ("n plus dummy").
+However if there were \emph{duplicated} points then the row name
+corresponding to a point is the \emph{first} of the indices of
+the set of duplicated points in which the given point appears.
+The columns are:
 \itemize{
 \item \code{x} (the \eqn{x}-coordinate of the point)
 \item \code{y} (the \eqn{y}-coordinate of the point)
 \item \code{pt.type} (a character vector with entries \dQuote{data}
 and \dQuote{dummy}; present only if \code{n.dum > 0})
-\item \code{z} (the auxiliary values or weights; present only if
-these were specified)
+\item \code{z} (the auxiliary values or \dQuote{weights}; present
+only if these were specified)
 \item \code{n.tri} (the number of Delaunay triangles emanating from
 the point)
 \item \code{del.area} (1/3 of the total area of all the Delaunay

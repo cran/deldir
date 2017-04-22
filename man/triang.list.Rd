@@ -24,8 +24,10 @@ triang.list(object)
   to the vertices of the corresponding Delaunay triangle. The
   columns are:
   \itemize{
-  \item \code{ptNum} (the point number of the vertex in the original
-  list of points being triangulated)
+  \item \code{ptNum} (the index of the point in the original sequence
+  of points that is being triangulated.  Note that if a point is
+  one of a set of \emph{duplicated} points then \code{ptNum} is
+  the \emph{first} of the indices of the points in this set.)
   \item \code{ptType} (the type of the vertex; \dQuote{data}
   or \dQuote{dummy}; present only if there were any dummy points
   specified)

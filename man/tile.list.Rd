@@ -16,6 +16,10 @@ A list with one entry for each of the points in the set
 being tesselated.  Each entry is in turn a list with
 components
 
+\item{ptNum}{The index of the point in the original sequence of points
+that is being tessellated.  Note that if a point is one of a set
+of \emph{duplicated} points then \code{ptNum} is the \emph{first} of the
+indices of the points in this set.}
 \item{pt}{The coordinates of the point whose tile is being described.}
 \item{ptType}{The \dQuote{type} of the \code{pt}, either \dQuote{data}
 or \dQuote{dummy}.  Present only if any dummy points were specified
@@ -30,6 +34,7 @@ tile edge intersects the boundary of the enclosing rectangle.}
 \item{z}{The \dQuote{auxiliary value} or \dQuote{weight} associated
 with the \code{pt}; present only if such values were supplied in
 the call to \code{deldir()}.}
+\item{area}{The area of the tile.}
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}

@@ -18,7 +18,7 @@ if(!is.null(dpl$nrad)) {
 	nper  <- dpl$nper # Number of dummy points per radius.
 	fctr  <- dpl$fctr # Length of each radius = fctr * mean
                              # interpoint distance.
-	lrad  <- fctr*mnnd(x,y)/nper
+	lrad  <- fctr*mnndR(x,y)/nper
 	theta <- 2*pi*(1:nrad)/nrad
 	cs    <- cos(theta)
 	sn    <- sin(theta)

@@ -1,4 +1,4 @@
-binsrt <- function(x,y,rw) {
+binsrtR <- function(x,y,rw) {
     n    <- length(x)
     ind  <- rep(0,n)
     rslt <- .Fortran("binsrt",

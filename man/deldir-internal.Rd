@@ -2,12 +2,13 @@
 \alias{[.tile.list}
 \alias{[.triang.list}
 \alias{acw}
-\alias{binsrt}
+\alias{binsrtR}
 \alias{dumpts}
 \alias{get.cnrind}
 \alias{getCol}
 \alias{mid.in}
-\alias{mnnd}
+\alias{mnndR}
+\alias{prelimtlist}
 \alias{tilePerim0}
 \title{Internal deldir functions}
 \description{
@@ -18,11 +19,12 @@
 \method{[}{triang.list}(x,i,\dots)
 acw(xxx)
 dumpts(x,y,dpl,rw)
-binsrt(x,y,rw)
+binsrtR(x,y,rw)
 get.cnrind(x,y,rw)
 getCol(x,warn=FALSE)
 mid.in(x,y,rx,ry)
-mnnd(x,y)
+mnndR(x,y)
+prelimtlist(object)
 tilePerim0(object,inclbdry=TRUE)
 }
 \details{

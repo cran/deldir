@@ -1,8 +1,9 @@
 plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                             fillcol = getCol(x,warn=warn), col.pts=NULL,
-                            border=NULL, showpoints = TRUE, add = FALSE,
-                            asp = 1, clipp=NULL, xlab = "x", ylab = "y",
-                            main = "", warn=FALSE, ...) {
+                            col.num=NULL,border=NULL, showpoints = !number,
+                            add = FALSE, asp = 1, clipp=NULL, xlab = "x",
+                            ylab = "y", main = "", warn=FALSE,
+                            number=FALSE,adj=NULL,...) {
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
@@ -34,11 +35,22 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
         })
         col.pts <- rep(col.pts, length = length(object))
     }
+    if(is.null(col.num)){
+        col.num <- ifelse(fillcol == hexbla, hexwhi, hexbla)
+    } else {
+        col.num <- apply(col2rgb(col.num, TRUE), 2, function(x) {
+            do.call(rgb, as.list(x/255))
+        })
+        col.num <- rep(col.num, length = length(object))
+    }
     if(is.null(border))
         border <- if(all(fillcol == hexbla)) hexwhi else hexbla
     else if(length(border) > 1)
         stop("Argument \"border\" must be a scalar or NULL.\n")
     lnwid <- if(all(fillcol == hexbla)) 2 else 1
+    ptNums <- sapply(x,function(u){u$ptNum})
+    Adj <- adj
+    if(is.null(Adj)) Adj <- if(showpoints) -1 else 0
     pch <- rep(pch,n)
     okn <- logical(n)
     for(i in 1:n) {
@@ -75,12 +87,17 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
          }
          if(ok & verbose) {
              if(showpoints) points(object[[i]]$pt[1], object[[i]]$pt[2],
-                                   pch = pch[i], col = col.pts[i])
+                                   pch = pch[i], col = col.pts[i],...)
+             if(number) text(object[[i]]$pt[1], object[[i]]$pt[2],
+                             labels=ptNums[i], col = col.num[i],adj=Adj,...)
              if(i < n) readline(paste("i = ",i,"; Go? ",sep=""))
              if(i == n) cat("i = ",i,"\n",sep="")
          }
     }
     if (showpoints & !verbose) 
-    points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn])
+    points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn],...)
+    if (number & !verbose) 
+    text(x.pts[okn], y.pts[okn], labels = ptNums[okn], col = col.num[okn],
+         adj=Adj,...)
     invisible()
 }

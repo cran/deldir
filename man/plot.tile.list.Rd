@@ -5,10 +5,11 @@
 the tiles associated with each point in the set being tessellated. }
 \usage{
 \method{plot}{tile.list}(x, verbose = FALSE, close = FALSE, pch = 1,
-                         fillcol = getCol(x,warn=warn),col.pts = NULL,
-                         border=NULL, showpoints = TRUE, add = FALSE,
-                         asp = 1, clipp = NULL, xlab = "x", ylab = "y",
-                         main = "", warn = FALSE, ...)
+                         fillcol = getCol(x,warn=warn), col.pts=NULL,
+                         col.num=NULL,border=NULL, showpoints = !number,
+                         add = FALSE, asp = 1, clipp=NULL, xlab = "x",
+                         ylab = "y", main = "", warn=FALSE,
+                         number=FALSE,adj=NULL,...) 
 }
 \arguments{
   \item{x}{ A list of the tiles in a tessellation, as produced
@@ -26,8 +27,8 @@ the tiles associated with each point in the set being tessellated. }
   \item{fillcol}{Optional vector (possibly of length 1, i.e. a scalar)
   whose entries can be interpreted as colours by \code{\link{col2rgb}()}.
   The \eqn{i}-th entry indicates with which colour to fill
-  the \eqn{i}-th tile.  Note that an \code{NA} entry indicates
-  the use of no colour at all.  This argument will be replicated
+  the \eqn{i}-th tile.  Note that an \code{NA} entry cause the
+  tile to be left unfilled.  This argument will be replicated
   to have length equal to the number of tiles.
   }
   \item{col.pts}{Optional vector like unto \code{fillcol} whose
@@ -36,6 +37,11 @@ the tiles associated with each point in the set being tessellated. }
   \eqn{i}-th point.  This argument will be replicated to have length
   equal to the number of tiles.  Ignored if \code{showpoints} is
   \code{FALSE}.
+  }
+  \item{col.num}{Optional vector like unto \code{col.pts}. Determines
+  the colours in which the point numbers (see \code{number} below).
+  This argument will be replicated to have length equal to the
+  number of tiles.  Ignored if \code{number} is \code{FALSE}.
   }
   \item{border}{A \emph{scalar} indicating the colour with which to plot
   the tile boundaries.  Defaults to black unless all of the
@@ -73,10 +79,23 @@ the tiles associated with each point in the set being tessellated. }
    A title for the plot (used only if \code{add} is \code{FALSE}).}
   \item{warn}{Logical scalar passed to the internal function \code{getCol()}.
   Should a warning be issued if the \code{z} components of the entries
-  of \code{x} cannot all be interpreted as colours.  See \bold{Details}.
+  of \code{x} cannot all be interpreted as colours.  See \bold{Notes}.
   }
-  \item{...}{ Optional arguments; not used.  There for consistency
-  with the generic \code{plot} function.}
+  \item{number}{Logical scalar; if \code{TRUE} the numbers of the
+  points determining the tiles are plotted in the tiles.  Note
+  that if \code{number} is \code{TRUE} then \code{showpoints}
+  defaults to \code{FALSE}
+  }
+  \item{adj}{The \dQuote{adjustment} argument to \code{text()}.
+  If \code{number} and \code{showpoints} are both \code{TRUE} it
+  defaults to \code{-1} (so that the numbers and point symbols
+  are not superimposed).  If \code{number} is \code{TRUE} and
+  \code{showpoints} is \code{FALSE} it defaults to \code{0}.
+  If \code{number} is \code{FALSE} it is ignored.
+  }
+  \item{...}{Optional arguments; may be passed to \code{points()}
+  and \code{text()}.
+  }
 }
   \section{Warnings}{
   \itemize{
@@ -123,6 +142,14 @@ the tiles associated with each point in the set being tessellated. }
   \emph{completely} then the point which determines that tile is
   \emph{not} plotted irrespective of the value of \code{showpoints}.
 
+  \item If the \code{z} components of the entries of \code{x}
+  cannot all be interpreted as colours (e.g. if there \emph{aren't}
+  any \code{z} components, which will be the case if no such
+  values were supplied in the call to \code{deldir()}) then the
+  internal function \code{getCol()} returns \code{NA}.  This value of
+  \code{fillcol} results (as is indicated by the argument list entry
+  for \code{fillcol}) in (all of) the tiles being left unfilled.
+
   \item The new behaviour in respect of the colours with which to fill
   the plotted tiles, and the argument \code{clipp} were added at
   the request of Chris Triggs.
@@ -131,6 +158,7 @@ the tiles associated with each point in the set being tessellated. }
   Dowlaty.
   }
 }
+
 \value{NULL; side effect is a plot.}
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
@@ -155,5 +183,8 @@ the tiles associated with each point in the set being tessellated. }
                           0.51,0.46,0.31,0.20,0.37,0.54))
      plot(w,clipp=CP,showpoints=FALSE,fillcol=topo.colors(20))
   }
+  plot(w,number=TRUE,col.num="red")
+  plot(w,number=TRUE,col.num="red",cex=0.5)
+  plot(w,showpoints=TRUE,number=TRUE,col.pts="green",col.num="red")
 }
 \keyword{ hplot }
