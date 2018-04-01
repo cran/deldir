@@ -1,4 +1,24 @@
+ Version 0-1.15
+ Installed on CRAN 01/04/2018
+
+ Changed the example in triMat.Rd to use the data with which
+ Jay Call illustrated the bug in the former (buggy) version
+ of triMat().
+
+ Added an "axes" argument to plot.deldir(), defaulting to
+ FALSE.  Made xlab and ylab default to "x" and "y" if axes
+ is TRUE and to "" if axes is FALSE.
+
+ Modified tile.list() (and the internal function acw() upon which
+ it depends) for speed-up, at the suggestion of Jean-Romain Roussel.
+
+ Registered S3 method "[.triang.list" (previously had methods
+ plot.deldir, plot.tile.list, plot.triang.list, [.tile.list,
+ divchain.default, divchain.deldir, plot.divchain and print.tileInfo
+ registered, but "[.triang.list" had been omitted.
+
  Version 0.1-14
+ Installed on CRAN 22/04/2017
 
  Corrected a mild infelicity in respect of the rownames
  of the "summary" component of the object returned by deldir.
@@ -35,8 +55,6 @@
  by Jay Call.
  22/04/2017
 
- Installed on CRAN 06/03/2016.
-
  Version 0.1-13
  Never installed on CRAN (??? !!!)
 
@@ -57,6 +75,7 @@
 
  
  Version 0.1-12
+ Installed on CRAN 06/03/2016.
 
  Changed the "binsrt" procedure back to using Fortran/Ratfor
  code but with the code being called directly by .Fortran(),
@@ -66,7 +85,6 @@
  "ind".
  Done 05/03/2016
 
- Installed on CRAN 06/03/2016.
 
  Version 0.1-11
  Never installed on CRAN
@@ -232,7 +250,6 @@
  Done 18/05/2014.
 
  Version 0.1-5
-
  Uploaded to CRAN 02/02/2014
 
  In the help for plot.tile.list() the call to this function that
@@ -245,7 +262,6 @@
  (Change made at the behest of Uwe Ligges.)
 
  Version 0.1-4
-
  Uploaded to CRAN 31/01/2014
  
  Fixed up an error in the handling of "x" and "y" coordinates
@@ -264,7 +280,6 @@
      NULL.
 
  Version 0.1-3
-
  Uploaded to CRAN 30/01/2014
 
  Fixed up references to my web page to refer to my
@@ -278,7 +293,6 @@
  column exists.
 
  Version 0.1-2
-
  Uploaded to CRAN 01/10/2013.
 
  Adjusted the behaviour of the function plot.tile.list()
@@ -288,6 +302,7 @@
  (in accordance with the new behaviour of spatstat).
 
  Version 0.1-1
+ Uploaded to CRAN 02 October 2013
 
  Revised the function "plot.tile.list", changing the behaviour of
  the colouring of tiles and added the argument "clipwin".
@@ -300,8 +315,6 @@
 
  Added the function "tilePerim" and the internal function
  "tilePerim0".  Request of Haozhe Zhang.
-
- Uploaded to CRAN 02 October 2013
 
  Version 0.0-22 (17 April 2013)
 

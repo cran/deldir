@@ -40,10 +40,10 @@ triang.list <- function (object)
 		u=as.double(x),
 		v=as.double(y),
 		n=as.integer(length(x)),
-		okay=logical(1),
+		okay=integer(1),
 		PACKAGE="deldir"
 	)
-	if(tmp$okay) {
+	if(as.logical(tmp$okay)) {
                 tmp <- data.frame(ptNum=io[tlist[i,]],x=xtri[i,],y=ytri[i,])
                 if(length(pt)) tmp <- cbind(tmp[,1,drop=FALSE],
                                             ptType=pt[tlist[i,]],tmp[,2:3])

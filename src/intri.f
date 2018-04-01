@@ -1,8 +1,9 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine intri(x,y,u,v,n,okay)
       implicit double precision(a-h,o-z)
       dimension x(3), y(3), u(n), v(n)
-      logical okay, inside
+      integer okay
+      logical inside
       zero = 0.d0
       s = 1.d0
       a = x(2) - x(1)
@@ -32,11 +33,11 @@ C Output from Public domain Ratfor, version 1.0
 23004 continue
 23005 continue
       if(inside)then
-      okay = .false.
+      okay = 0
       return
       endif
 23002 continue
 23003 continue
-      okay = .true.
+      okay = 1
       return
       end

@@ -1,7 +1,8 @@
 plot.deldir <- function(x,add=FALSE,wlines=c('both','triang','tess'),
                         wpoints=c('both','real','dummy','none'),
                         number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                        pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',
+                        pch=NULL,xlim=NULL,ylim=NULL,axes=FALSE,
+                        xlab=if(axes) 'x' else '',ylab=if(axes) 'y' else'',
                         showrect=FALSE,...)
 {
 #
@@ -55,9 +56,7 @@ if(!add) {
 	if(is.null(xlim)) xlim <- rw[1:2]
 	if(is.null(ylim)) ylim <- rw[3:4]
 	plot(0,0,type='n',xlim=xlim,ylim=ylim,
-     		xlab=xlab,ylab=ylab,axes=FALSE,...)
-	axis(side=1)
-	axis(side=2)
+     		xlab=xlab,ylab=ylab,axes=axes,...)
 }
 
 if(plot.del) segments(x1,y1,x2,y2,col=col[1],lty=lty[1],...)

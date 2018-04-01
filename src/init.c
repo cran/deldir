@@ -7,15 +7,15 @@
 */
 
 /* .Fortran calls */
-extern void F77_NAME(binsrt)(void *, void *, void *, void *, void *,
-                             void *, void *, void *, void *, void *);
-extern void F77_NAME(intri)(void *, void *, void *, void *, void *,
-                            void *);
-extern void F77_NAME(master)(void *, void *, void *, void *, void *,
-                             void *, void *, void *, void *, void *,
-                             void *, void *, void *, void *, void *,
-                             void *, void *);
-extern void F77_NAME(mnnd)(void *, void *, void *, void *, void *);
+extern void F77_NAME(binsrt)(double *, double *, double *, int *, int *,
+                             int *, double *, double *, int *, int *);
+extern void F77_NAME(intri)(double *, double *, double *, double *, int *,
+                            int *);
+extern void F77_NAME(master)(double *, double *, double *, int *, int *,
+                             int *, int *, double *, double *, double *,
+                             double *, int *, double *, double *, int *,
+                             double *, int *);
+extern void F77_NAME(mnnd)(double *, double *, int *, double *, double *);
 
 static const R_FortranMethodDef FortranEntries[] = {
     {"binsrt", (DL_FUNC) &F77_NAME(binsrt), 10},

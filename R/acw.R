@@ -1,6 +1,6 @@
 acw <- function(xxx) {
-xbar <- mean(xxx$x)
-ybar <- mean(xxx$y)
+xbar    <- sum(xxx$x)/length(xxx$x)
+ybar    <- sum(xxx$y)/length(xxx$y)
 theta   <- atan2(xxx$y - ybar,xxx$x-xbar)
 theta   <- ifelse(theta > 0, theta, theta + 2 * pi)
 theta.0 <- sort(unique(theta))

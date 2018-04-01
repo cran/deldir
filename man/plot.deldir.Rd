@@ -10,9 +10,9 @@ This is a method for plot.
 \method{plot}{deldir}(x,add=FALSE,wlines=c('both','triang','tess'),
                       wpoints=c('both','real','dummy','none'),
                       number=FALSE,cex=1,nex=1,col=NULL,lty=NULL,
-                      pch=NULL,xlim=NULL,ylim=NULL,xlab='x',ylab='y',
+                      pch=NULL,xlim=NULL,ylim=NULL,axes=FALSE,
+                      xlab=if(axes) 'x' else '',ylab=if(axes) 'y' else'',
                       showrect=FALSE,...)
-
 }
 \arguments{
 \item{x}{
@@ -28,7 +28,7 @@ logical argument; should the plot be added to an existing plot?
 default) ?
 }
 \item{wpoints}{
-"which points?".  I.e.  should the real points be plotted
+"Which points to plot?".  I.e.  should the real points be plotted
 (wpoints='real'), should the dummy points be plotted
 (wpoints='dummy'), should both be plotted (wpoints='both', the
 default) or should no points be plotted (wpoints='none')?
@@ -49,46 +49,52 @@ text function when numbering the points with their indices.  Used only
 if number=\code{TRUE}.
 }
 \item{col}{
-the colour numbers for plotting the triangulation, the tesselation,
+The colour numbers for plotting the triangulation, the tesselation,
 the data points, the dummy points, and the point numbers, in that
 order; defaults to c(1,1,1,1,1).  If fewer than five numbers are
 given, they are recycled.  (If more than five numbers are given, the
 redundant ones are ignored.)
 }
 \item{lty}{
-the line type numbers for plotting the triangulation and the
+The line type numbers for plotting the triangulation and the
 tesselation, in that order; defaults to 1:2.  If only one value is
 given it is repeated.  (If more than two numbers are given, the
 redundant ones are ignored.)
 }
 \item{pch}{
-the plotting symbols for plotting the data points and the dummy
+The plotting symbols for plotting the data points and the dummy
 points, in that order; may be either integer or character; defaults
 to 1:2.  If only one value is given it is repeated.  (If more than
 two values are given, the redundant ones are ignored.)
 }
 \item{xlim}{
-the limits on the x-axis.  Defaults to rw[1:2] where rw is the
+The limits on the x-axis.  Defaults to rw[1:2] where rw is the
 rectangular window specification returned by deldir().
 }
 \item{ylim}{
-the limits on the y-axis.  Defaults to rw[3:4] where rw is the
+The limits on the y-axis.  Defaults to rw[3:4] where rw is the
 rectangular window specification returned by deldir().
 }
+\item{axes}{
+Logical scalar.  Should axes be drawn on the plot?
+}
 \item{xlab}{
-label for the x-axis.  Defaults to \code{x}.  Ignored if
-\code{add=TRUE}.
+Label for the x-axis.  Defaults to \code{x} if \code{axes} is
+\code{TRUE} and to the empty string if \code{axes} is \code{FALSE}.
+Ignored if \code{add=TRUE}.
 }
 \item{ylab}{
-label for the y-axis.  Defaults to \code{y}.  Ignored if
-\code{add=TRUE}.
+Label for the y-axis.  Defaults to \code{y} if \code{axes} is
+\code{TRUE} and to the empty string if \code{axes} is \code{FALSE}.
+Ignored if \code{add=TRUE}.
 }
 \item{showrect}{
-logical scalar; show the enclosing rectangle \code{rw} (see
+Logical scalar; show the enclosing rectangle \code{rw} (see
 \code{\link{deldir}()}) be plotted? }
 \item{...}{
 Further plotting parameters to be passed to \code{plot()}
-\code{segments()} or \code{points()}.  Unlikely to be used.
+\code{segments()} or \code{points()} or \code{text()}.  Unlikely to
+be used.
 }
 }
 \section{Side Effects}{

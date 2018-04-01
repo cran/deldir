@@ -7,7 +7,8 @@ subroutine intri(x,y,u,v,n,okay)
 
 implicit double precision(a-h,o-z)
 dimension x(3), y(3), u(n), v(n)
-logical okay, inside
+integer okay
+logical inside
 
 zero = 0.d0
 
@@ -35,11 +36,11 @@ do i = 1,n {
 		}
 	}
 	if(inside) {
-		okay = .false.
+		okay = 0
 		return
 	}
 	
 }
-okay = .true.
+okay = 1
 return
 end
