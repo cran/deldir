@@ -1,10 +1,10 @@
-C Output from Public domain Ratfor, version 1.0
-      subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
+C Output from Public domain Ratfor, version 1.03
+      subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,ntri,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(
      *3)
-      integer tau(3), temp(21)
-      logical adjace
+      integer tau(3)
+      logical adjace, anticl
       nerror = -1
       if(j.eq.1)then
       nerror = 11
@@ -28,10 +28,23 @@ C Output from Public domain Ratfor, version 1.0
       return
       endif
       endif
+      ktri = 0
 1     continue
+      call acchk(tau(1),tau(2),tau(3),anticl,x,y,ntot,eps)
+      if(.not.anticl)then
+      call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
+      if(.not.anticl)then
+      call fexit("Both vertex orderings are clockwise. See help for deld
+     *ir.")
+      else
+      ivtmp = tau(3)
+      tau(3) = tau(1)
+      tau(1) = ivtmp
+      endif
+      endif
       ntau = 0
       nedge = 0
-      do23010 i = 1,3 
+      do23014 i = 1,3 
       ip = i+1
       if(ip.eq.4)then
       ip = 1
@@ -62,11 +75,11 @@ C Output from Public domain Ratfor, version 1.0
       nedge = ip
       else
       ntau = ip
-      goto 23011
+      goto 23015
       endif
       endif
-23010 continue
-23011 continue
+23014 continue
+23015 continue
       if(ntau.eq.0)then
       return
       endif
@@ -90,6 +103,11 @@ C Output from Public domain Ratfor, version 1.0
       if(nerror .gt. 0)then
       return
       endif
+      endif
+      ktri = ktri + 1
+      if(ktri .gt. ntri)then
+      call fexit("Cannot find an enclosing triangle.  See help for deldi
+     *r.")
       endif
       go to 1
       end

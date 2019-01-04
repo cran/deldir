@@ -1,9 +1,9 @@
-C Output from Public domain Ratfor, version 1.0
-      subroutine initad(j,nadj,madj,x,y,ntot,eps,nerror)
+C Output from Public domain Ratfor, version 1.03
+      subroutine initad(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       integer tau(3)
-      call trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
+      call trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,ntri,nerror)
       if(nerror .gt. 0)then
       return
       endif

@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine circen(i,j,k,x0,y0,x,y,ntot,eps,collin,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3)

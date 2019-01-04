@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine succ(ksc,i,j,nadj,madj,ntot,nerror)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj)

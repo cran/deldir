@@ -33,8 +33,8 @@
 
 dsw <- deldir(seaweed)
 isw <- tileInfo(dsw)
-options(width=120)
 # Expand the width of the terminal window.
+options(width=120)
 isw
 tsw <- tile.list(dsw)
 plot(tsw,number=TRUE,col.num="red",cex=0.5,adj=0.5)

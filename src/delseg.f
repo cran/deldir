@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,nerror)
       implicit double precision(a-h,o-z)
       logical value

@@ -55,11 +55,12 @@ do i = 1,4 {
 	call insrt(1,j,nadj,madj,x,y,ntot,nerror,eps)
         if(nerror>0) return
 }
+ntri = 4
 
 # Now add the rest of the point set
 do j = 2,npd {
-	call addpt(j,nadj,madj,x,y,ntot,eps,nerror)
-        if(nerror>0) return
+	call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+        ntri = ntri + 3
 }
 
 # Obtain the description of the triangulation.
@@ -69,7 +70,7 @@ if(nerror>0) return
 call delout(delsum,nadj,madj,x,y,ntot,npd,nerror)
 if(nerror>0) return
 
-call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,nerror)
+call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,nerror)
 if(nerror>0) return
 call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps,nerror)
 return

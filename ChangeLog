@@ -1,4 +1,20 @@
- Version 0-1.15
+ Version 0.1-16
+ Installed on CRAN 04/01/2019
+ 
+ Added error traps in trifnd.r to avoid going into an infinite
+ loop when a certain sort of collinearity problem arises.
+ Thanks to Adam Dadvar who drew my attention to the problem
+ and provided a data set to illustrate the problem
+ (30/12/2018).
+
+ Added the data set "niProperties" (kindly provided by Adam
+ Dadvar) to illustrate collinearity problems
+ (03/01/2019).
+
+ Further revised the help page for deldir, giving some explanation
+ of the error traps and error numbers.
+
+ Version 0.1-15
  Installed on CRAN 01/04/2018
 
  Changed the example in triMat.Rd to use the data with which

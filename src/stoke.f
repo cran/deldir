@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension rw(4)

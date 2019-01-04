@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine cross(x,y,ijk,cprd)
       implicit double precision(a-h,o-z)
       dimension x(3), y(3)
@@ -45,7 +45,7 @@ C Output from Public domain Ratfor, version 1.0
       if(ijk.eq.3)then
       x(1) = zero
       y(1) = zero
-      smin = 2
+      smin = two
       endif
       if(ijk.eq.4)then
       x(3) = x(3) - x(2)

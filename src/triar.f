@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine triar(x0,y0,x1,y1,x2,y2,area)
       implicit double precision(a-h,o-z)
       half = 0.5d0

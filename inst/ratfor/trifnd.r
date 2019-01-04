@@ -1,4 +1,4 @@
-subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
+subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,ntri,nerror)
 
 # Find the triangle of the extant triangulation in which
 # lies the point currently being added.
@@ -6,8 +6,8 @@ subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(3)
-integer tau(3), temp(21)
-logical adjace
+integer tau(3)
+logical adjace, anticl
 
 nerror = -1
 
@@ -34,7 +34,24 @@ if(!adjace) {
 
 # Move to the adjacent triangle in the direction of the new
 # point, until the new point lies in this triangle.
+ktri = 0
 1       continue
+
+# Check that the vertices of the triangle listed in tau are
+# in anticlockwise order.  (If they aren't then alles upgefucken
+# ist; throw an error.)
+call acchk(tau(1),tau(2),tau(3),anticl,x,y,ntot,eps)
+if(!anticl) {
+    call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
+    if(!anticl) {
+        call fexit("Both vertex orderings are clockwise. See help for deldir.")
+    } else {
+        ivtmp  = tau(3)
+        tau(3) = tau(1)
+        tau(1) = ivtmp
+    }
+}
+
 ntau  = 0 # This number will identify the triangle to be moved to.
 nedge = 0 # If the point lies on an edge, this number will identify that edge.
 do i = 1,3 {
@@ -112,6 +129,10 @@ if(ntau==3) {
 
 # We've moved to a new triangle; check if the point being added lies
 # inside this one.
+ktri = ktri + 1
+if(ktri > ntri) {
+    call fexit("Cannot find an enclosing triangle.  See help for deldir.")
+}
 go to 1
 
 end

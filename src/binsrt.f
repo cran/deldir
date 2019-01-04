@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst,nerror)
       implicit double precision(a-h,o-z)
       dimension x(npd), y(npd), tx(npd), ty(npd)

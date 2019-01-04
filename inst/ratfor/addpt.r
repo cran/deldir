@@ -1,4 +1,4 @@
-subroutine addpt(j,nadj,madj,x,y,ntot,eps,nerror)
+subroutine addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
 # Add point j to the triangulation.
 # Called by master, dirseg.
 
@@ -8,7 +8,7 @@ logical didswp
 
 # Put the new point in, joined to the vertices of its
 # enclosing triangle.
-call initad(j,nadj,madj,x,y,ntot,eps,nerror)
+call initad(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
 if(nerror > 0) return
 
 # Look at each `gap', i.e. pair of adjacent segments

@@ -1,4 +1,4 @@
-subroutine initad(j,nadj,madj,x,y,ntot,eps,nerror)
+subroutine initad(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
 
 # Initial adding-in of a new point j.
 # Called by addpt.
@@ -8,7 +8,7 @@ dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
 integer tau(3)
 
 # Find the triangle containing vertex j.
-call trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,nerror)
+call trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,ntri,nerror)
 if(nerror > 0) return
 
 # If the new point is on the edge of a triangle, detach the two

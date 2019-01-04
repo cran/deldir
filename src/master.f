@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine master(x,y,rw,npd,ntot,nadj,madj,tx,ty,eps, delsgs,ndel
      *,delsum,dirsgs,ndir,dirsum,nerror)
       implicit double precision(a-h,o-z)
@@ -45,11 +45,10 @@ C Output from Public domain Ratfor, version 1.0
       endif
 23010 continue
 23011 continue
+      ntri = 4
       do23014 j = 2,npd 
-      call addpt(j,nadj,madj,x,y,ntot,eps,nerror)
-      if(nerror.gt.0)then
-      return
-      endif
+      call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+      ntri = ntri + 3
 23014 continue
 23015 continue
       call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,nerror)
@@ -60,7 +59,7 @@ C Output from Public domain Ratfor, version 1.0
       if(nerror.gt.0)then
       return
       endif
-      call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,nerror)
+      call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,nerror)
       if(nerror.gt.0)then
       return
       endif

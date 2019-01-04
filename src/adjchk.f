@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine adjchk(i,j,adj,nadj,madj,ntot,nerror)
       dimension nadj(-3:ntot,0:madj)
       logical adj

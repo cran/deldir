@@ -2,11 +2,11 @@ subroutine cross(x,y,ijk,cprd)
 implicit double precision(a-h,o-z)
 dimension x(3), y(3)
 # Calculates a ``normalized'' cross product of the vectors joining
-# [x(1),y(1)] to [x(2),y(2)] and [x(3),y(3)] respectively.
+# [x(1),y(1)] to [x(2),y(2)] and to [x(3),y(3)] respectively.
 # The normalization consists in dividing by the square of the
 # shortest of the three sides of the triangle.  This normalization is
 # for the purposes of testing for collinearity; if the result is less
-# than epsilon, the smallest of the sines of the angles is less than
+# than epsilon, then the smallest of the sines of the angles is less than
 # epsilon.
 
 # Set constants
@@ -59,7 +59,7 @@ if(ijk==2) {
 if(ijk==3) {
 		x(1) = zero
 		y(1) = zero
-		smin  = 2
+		smin = two
 }
 
 # case 4: Only i ideal.

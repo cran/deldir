@@ -1,4 +1,4 @@
-subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,nerror)
+subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,nerror)
 
 # Output the endpoints of the segments of boundaries of Dirichlet
 # tiles.  (Do it economically; each such segment once and only once.)
@@ -46,7 +46,8 @@ x(i) = xmin-c
 y(i) = ymax+c
 
 do j = nstt,ntot {
-	call addpt(j,nadj,madj,x,y,ntot,eps,nerror)
+	call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+        ntri = ntri + 3
 	if(nerror > 0) return
 }
 

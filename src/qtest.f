@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine qtest(h,i,j,k,shdswp,x,y,ntot,eps,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot)

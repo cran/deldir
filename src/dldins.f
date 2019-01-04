@@ -1,4 +1,4 @@
-C Output from Public domain Ratfor, version 1.0
+C Output from Public domain Ratfor, version 1.03
       subroutine dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bpt,nedge)
       implicit double precision(a-h,o-z)
       dimension rw(4)

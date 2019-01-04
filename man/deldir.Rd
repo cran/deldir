@@ -270,6 +270,7 @@ not \code{NULL}) are identical.
 If \code{plotit=TRUE} a plot of the triangulation and/or tessellation
 is produced or added to an existing plot.
 }
+
 \details{
 This package is a (straightforward) adaptation of the Splus library
 section ``delaunay'' to R.  That library section is an implementation
@@ -300,6 +301,78 @@ collaborated in the preparation of that package.
 
 See the \code{ChangeLog} for information about further revisions
 and bug-fixes.
+}
+
+\section{Notes on error messages}{
+
+In the underlying Fortran code, error traps have been set for
+17 different errors, which are identified by an error number
+\code{nerror}.  When one of these traps detects an error, the
+value of \code{nerror} is passed back along the call stack to the
+\code{R} function \code{deldir()} that calls the Fortran subroutines.
+(I.e. to \emph{this} function, the documentation of which you are
+currently reading.)  The \code{deldir()} function then prints out a
+message and returns (invisibly) a \code{NULL} value.  The  message
+consists only of the value of \code{nerror}.  A glossary of the
+meanings of the values of \code{nerror} is to be found in the file
+\code{err.list}, located in the top level of the package directory
+(\dQuote{folder} if you are a Windoze weenie).
+
+Note that the values 4, 14 and 15 of \code{nerror} do not cause
+\code{deldir()} to return a \code{NULL} value but rather cause
+a message to be printed, storage (memory) to be re-allocated
+(increased) and \code{deldir()} to be re-started so as to take
+advantage of the increased amount of storage.
+
+In version \code{0.1-16} of \code{deldir} a new error trap was
+introduced, and this new trap triggers a genuine error and does
+so in a direct and perspicuous manner.
+
+This new error trap relates to \dQuote{triangle problems}.  It was
+drawn to my attention by Adam Dadvar (on 18 December, 2018) that in
+some data sets collinearity problems may cause the \dQuote{triangle
+finding} procedure, used by the algorithm to successively add new
+points to a tessellation, to go into an infinite loop.  A symptom of
+the collinearity is that the vertices of a putative triangle appear
+\emph{not} to be in anticlockwise order irrespective of whether
+they are presented in the order \code{i, j, k} or \code{k, j, i}.
+The result of this anomaly is that the procedure keeps alternating
+between moving to \dQuote{triangle} \code{i, j, k} and moving to
+\dQuote{triangle} \code{k, j, i}, forever.
+
+The new error trap, set in \code{trifnd}, the triangle finding
+subroutine, detects such occurrences of \dQuote{clockwise in either
+orientation} vertices.  The trap causes the \code{deldir()} function
+to throw an error rather than disappearing into a black hole.
+The error is thrown \dQuote{directly} rather than via passing a
+\code{nerror} number back up the call stack.  The facility for
+triggering an error in this manner was not available when the
+\code{deldir} package was originally written.  In the reasonably
+near future the \code{deldir} package will be adjusted so that all
+error traps throw errors in the \dQuote{direct} manner, and use of
+the \code{nerror} numbers will be eliminated.
+
+When an error of the \dQuote{triangle problems} nature occurs, a
+\emph{possible} remedy is to increase the value of the \code{eps}
+argument of \code{deldir()}. (See the \bold{Examples}.)  There may
+conceiveably be other problems that lead to infinite loops and so I
+have put in another error trap to detect whether the procedure has
+inspected more triangles than actually exist, and if so to throw
+an error.
+
+Note that the strategy of increasing the value of \code{eps}
+is \emph{probably} the appropriate one in most (if not all)
+of the cases where errors of this nature arise.  (Similarly this
+strategy is \emph{probably} the appropriate response to errors with
+\code{nerror} equal to 3, 12 and 13.) However it is impossible to
+be sure.  The intricacy and numerical delicacy of triangulations
+is too great for anyone to be able to foresee all the possibilities
+that could arise.
+
+If there is any doubt as the appropriateness of the \dQuote{increase
+\code{eps}} strategy, the user is advised to do his or her best to
+explore the data set, graphically or by other means, and thereby
+determine what is actually going on and why problems are occurring.
 }
 
 \section{Warnings}{
@@ -390,5 +463,11 @@ dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl='tr')
 z    <- c(1.63,0.79,2.84,1.56,0.22,1.07)
 zdum <- rep(42,4)
 dxy4 <- deldir(x,y,dpl=list(ndx=2,ndy=2),rw=c(0,10,0,10),z=z,zdum=zdum)
+
+# Example of collinearity error.
+\dontrun{
+    dniP <- deldir(niProperties) # Throws an error
+}
+    dniP <- deldir(niProperties,eps=1e-8) # No error.
 }
 \keyword{spatial}
