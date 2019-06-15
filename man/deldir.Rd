@@ -173,22 +173,24 @@ of the corresponding edge of a Dirichlet tile is a boundary point
 (a point on the boundary of the rectangular window).  Likewise for
 the entry in column \code{bp2} and the second endpoint of the edge.
 
-The nineth and tenth entries, in columns named \code{thirdv1} and
-\code{thirdv2} are the indices of the third vertex of the Delaunay
-triangle whose circumcentre constitutes the corresponding vertex of
-the edge under consideration.  (The other two vertices are indexed
-by the entries of columns \code{ind1} and \code{ind2}.)
+The nineth and tenth entries, in columns named \code{thirdv1}
+and \code{thirdv2} are the indices of the respective third
+vertices of the Delaunay triangle whose circumcentres constitute
+the corresponding endpoints of the edge under consideration.
+(The other two vertices of the triangle in question are indexed by
+the entries of columns \code{ind1} and \code{ind2}.)
 
 The entries of columns \code{thirdv1} and \code{thirdv2} may (also)
 take the values $-1, -2, -3$, and $-4$.  This will be the case
 if the circumcentre in question lies outside of the rectangular
-window \code{rw}.  In these circumstances the corresponding endpoint
-of the tile edge is the intersection of the line joining the two
-circumcentres with the boundary of \code{rw}, and the numeric
-value of the entry of column \dQuote{vi3} indicates which side.
-The numbering follows the convention for numbering the sides of a
-plot region in \code{R}: 1 for the bottom side, 2 for the left side,
-3 for the top side and 4 for the right side.
+window \code{rw}.  In these circumstances the corresponding
+endpoint of the tile edge is the intersection of the line joining
+the two circumcentres with the boundary of \code{rw}, and the
+numeric value of the entry of column \dQuote{thirdv1} (respectively
+\dQuote{thirdv2}) indicates which side.  The numbering follows the
+convention for numbering the sides of a plot region in \code{R}:
+1 for the bottom side, 2 for the left hand side, 3 for the top side
+and 4 for the right hand side.
 
 Note that the entry in column \code{thirdv1} will be negative if and
 only if the corresponding entry in column \code{bp1} is \code{TRUE}.
@@ -442,8 +444,8 @@ Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
 \examples{
 x    <- c(2.3,3.0,7.0,1.0,3.0,8.0)
 y    <- c(2.3,3.0,2.0,5.0,8.0,9.0)
-# An "alerting note" is printed.; let deldir() choose the
-# rectangular window.
+
+# Let deldir() choose the rectangular window.
 dxy1 <- deldir(x,y)
 
 # User chooses the rectangular window.

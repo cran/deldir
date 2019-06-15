@@ -1,11 +1,10 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine master(x,y,rw,npd,ntot,nadj,madj,tx,ty,eps, delsgs,ndel
-     *,delsum,dirsgs,ndir,dirsum,nerror)
+      subroutine master(x,y,rw,npd,ntot,nadj,madj,eps, delsgs,ndel,delsu
+     *m,dirsgs,ndir,dirsum,nerror)
       implicit double precision(a-h,o-z)
-      logical adj
       dimension x(-3:ntot), y(-3:ntot)
       dimension nadj(-3:ntot,0:madj)
-      dimension tx(npd), ty(npd), rw(4)
+      dimension rw(4)
       dimension delsgs(6,ndel), dirsgs(10,ndir)
       dimension delsum(npd,4), dirsum(npd,3)
       one = 1.d0

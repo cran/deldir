@@ -6,7 +6,6 @@ subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,nerror)
 
 implicit double precision(a-h,o-z)
 logical value
-integer tdel
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
 dimension delsgs(6,ndel)
 

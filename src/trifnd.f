@@ -34,7 +34,7 @@ C Output from Public domain Ratfor, version 1.03
       if(.not.anticl)then
       call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
       if(.not.anticl)then
-      call fexit("Both vertex orderings are clockwise. See help for deld
+      call rexit("Both vertex orderings are clockwise. See help for deld
      *ir.")
       else
       ivtmp = tau(3)
@@ -106,7 +106,7 @@ C Output from Public domain Ratfor, version 1.03
       endif
       ktri = ktri + 1
       if(ktri .gt. ntri)then
-      call fexit("Cannot find an enclosing triangle.  See help for deldi
+      call rexit("Cannot find an enclosing triangle.  See help for deldi
      *r.")
       endif
       go to 1

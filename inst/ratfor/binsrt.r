@@ -9,7 +9,7 @@ dimension ind(npd), ilst(npd)
 dimension rw(4)
 
 nerror = -1
-kdiv   = 1+dble(npd)**0.25 # Round high.
+kdiv   = int(1+dble(npd)**0.25) # Round high.
 xkdiv  = dble(kdiv)
 
 # Dig out the corners of the rectangular window.
@@ -44,9 +44,9 @@ while(ky<=kdiv) {            # to the new list.
                 # If the i-th point is in the current bin, add it to the list.
                 xt = x(i)
                 yt = y(i)
-                ix = 1+(xt-xmin)/dw
+                ix = int(1+(xt-xmin)/dw)
                 if(ix>kdiv) ix = kdiv
-                jy = 1+(yt-ymin)/dh
+                jy = int(1+(yt-ymin)/dh)
                 if(jy>kdiv) jy = kdiv
                 if(ix==kx&jy==ky) {
                         k = k+1

@@ -1,3 +1,57 @@
+
+ Version 0.1-21
+
+ Fixed yet another screw-up in init.c in src; the specifications
+ for "master" were wrong (as a result of the removal of a couple
+ of unused arguments from the "master" subroutine).
+
+ Submitted to CRAN 15/06/2019.
+
+ Version 0.1-20
+
+ Submitted to CRAN 14/06/2019.
+
+ Fixed several infelicities in the ratfor/fortran code in
+ respect of variables being declared or appearing as arguments
+ but never being used.
+ (12/06/2019)
+
+ Removed redundant fexit* files from src; these were generating
+ spurious warnings (and should of course have been removed as
+ soon as I switched from fexit* to rexit).
+
+ Version 0.1-19
+
+ Submitted to CRAN 11/06/2019.
+ However it was never installed on CRAN due to problems arising
+ from redundant fexit* files having been lying around in src.
+ (See above.)
+
+ Made substantial revision to the lawSummary function, after
+ lengthy email discussions with Kai Xu.
+ (11/06/2019)
+
+ Version 0.1-18
+
+ Added the function lawSummary (at the request of Kai Xu)
+ (22/02/2019).
+
+ Changed trifnd.r to call rexit rather than calling fexit
+ (which in turn calls fexitc).  The subroutine rexit is (now)
+ provided automatically by R.  This change was made at the
+ behest of Brian Ripley 02/06/2019.
+
+ Documented lawSummary(); revised this function in accordance
+ with Kai Xu's suggestions. 04/06/2019.
+
+ Version 0.1-17
+
+ Corrected the help file for deldir; removed reference to "vi3"
+ (which no longer exists) in the description of the "dirsgs"
+ component of the object returned.
+
+ Added in a new function lawSummary() at the request of Kai Xu.
+
  Version 0.1-16
  Installed on CRAN 04/01/2019
  

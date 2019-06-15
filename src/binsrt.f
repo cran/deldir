@@ -6,7 +6,7 @@ C Output from Public domain Ratfor, version 1.03
       dimension ind(npd), ilst(npd)
       dimension rw(4)
       nerror = -1
-      kdiv = 1+dble(npd)**0.25
+      kdiv = int(1+dble(npd)**0.25)
       xkdiv = dble(kdiv)
       xmin = rw(1)
       xmax = rw(2)
@@ -31,11 +31,11 @@ C Output from Public domain Ratfor, version 1.03
       endif
       xt = x(i)
       yt = y(i)
-      ix = 1+(xt-xmin)/dw
+      ix = int(1+(xt-xmin)/dw)
       if(ix.gt.kdiv)then
       ix = kdiv
       endif
-      jy = 1+(yt-ymin)/dh
+      jy = int(1+(yt-ymin)/dh)
       if(jy.gt.kdiv)then
       jy = kdiv
       endif

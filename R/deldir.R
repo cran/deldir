@@ -269,8 +269,6 @@ repeat {
 			ntot=as.integer(ntot),
 			nadj=integer(tadj),
 			madj=as.integer(madj),
-			tx=double(npd),
-			ty=double(npd),
 			eps=as.double(eps),
 			delsgs=double(tdel),
 			ndel=as.integer(ndel),

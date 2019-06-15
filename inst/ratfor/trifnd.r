@@ -44,7 +44,7 @@ call acchk(tau(1),tau(2),tau(3),anticl,x,y,ntot,eps)
 if(!anticl) {
     call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
     if(!anticl) {
-        call fexit("Both vertex orderings are clockwise. See help for deldir.")
+        call rexit("Both vertex orderings are clockwise. See help for deldir.")
     } else {
         ivtmp  = tau(3)
         tau(3) = tau(1)
@@ -131,7 +131,7 @@ if(ntau==3) {
 # inside this one.
 ktri = ktri + 1
 if(ktri > ntri) {
-    call fexit("Cannot find an enclosing triangle.  See help for deldir.")
+    call rexit("Cannot find an enclosing triangle.  See help for deldir.")
 }
 go to 1
 
