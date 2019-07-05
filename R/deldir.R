@@ -140,48 +140,43 @@ if(!is.null(rw)) {
 	if(length(drop)>0) {
 		x <- x[-drop]
 		y <- y[-drop]
-		n <- length(x)
-        if(n == 0 & is.null(dpl)) {
-            whinge <- paste("There are no points inside the given rectangular window\n",
-                            "and no dummy points are specified.  Thus there are\n",
-                            "no points to triangulate/tessellate.\n")
-            stop(whinge)
-        }
                 if(haveZ) z <- z[-drop]
 	}
 }
 
-# If the rectangular window is not specified, form its corners
+# If the rectangular window is (still) not specified, form its corners
 # from the minimum and maximum of the data +/- 10%:
-else {
-	xmin <- min(x)
-	xmax <- max(x)
-	ymin <- min(y)
-	ymax <- max(y)
-	xdff <- xmax-xmin
-	ydff <- ymax-ymin
-	xmin <- xmin-0.1*xdff
-	xmax <- xmax+0.1*xdff
-	ymin <- ymin-0.1*ydff
-	ymax <- ymax+0.1*ydff
-	rw   <- c(xmin,xmax,ymin,ymax)
+if(is.null(rw)) {
+    if(length(x)==0)
+        stop("No points and no rectangular window specified.\n")
+    xmin <- min(x)
+    xmax <- max(x)
+    ymin <- min(y)
+    ymax <- max(y)
+    xdff <- xmax-xmin
+    ydff <- ymax-ymin
+    xmin <- xmin-0.1*xdff
+    xmax <- xmax+0.1*xdff
+    ymin <- ymin-0.1*ydff
+    ymax <- ymax+0.1*ydff
+    rw   <- c(xmin,xmax,ymin,ymax)
 }
 
 # Add the dummy points:
 if(!is.null(dpl)) {
-	dpts <- dumpts(x,y,dpl,rw)
-	x    <- dpts$x
-	y    <- dpts$y
-        ndm  <- length(x) - n
-        if(haveZ) {
-		if(!is.null(zdum)) {
-			if(length(zdum) != ndm)
-				stop("The z dummy points are of the wrong length.\n")
-		} else {
-			zdum <- rep(NA,ndm)
-		}
-		z <- c(z,zdum)
-	}
+    dpts <- dumpts(x,y,dpl,rw)
+    x    <- dpts$x
+    y    <- dpts$y
+    ndm  <- length(x) - n
+    if(haveZ) {
+        if(!is.null(zdum)) {
+            if(length(zdum) != ndm)
+                stop("The z dummy points are of the wrong length.\n")
+        } else {
+            zdum <- rep(NA,ndm)
+        }
+        z <- c(z,zdum)
+    }
 } else ndm <- 0
 
 # Eliminate duplicate points:
@@ -206,6 +201,14 @@ if(any(iii)) {
 
 # Toadal length of coordinate vectors ("n plus dummy").
 npd  <- n + ndm
+
+# Check there are sufficiently many points to triangulate/tessellate.
+if(npd <= 1) {
+    whinge <- paste("There is at most one point, data or dummy, inside\n",
+                    " the given rectangular window. Thus there are\n",
+                    " insufficiently many points to triangulate/tessellate.\n")
+    stop(whinge)
+}
 
 # Sort the coordinates into "bins".  There are approximately
 # sqrt(npd) such bins.  The vector "ind" (index) keeps track of the

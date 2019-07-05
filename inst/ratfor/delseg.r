@@ -16,7 +16,9 @@ kseg = 0
 do i = 2,npd {
         do j = 1,i-1 {
                 call adjchk(i,j,value,nadj,madj,ntot,nerror)
-		if(nerror>0) return
+		if(nerror>0){
+                    return
+                }
                 if(value) {
 			kseg = kseg+1
 			if(kseg > ndel) {

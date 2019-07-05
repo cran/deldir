@@ -16,9 +16,9 @@ tile.list <- function (object) {
   rslt <- list()
   ind.orig <- object$ind.orig
   for (i in 1:npts) {
-    filter1 = ddd$ind1 == i
-    filter2 = ddd$ind2 == i
-    subset = ddd[which(filter1 | filter2),]
+    filter1 <- ddd$ind1 == i
+    filter2 <- ddd$ind2 == i
+    subset  <- ddd[which(filter1 | filter2),,drop=FALSE]
     m <- matrix(unlist(subset[, 1:4]), ncol = 4)
     bp1 <- subset[, 7]
     bp2 <- subset[, 8]
@@ -28,7 +28,7 @@ tile.list <- function (object) {
     pt <- c(x = sss$x[i], y = sss$y[i])
     theta <- atan2(m[, 2] - pt[2], m[, 1] - pt[1])
     theta.0 <- sort(unique(theta))
-    mm <- m[match(theta.0, theta), ]
+    mm <- m[match(theta.0, theta),,drop=FALSE]
     xx <- mm[, 1]
     yy <- mm[, 2]
     bp <- as.logical(mm[, 3])

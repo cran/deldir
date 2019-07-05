@@ -25,7 +25,9 @@ tau(3) = nadj(j1,1)
 call pred(tau(2),j1,tau(3),nadj,madj,ntot,nerror)
 if(nerror > 0) return
 call adjchk(tau(2),tau(3),adjace,nadj,madj,ntot,nerror)
-if(nerror>0) return
+if(nerror>0) {
+    return
+}
 if(!adjace) {
         tau(3) = tau(2)
 	call pred(tau(2),j1,tau(3),nadj,madj,ntot,nerror)

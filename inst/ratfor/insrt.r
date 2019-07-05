@@ -8,7 +8,9 @@ logical adj
 
 # Check whether i and j are in each other's adjacency lists.
 call adjchk(i,j,adj,nadj,madj,ntot,nerror)
-if(nerror > 0) return
+if(nerror > 0) {
+    return
+}
 if(adj) return
 
 # If not, find where in each list they should respectively be.

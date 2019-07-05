@@ -1,4 +1,46 @@
 
+ Version 0.1-22
+
+ Added a "drop=FALSE" argument to the line
+
+     mm <- m[match(theta.0, theta),]
+
+ in tile.list.R, changing it to
+
+     mm <- m[match(theta.0, theta),,drop=FALSE] 
+
+ to guard against an infelicity that *could* (???) arise if
+ theta.0 turned out to have length 1.  This was motivated by
+ an error message that Vitor Sampaio received when he used
+ adaptive.density() in spatstat.  The error went away when
+ he re-started R (!!!) but seemed to have been triggered by
+ such an infelicity.  I don't *think* theta.0 could ever
+ have length 1 in real life, but the "drop=FALSE" doesn't
+ hurt.
+
+ (23/06/2019) 
+
+ Fixed an error in master.r that was introduced in version
+ 0.1-16 when I fixed the bug in trifnd.r that was pointed out
+ by Adam Dadvar.  In adding a line to master.r I inadvertently
+ deleted the line "if(nerror>0) return" after the call to the
+ "addpt" subroutine.  Consequenty the "madj" parameter/dimension
+ did not get incremented when this was called for.  As a result
+ (the intricacies of which I have not investigated) a "nerror = 1"
+ condition was induced later on.
+
+ Thanks to Peter Bastian for pointing out the problem.
+ (05/07/2019).
+
+ Adjusted deldir() to throw a "graceful" error if there is only
+ one point in the pattern and no dummy points.  Previously this
+ situation led to an un-graceful error.  (Previously an error
+ was thrown only if there were zero points in the pattern; this
+ is insufficiently stringent.)
+ (05/07/2019).
+
+ Submitted to CRAN 05/07/2019.
+
  Version 0.1-21
 
  Fixed yet another screw-up in init.c in src; the specifications

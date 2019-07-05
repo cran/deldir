@@ -14,7 +14,9 @@ logical shdswp
 # If vertices k1 and k2 are not connected there is no diagonal to swap.
 # This could happen if vertices j, k1, and k2 were colinear, but shouldn't.
 call adjchk(k1,k2,shdswp,nadj,madj,ntot,nerror)
-if(nerror > 0) return
+if(nerror > 0) {
+    return
+}
 if(!shdswp) return
 
 # Get the other vertex of the quadrilateral.

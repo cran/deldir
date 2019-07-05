@@ -47,6 +47,9 @@ C Output from Public domain Ratfor, version 1.03
       ntri = 4
       do23014 j = 2,npd 
       call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+      if(nerror.gt.0)then
+      return
+      endif
       ntri = ntri + 3
 23014 continue
 23015 continue

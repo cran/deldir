@@ -8,7 +8,9 @@ logical adj
 
 # First check that they're IN each other's lists.
 call adjchk(i,j,adj,nadj,madj,ntot,nerror)
-if(nerror > 0) return
+if(nerror > 0) {
+   return
+}
 
 # Then do the actual deletion if they are.
 if(adj) {

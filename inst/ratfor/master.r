@@ -59,6 +59,9 @@ ntri = 4
 # Now add the rest of the point set
 do j = 2,npd {
 	call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+        if(nerror>0) {
+            return
+        }
         ntri = ntri + 3
 }
 

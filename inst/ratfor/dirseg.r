@@ -48,7 +48,9 @@ y(i) = ymax+c
 do j = nstt,ntot {
 	call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
         ntri = ntri + 3
-	if(nerror > 0) return
+	if(nerror > 0) {
+            return
+        }
 }
 
 # Put the segments into the array dirsgs.
@@ -60,7 +62,9 @@ kseg = 0
 do i = 2,npd {
         do j = 1,i-1 {
                 call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
-		if(nerror > 0) return
+		if(nerror > 0) {
+                    return
+                }
                 if(adjace) {
                         call pred(k,i,j,nadj,madj,ntot,nerror)
 			if(nerror > 0) return
