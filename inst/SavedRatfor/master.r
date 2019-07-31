@@ -1,5 +1,5 @@
 subroutine master(x,y,rw,npd,ntot,nadj,madj,eps,delsgs,ndel,delsum,
-                  dirsgs,ndir,dirsum,nerror)
+                  dirsgs,ndir,dirsum,collinchk,nerror)
 
 # Master subroutine:
 # One subroutine to rule them all,
@@ -13,6 +13,7 @@ dimension nadj(-3:ntot,0:madj)
 dimension rw(4)
 dimension delsgs(6,ndel), dirsgs(10,ndir)
 dimension delsum(npd,4), dirsum(npd,3)
+integer collinchk
 
 # Define one.
 one = 1.d0
@@ -59,6 +60,7 @@ ntri = 4
 # Now add the rest of the point set
 do j = 2,npd {
 	call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+        if(collinchk==1) call collincheck(nadj,j,madj,x,y,ntot,eps)
         if(nerror>0) {
             return
         }

@@ -1,3 +1,15 @@
+ Version 0.1-23
+
+ Fixed a bug in storage allocation which arose (only) when the
+ storage allocation had to be increased.  Thanks to Frederic Pons
+ (of "Service Risques Inondations Littoraux et Hydraulique") who
+ provided a data set which revealed the bug (during the course of
+ investigating error messages that were generated).
+
+ Improved a couple of error messages produced by subroutines
+ circen, qtest1 and trifnd.
+
+ Submitted to CRAN 31/07/2019.
 
  Version 0.1-22
 

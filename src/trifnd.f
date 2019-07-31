@@ -34,6 +34,8 @@ C Output from Public domain Ratfor, version 1.03
       if(.not.anticl)then
       call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
       if(.not.anticl)then
+      call intpr("Point number =",-1,j,1)
+      call intpr("Previous triangle:",-1,tau,3)
       call rexit("Both vertex orderings are clockwise. See help for deld
      *ir.")
       else

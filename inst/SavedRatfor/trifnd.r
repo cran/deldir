@@ -101,7 +101,12 @@ do i = 1,3 {
 # next move:
 
 # case 0: All tests >= 0.; the point is inside; return.
-if(ntau==0) return
+if(ntau==0) {
+if(j==580) {
+   call intpr("Initial containing triangle for point 580:",-1,tau,3)
+}
+return
+}
 
 # The point is not inside; work out the vertices of the triangle to which
 # to move.  Notation: Number the vertices of the current triangle from 1 to 3,

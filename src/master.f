@@ -1,6 +1,6 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine master(x,y,rw,npd,ntot,nadj,madj,eps, delsgs,ndel,delsu
-     *m,dirsgs,ndir,dirsum,nerror)
+      subroutine master(x,y,rw,npd,ntot,nadj,madj,eps,delsgs,ndel,delsum
+     *, dirsgs,ndir,dirsum,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot)
       dimension nadj(-3:ntot,0:madj)

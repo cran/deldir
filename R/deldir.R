@@ -290,21 +290,24 @@ repeat {
 	else {
 		if(nerror==4) {
 			cat('nerror =',nerror,'\n')
-			cat('Increasing madj and trying again.\n')
-			madj <- ceiling(1.2*madj)
+			nmadj <- ceiling(1.2*madj)
+			cat('Increasing madj from',madj,'to',nmadj,'and trying again.\n')
+			madj <- nmadj
 			tadj <- (madj+1)*(ntot+4)
 			ndel <- max(ndel,madj*(madj+1)/2)
 			tdel <- 6*ndel
 			ndir <- ndel
-			tdir <- 8*ndir
+			tdir <- 10*ndir
 			}
 		else if(nerror==14|nerror==15) {
 			cat('nerror =',nerror,'\n')
-			cat('Increasing ndel and ndir and trying again.\n')
-			ndel <- ceiling(1.2*ndel)
+                        nndel <- ceiling(1.2*ndel)
+                        wrds <-paste('Increasing ndel and ndir from',ndel,
+                                     'to',nndel,'and trying again.\n')
+			ndel <- nndel
 			tdel <- 6*ndel
 	                ndir <- ndel
-	                tdir <- 8*ndir
+	                tdir <- 10*ndir
 		}
 		else {
 			cat('nerror =',nerror,'\n')
@@ -350,7 +353,7 @@ dirsgs$thirdv2  <- with(dirsgs,ifelse(thirdv2<0,thirdv2,rind[abs(thirdv2)]))
 # the rows of "allsum" so that the points appear in the original order.
 allsum          <- allsum[ind,]
 
-# The follwing is a furphy --- it just makes the rownames into
+# The following is a furphy --- it just makes the rownames into
 # 1, 2, ..., n.  At this point the rownames of "allsum" were
 # (1:n)[ind].  So we're getting (1:n)[ind])[rind] = ind[rind]
 # = 1:n !!!
