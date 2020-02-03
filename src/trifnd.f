@@ -3,6 +3,7 @@ C Output from Public domain Ratfor, version 1.03
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(
      *3)
+      dimension itmp(1)
       integer tau(3)
       logical adjace, anticl
       nerror = -1
@@ -34,7 +35,8 @@ C Output from Public domain Ratfor, version 1.03
       if(.not.anticl)then
       call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
       if(.not.anticl)then
-      call intpr("Point number =",-1,j,1)
+      itmp(1) = j
+      call intpr("Point number =",-1,itmp,1)
       call intpr("Previous triangle:",-1,tau,3)
       call rexit("Both vertex orderings are clockwise. See help for deld
      *ir.")
@@ -108,6 +110,8 @@ C Output from Public domain Ratfor, version 1.03
       endif
       ktri = ktri + 1
       if(ktri .gt. ntri)then
+      itmp(1) = j
+      call intpr("Point being added:",-1,itmp,1)
       call rexit("Cannot find an enclosing triangle.  See help for deldi
      *r.")
       endif

@@ -6,6 +6,7 @@ subroutine trifnd(j,tau,nedge,nadj,madj,x,y,ntot,eps,ntri,nerror)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot), xt(3), yt(3)
+dimension itmp(1)
 integer tau(3)
 logical adjace, anticl
 
@@ -47,7 +48,8 @@ call acchk(tau(1),tau(2),tau(3),anticl,x,y,ntot,eps)
 if(!anticl) {
     call acchk(tau(3),tau(2),tau(1),anticl,x,y,ntot,eps)
     if(!anticl) {
-        call intpr("Point number =",-1,j,1)
+        itmp(1) = j
+        call intpr("Point number =",-1,itmp,1)
         call intpr("Previous triangle:",-1,tau,3)
         call rexit("Both vertex orderings are clockwise. See help for deldir.")
     } else {
@@ -136,6 +138,8 @@ if(ntau==3) {
 # inside this one.
 ktri = ktri + 1
 if(ktri > ntri) {
+    itmp(1) = j
+    call intpr("Point being added:",-1,itmp,1)
     call rexit("Cannot find an enclosing triangle.  See help for deldir.")
 }
 go to 1

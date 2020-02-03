@@ -3,6 +3,7 @@ C Output from Public domain Ratfor, version 1.03
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3)
       dimension indv(3)
+      dimension xtmp(1)
       logical collin
       nerror = -1
       xt(1) = x(i)
@@ -35,7 +36,8 @@ C Output from Public domain Ratfor, version 1.03
       indv(2) = j
       indv(3) = k
       call intpr("Point numbers:",-1,indv,3)
-      call dblepr("Test value:",-1,alpha,1)
+      xtmp(1) = alpha
+      call dblepr("Test value:",-1,xtmp,1)
       call rexit("Points are collinear but in the wrong order.")
       endif
       return

@@ -2,6 +2,8 @@ C Output from Public domain Ratfor, version 1.03
       subroutine qtest1(h,i,j,k,x,y,ntot,eps,shdswp,nerror)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3), indv(3)
+      dimension itmp(1)
+      dimension xtmp(1)
       integer h
       logical shdswp, collin
       xt(1) = x(h)
@@ -26,13 +28,16 @@ C Output from Public domain Ratfor, version 1.03
       d = d/c2
       alpha = a*c+b*d
       if(alpha.gt.0)then
-      call intpr("error detected in qtest1",-1,1,0)
+      itmp(1) = 1
+      call intpr("error detected in qtest1",-1,itmp,0)
       indv(1) = i
       indv(2) = j
       indv(3) = k
-      call intpr("Point being added, h:",-1,h,1)
+      itmp(1) = h
+      call intpr("Point being added, h:",-1,itmp,1)
       call intpr("now, other vertex, nxt:",-1,indv,3)
-      call dblepr("Test value:",-1,alpha,1)
+      xtmp(1) = alpha
+      call dblepr("Test value:",-1,xtmp,1)
       call rexit("Points are collinear but h not between i and k.")
       endif
       shdswp = .true.
