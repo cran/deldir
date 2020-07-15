@@ -1,8 +1,23 @@
-tile.list <- function (object) {
+tile.list <- local({
+edgeLengths <- function(x,y) {
+    n <- length(x)
+    el <- numeric(n) 
+    for(i in 1:n) {
+        ii <- if(i < n) i+1 else 1
+        el[i] <- sqrt((x[i] - x[ii])^2 + (y[i] - y[ii])^2)
+    } 
+    el 
+}
+
+function (object,minEdgeLength=NULL) {
   if (!inherits(object, "deldir"))
     stop("Argument \"object\" is not of class \"deldir\".\n")
   ptp <- object$summary$pt.type
   rw <- object$rw
+  if(is.null(minEdgeLength)) {
+    drw <- sqrt((rw[2] - rw[1])^2 + (rw[4] - rw[3])^2)
+    minEdgeLength <- drw*sqrt(.Machine$double.eps)
+  }
   x.crnrs <- rw[c(1, 2, 2, 1)]
   y.crnrs <- rw[c(3, 3, 4, 4)]
   ddd <- object$dirsgs
@@ -42,12 +57,17 @@ tile.list <- function (object) {
                 y     = unname(yy),
                 bp    = bp,
                 area  = sss$dir.area[i])
-
+    tmp    <- acw(tmp)
+    bird   <- edgeLengths(tmp$x,tmp$y)
+    ok     <- bird >= minEdgeLength
+    tmp$x  <- tmp$x[ok]
+    tmp$y  <- tmp$y[ok]
+    tmp$bp <- tmp$bp[ok]
     if(length(ptp)) {
       tmp <- append(tmp,values=ptp[i],after=2)
       names(tmp)[3] <- "ptType"
     }
-    rslt[[i]] <- acw(tmp)
+    rslt[[i]] <-acw(tmp)
     if(haveZ)
       rslt[[i]]["z"] <- z[i]
   }
@@ -55,6 +75,8 @@ tile.list <- function (object) {
   attr(rslt, "rw") <- object$rw
   return(rslt)
 }
+
+})
 
 "[.tile.list" <- function(x,i,...){
     y <- unclass(x)[i]

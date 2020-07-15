@@ -16,7 +16,7 @@ being triangulated.
 }
 \usage{
 deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
-       digits=6, z=NULL, zdum=NULL, suppressMsge=FALSE, \dots)
+       round=TRUE,digits=6, z=NULL, zdum=NULL, suppressMsge=FALSE, \dots)
 }
 \arguments{
 \item{x,y}{
@@ -112,9 +112,19 @@ to pass appropriate arguments to \code{plot.deldir()}.  Without
 \dQuote{further instruction} a plot of the points being triangulated
 and of both the triangulation and the tessellation is produced;
 }
+\item{round}{
+Logical scalar.  Should the data stored in the returned value
+be rounded to \code{digits} decimal digits?  This is essentially
+for cosmetic purposes.  This argument is a \dQuote{new addtion}
+to \code{deldir()}, as of version 0.1-26.  Previously rounding
+was done willy-nilly.  The change was undertaken when Kodi
+Arfer pointed out that the rounding might have unwanted effects
+upon \dQuote{downstream} operations.
+}
 \item{digits}{
 The number of decimal places to which all numeric values in the
-returned list should be rounded.  Defaults to 6.
+returned list should be rounded.  Defaults to 6. Ignored if
+\code{round} (see above) is set to \code{FALSE}.
 }
 \item{z}{
 An optional vector of \dQuote{auxiliary} values or \dQuote{weights}

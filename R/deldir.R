@@ -2,9 +2,8 @@ deldir <- local({
 
 EnvSupp <- new.env()
 
-function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,
-                   plotit=FALSE,digits=6,z=NULL, zdum=NULL,
-                   suppressMsge=FALSE,...) {
+function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,plotit=FALSE,
+         round=TRUE,digits=6,z=NULL, zdum=NULL,suppressMsge=FALSE,...) {
 # Function deldir
 #
 #   Copyright (C) 1996 by T. Rolf Turner
@@ -136,10 +135,12 @@ if(!is.null(rw)) {
 	xmax <- rw[2]
 	ymin <- rw[3]
 	ymax <- rw[4]
-	drop <- (1:n)[x<xmin|x>xmax|y<ymin|y>ymax]
+        ind.orig <- 1:n
+	drop     <- ind.orig[x<xmin|x>xmax|y<ymin|y>ymax]
 	if(length(drop)>0) {
 		x <- x[-drop]
 		y <- y[-drop]
+                ind.orig <- ind.orig[-drop]
                 if(haveZ) z <- z[-drop]
 	}
 }
@@ -160,14 +161,18 @@ if(is.null(rw)) {
     ymin <- ymin-0.1*ydff
     ymax <- ymax+0.1*ydff
     rw   <- c(xmin,xmax,ymin,ymax)
+    ind.orig <- 1:n
 }
+nn <- length(x) # Could be different from "n" if the data were
+                # clipped to rw.
 
 # Add the dummy points:
 if(!is.null(dpl)) {
     dpts <- dumpts(x,y,dpl,rw)
     x    <- dpts$x
     y    <- dpts$y
-    ndm  <- length(x) - n
+    ndm  <- length(x) - nn
+    ind.orig <- c(ind.orig,nn+(1:ndm))
     if(haveZ) {
         if(!is.null(zdum)) {
             if(length(zdum) != ndm)
@@ -183,8 +188,8 @@ if(!is.null(dpl)) {
 iii <- duplicatedxy(x,y)
 if(any(iii)) {
     kkk <- !iii
-    ndm <- sum(kkk[-(1:n)])
-    n   <- sum(kkk[1:n])
+    ndm <- sum(kkk[-(1:nn)])
+    nn  <- sum(kkk[1:nn])
     if(haveZ) {
         jjj <- duplicated(data.frame(x=x,y=y,z=z))
         if(sum(jjj) < sum(iii)) {
@@ -196,11 +201,12 @@ if(any(iii)) {
     }
     x   <- x[kkk]
     y   <- y[kkk]
-    ind.orig <- which(!iii)
-} else ind.orig <- seq_along(iii)
+    ind.orig <- ind.orig[!iii]
+}
 
 # Toadal length of coordinate vectors ("n plus dummy").
-npd  <- n + ndm
+npd  <- nn + ndm
+if(length(x) != npd) stop("Alles up-gefucken ist!\n")
 
 # Check there are sufficiently many points to triangulate/tessellate.
 if(npd <= 1) {
@@ -304,6 +310,7 @@ repeat {
                         nndel <- ceiling(1.2*ndel)
                         wrds <-paste('Increasing ndel and ndir from',ndel,
                                      'to',nndel,'and trying again.\n')
+                        cat(wrds)
 			ndel <- nndel
 			tdel <- 6*ndel
 	                ndir <- ndel
@@ -318,20 +325,36 @@ repeat {
 
 # Collect up the results for return:
 ndel             <- tmp$ndel
-delsgs           <- round(t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel])),digits)
+delsgs           <- if(round) {
+                        round(t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel])),digits)
+                    } else {
+                        t(as.matrix(matrix(tmp$delsgs,nrow=6)[,1:ndel]))
+                    }
 delsgs           <- as.data.frame(delsgs)
 names(delsgs)    <- c('x1','y1','x2','y2','ind1','ind2')
 delsum           <- matrix(tmp$delsum,ncol=4)
 del.area         <- sum(delsum[,4])
-delsum           <- round(cbind(delsum,delsum[,4]/del.area),digits)
-del.area         <- round(del.area,digits)
+delsum           <- if(round) {
+                        round(cbind(delsum,delsum[,4]/del.area),digits)
+                    } else {
+                        cbind(delsum,delsum[,4]/del.area)
+                    }
+del.area         <- if(round) round(del.area,digits) else del.area
 ndir             <- tmp$ndir
-dirsgs           <- round(t(as.matrix(matrix(tmp$dirsgs,nrow=10)[,1:ndir])),digits)
+dirsgs           <- if(round) {
+                        round(t(as.matrix(matrix(tmp$dirsgs,nrow=10)[,1:ndir])),digits)
+                    } else {
+                        t(as.matrix(matrix(tmp$dirsgs,nrow=10)[,1:ndir]))
+                    }
 dirsgs           <- as.data.frame(dirsgs)
 dirsum           <- matrix(tmp$dirsum,ncol=3)
 dir.area         <- sum(dirsum[,3])
-dirsum           <- round(cbind(dirsum,dirsum[,3]/dir.area),digits)
-dir.area         <- round(dir.area,digits)
+dirsum           <- if(round) {
+                        round(cbind(dirsum,dirsum[,3]/dir.area),digits)
+                    } else {
+                        cbind(dirsum,dirsum[,3]/dir.area)
+                    }
+dir.area         <- if(round) round(dir.area,digits) else dir.area
 names(dirsgs)    <- c('x1','y1','x2','y2','ind1','ind2','bp1','bp2',
                       'thirdv1','thirdv2')
 mode(dirsgs$bp1) <- 'logical'
@@ -370,21 +393,21 @@ rownames(allsum) <- ind.orig
 # Put in an indicator of point type if there were any
 # dummy points added.
 i1 <- if(ndm > 0) {
-    data.frame(pt.type=c(rep("data",n),rep("dummy",ndm)))
+    data.frame(pt.type=c(rep("data",nn),rep("dummy",ndm)))
 } else {
-    as.data.frame(matrix(nrow=n,ncol=0))
+    as.data.frame(matrix(nrow=nn,ncol=0))
 }
 i2 <- if(haveZ) {
     data.frame(z=z)
 } else {
-    as.data.frame(matrix(nrow=n+ndm,ncol=0))
+    as.data.frame(matrix(nrow=nn+ndm,ncol=0))
 }
 
 allsum <- cbind(allsum[,1:2],i1,i2,allsum[,3:9])
-rw     <- round(rw,digits)
+rw     <- if(round) round(rw,digits) else rw
 
 # Aw' done!!!
-rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=n,
+rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=nn,
              n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw,
              ind.orig=ind.orig)
 class(rslt) <- 'deldir'

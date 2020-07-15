@@ -1,3 +1,45 @@
+
+ Version 0.1-28
+
+ Removed a browser() call that I'd left lying around in deldir().
+ Grrrrrr!!!!
+
+ 15/07/2020
+
+ Version 0.1-27
+
+ Fixed a bug in deldir(), w.r.t. the lengths of vectors x and y
+ after duplicated points have been eliminated.  (Revealed by
+ CRAN having tested an example in the grapherator package,
+ which depends on deldir.
+
+ Added a data set "grapherXmpl" which is taken from the example
+ in the grapherator package.
+
+ 15/07/2020
+
+ Version 0.1-26
+
+ Fixed a bug in tile.list(); sometimes the edges of the
+ tiles could be effectively of zero length, possibly resulting
+ in an "invalid" tile.  Added an argment minEdgeLength to
+ tile.list() specifying the smallest value that an edge length
+ can have.  This defaults to sqrt(.Machine$double.eps) times
+ the length of the diagonal of the rectangle.
+
+ Thanks to Kodi Arfer for pointing out this problem.
+
+ Added argument "round" (defaulting to TRUE) to deldir().
+ If round==FALSE then rounding is no longer done.
+
+ Added function print.deldir() which prints out a a very brief
+ description of an object of class "deldir" as returned by deldir().
+
+ Fixed a bug in deldir; if the points got clipped to a specified
+ rectangular window ("rw") then "n", the number of points,` was
+ wrong.  Made corresponding adjustments to "ind.orig".
+
+ 14/07/2020
  
  Version 0.1-25
 

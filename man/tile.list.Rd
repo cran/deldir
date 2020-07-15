@@ -6,10 +6,20 @@ For each point in the set being tessellated produces a list
 entry describing the Dirichlet/Voronoi tile containing that
 point.
 }
-\usage{ tile.list(object) }
+\usage{ tile.list(object,minEdgeLength=NULL) }
 \arguments{
   \item{object}{ An object of class \code{deldir} as produced
    by the function \code{\link{deldir}()}.}
+  \item{minEdgeLength}{
+  Positive numeric scalar specifying the minimum length that
+  an edge of a tile may have.  It is used to eliminate edges
+  that are effectively of zero length, which can cause tiles
+  to be \dQuote{invalid}.  This argument defaults to
+  \code{sqrt(.Machine$double.eps)} time the diameter (length
+  of the diagonal) of the \dQuote{rectangular window}
+  associated with the tessellation.  This rectangular window
+  is available as the \code{rw} component of \code{object}.
+}
 }
 \value{
 A list with one entry for each of the points in the set
