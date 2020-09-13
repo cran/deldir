@@ -2,7 +2,7 @@ deldir <- local({
 
 EnvSupp <- new.env()
 
-function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,plotit=FALSE,
+function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
          round=TRUE,digits=6,z=NULL, zdum=NULL,suppressMsge=FALSE,...) {
 # Function deldir
 #
@@ -378,7 +378,7 @@ allsum          <- allsum[ind,]
 
 # The following is a furphy --- it just makes the rownames into
 # 1, 2, ..., n.  At this point the rownames of "allsum" were
-# (1:n)[ind].  So we're getting (1:n)[ind])[rind] = ind[rind]
+# (1:n)[ind].  So we're getting (1:n)[ind][rind] = ind[rind]
 # = 1:n !!!
 # rownames(allsum) <- rownames(allsum)[rind]
 # So we could just set rownames(allsum) <- 1:nrow(allsum) and
@@ -411,7 +411,7 @@ rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=nn,
              n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw,
              ind.orig=ind.orig)
 class(rslt) <- 'deldir'
-if(plotit) {
+if(plot) {
 	plot(rslt,...)
 	return(invisible(rslt))
 } else return(rslt)

@@ -1,10 +1,10 @@
-c31be6fd22450957d57dc4d1dc8be5b9 *ChangeLog
-9ea266a5a57f3b37a0e30cc96b51484d *DESCRIPTION
+0da5eebf18d0ef71780a0c4b526d6305 *ChangeLog
+48e3a38a4d42f7397061cdac033e6589 *DESCRIPTION
 feaa5112ceb7df995f229ceb1a0c56b1 *NAMESPACE
-276c474998f3b1b2af301365f41b4171 *R/First.R
+ecb8de55443d5a58ff44ccc58bf71d7b *R/First.R
 73e1fe7de214e92456cd97ad52a32f44 *R/acw.R
 6a846af3d0ab4ab78512bee974ec6162 *R/binsrt.R
-29014663b05554132d51dadd20948bdf *R/deldir.R
+33480c85268680e697fb36c4ee40e2a2 *R/deldir.R
 e93cf566c9d47595ee8fd48fd53c49ff *R/divchain.R
 b6bc4dcf957c3deea31c6f8784b4257e *R/divchain.default.R
 b9c43e43a0f28730313ee9a4c9b6e96d *R/divchain.deldir.R
@@ -15,7 +15,7 @@ fb4fd373dd2a698f4b5db76ad9bd4a48 *R/getCol.R
 1c8ff720c4eb4ce2c2285fcadfbe9e7a *R/lawSummary.R
 e55af1ae6eb1861a0e7e2ea8a68c8444 *R/mid.in.R
 38cab98679b46834c875f24aa585652d *R/mnnd.R
-1e5012489a9c348a7b2791cb9fdda731 *R/plot.deldir.R
+b238d97c41afeb6c361ce35906026a89 *R/plot.deldir.R
 d6eab673058844acdc5ec31ba74cac63 *R/plot.divchain.R
 1d66c3d631a8c9376fc042b3680dc4e1 *R/plot.tile.list.R
 d2c672a1e243a6ee9446433850234456 *R/plot.triang.list.R
@@ -113,7 +113,7 @@ ae763fdef4e32189add54be38868d492 *inst/ratfor/swap.r
 728e4e2b3d69a1ea05c3373ce5c378f5 *inst/ratfor/triar.r
 2b83d525c7bd91e73d0e4107b6eccf2b *inst/ratfor/trifnd.r
 016e78adc896fe444119258f827f9be1 *man/deldir-internal.Rd
-9b7f671b1ad66fd34d678f61098f8b38 *man/deldir.Rd
+9e6ffdb1c470ed761b921b66c647d98e *man/deldir.Rd
 d8d136a9c89729dc77d9b001608dbe39 *man/divchain.Rd
 9a864d08542901f46155c75482e027c3 *man/divchain.default.Rd
 5b2eedfe0ad5ff390b83e77b86fe6e38 *man/divchain.deldir.Rd
@@ -121,7 +121,7 @@ d8d136a9c89729dc77d9b001608dbe39 *man/divchain.Rd
 b4c81092e8fd5552ba4b24088301e95b *man/grapherXmpl.Rd
 6321c7706fc6345bcacefae5f2c48173 *man/lawSummary.Rd
 2ce7fbea93478b4645c8061eb4966093 *man/niProperties.Rd
-b3a5b85d2e6dcd005f7fda86abc2751d *man/plot.deldir.Rd
+66d4d8f2911715aa52e7569edbbb566b *man/plot.deldir.Rd
 6e913c92d1e1b06484d9e128d68051f2 *man/plot.divchain.Rd
 e2e14d87ebcba8c95b55195e7ecf69bf *man/plot.tile.list.Rd
 bb74ebbd0b644b2ef29de2ce4378f9ac *man/plot.triang.list.Rd
@@ -132,7 +132,7 @@ e9e5fda3117e4c5fb172c8f883c6e3f6 *man/print.deldir.Rd
 32e1e82c1ca70328f499c76d99f57d87 *man/tile.list.Rd
 d76db01a93f1c250b738839459443425 *man/tileInfo.Rd
 1a445f24882bdb832d115514897389bf *man/tilePerim.Rd
-4cd6cb5dfeead58a474f7d5aeb93ec5a *man/triMat.Rd
+f4fcd7bd9c5b504ecf963dcd3d44c737 *man/triMat.Rd
 7693498598a1fa296c15a429a44bc43f *man/triang.list.Rd
 b19b7f645ad78070a72b9e3b4f04adbf *man/which.tile.Rd
 76a558eb6db0bdbeef0087d1f3c35b92 *src/acchk.f

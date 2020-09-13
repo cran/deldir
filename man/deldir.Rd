@@ -15,7 +15,7 @@ points may be added, in various ways, to the set of data points
 being triangulated.
 }
 \usage{
-deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plotit=FALSE,
+deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plot=FALSE,
        round=TRUE,digits=6, z=NULL, zdum=NULL, suppressMsge=FALSE, \dots)
 }
 \arguments{
@@ -105,7 +105,7 @@ the triangulation, and therefore wished to make sure that the point
 in question was added last.  Essentially this argument would get used
 only in a de-bugging process.
 }
-\item{plotit}{
+\item{plot}{
 Logical argument; if \code{TRUE} a plot is produced.  The nature
 of the plot may be controlled by using the \code{\dots} argument
 to pass appropriate arguments to \code{plot.deldir()}.  Without
@@ -158,11 +158,11 @@ Auxiliary arguments \code{add}, \code{wlines}, \code{wpoints},
 \code{number}, \code{nex}, \code{col}, \code{lty}, \code{pch},
 \code{xlim}, and \code{ylim} (and possibly other plotting parameters)
 may be passed to \code{\link{plot.deldir}()} through \code{\dots}
-if \code{plotit=TRUE}.
+if \code{plot=TRUE}.
 }
 }
 \value{
-A list (of class \code{deldir}), invisible if \code{plotit=TRUE}, with components:
+A list (of class \code{deldir}), invisible if \code{plot=TRUE}, with components:
 
 \item{delsgs}{
 A data frame with 6 columns.  The first 4 entries of each row are the
@@ -279,7 +279,7 @@ hull, and so the values of del.area and dir.area (if the latter is
 not \code{NULL}) are identical.
 }
 \section{Side Effects}{
-If \code{plotit=TRUE} a plot of the triangulation and/or tessellation
+If \code{plot=TRUE} a plot of the triangulation and/or tessellation
 is produced or added to an existing plot.
 }
 

@@ -1,4 +1,35 @@
 
+ Version 0.1-29
+
+ Changed the names of arguments "col" and "lty" of plot.deldir()
+ to "cmpnt_col" and "cmpnt_lty" so that "col" (in particular) can
+ be passed as a "..." argument.
+
+ Restructred these arguments as *named* vectors or lists.
+
+ Re-wrote the help file accordingly.
+
+ Revised the examples for plot.deldir().
+
+ Added an argument "asp" (aspect ratio), defaulting to 1, to
+ plot.deldir().  This should have been present all along.  Dunno
+ what I was thinking.
+
+ Got rid of the call to par() setting pty="s"; dunno what I thought
+ this was accomplishing.  (Probably thought it was doing what setting
+ asp=1 actually *is* doing.  Adjusted the code so that one can
+ effectively pass pty="s" as a "..." argument, so as to be able
+ to reproduce old results *exactly*.
+
+ Changed the "plotit" argument of deldir() to "plot"; the "plotit"
+ name was a hangover from the dark ages.  It has not been necessary,
+ for decades, to avoid function names as the names of (non-function)
+ arguments.
+
+ 07/09/2020
+
+ Uploaded to CRAN 10/07/09.
+
  Version 0.1-28
 
  Removed a browser() call that I'd left lying around in deldir().

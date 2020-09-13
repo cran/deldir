@@ -64,7 +64,7 @@ xy <- data.frame(
       )
 dxy <- deldir(xy)
 M   <- triMat(dxy)
-plot(dxy,wlines="triang",num=TRUE,axes=FALSE,col=c(1,1,1,1,2))
+plot(dxy,wlines="triang",num=TRUE,axes=FALSE,cmpnt_col=c(1,1,1,1,2,1))
 # The triangle with vertices {4,5,8} was listed in the output of
 # the previous (buggy) version of triMat().  It is NOT a Delaunay
 # triangle and hence should NOT be listed.
