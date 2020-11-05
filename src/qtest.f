@@ -1,10 +1,11 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine qtest(h,i,j,k,shdswp,x,y,ntot,eps,nerror)
+      subroutine qtest(h,i,j,k,shdswp,x,y,ntot,eps)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot)
+      dimension ndi(1)
       integer h
       logical shdswp
-      nerror = -1
+      ndi(1) = 0
       if(i.le.0)then
       ii = 1
       else
@@ -76,9 +77,10 @@ C Output from Public domain Ratfor, version 1.03
       return
       endif
       if(ijk.eq.0)then
-      call qtest1(h,i,j,k,x,y,ntot,eps,shdswp,nerror)
+      call qtest1(h,i,j,k,x,y,ntot,eps,shdswp)
       return
       endif
-      nerror = 7
-      return
+      call intpr("Indicator ijk is out of range.",-1,ndi,0)
+      call intpr("This CAN'T happen!",-1,ndi,0)
+      call rexit("Bailing out of qtest.")
       end

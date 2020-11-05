@@ -21,25 +21,25 @@ d = y(3) - y(1)
 cp = a*d - b*c
 if(cp < 0) s = -s
 do i = 1,n {
-	inside = .true.
-	do j = 1,3 {
-        	jp = j+1
-        	if(jp==4) jp = 1 # Take addition modulo 3.
-		a  = x(jp) - x(j)
-		b  = y(jp) - y(j)
-		c  = u(i)  - x(j)
-		d  = v(i)  - y(j)
-		cp = s*(a*d - b*c)
-		if(cp <= zero) {
-			inside = .false.
-			break
-		}
-	}
-	if(inside) {
-		okay = 0
-		return
-	}
-	
+    inside = .true.
+    do j = 1,3 {
+        jp = j+1
+        if(jp==4) jp = 1 # Take addition modulo 3.
+        a  = x(jp) - x(j)
+        b  = y(jp) - y(j)
+        c  = u(i)  - x(j)
+        d  = v(i)  - y(j)
+        cp = s*(a*d - b*c)
+        if(cp <= zero) {
+            inside = .false.
+            break
+        }
+    }
+    if(inside) {
+        okay = 0
+        return
+    }
+    
 }
 okay = 1
 return

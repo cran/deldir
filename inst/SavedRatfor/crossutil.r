@@ -1,5 +1,4 @@
-subrountine crossutil(i,j,k,x,y,ntot,eps,collin)
-
+subroutine crossutil(i,j,k,x,y,ntot,eps,collin)
 implicit double precision(a-h,o-z)
 dimension x(-3:ntot), y(-3:ntot)
 dimension xt(3), yt(3)

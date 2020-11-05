@@ -13,8 +13,8 @@ n = nadj(i,0)
 
 # If there is nothing already adjacent to i, then j will have place 1.
 if(n==0) {
-        kj = 1
-        return
+    kj = 1
+    return
 }
 
 # Run through i's list, checking if j should come before each element
@@ -22,20 +22,20 @@ if(n==0) {
 # If j comes before the kj-th item, but not before the (kj-1)-st, then
 # j should have place kj.
 do ks = 1,n {
-	kj = ks
-        k = nadj(i,kj)
+    kj = ks
+    k = nadj(i,kj)
+    call acchk(i,j,k,before,x,y,ntot,eps)
+    if(before) {
+        km = kj-1
+        if(km==0) km = n
+        k = nadj(i,km)
         call acchk(i,j,k,before,x,y,ntot,eps)
-        if(before) {
-                km = kj-1
-                if(km==0) km = n
-                k = nadj(i,km)
-                call acchk(i,j,k,before,x,y,ntot,eps)
-                if(before) next
-                # If j is before 1 and after n, then it should
-                # have place n+1.
-                if(kj==1) kj = n+1
-                return
-        }
+        if(before) next
+# If j is before 1 and after n, then it should
+# have place n+1.
+        if(kj==1) kj = n+1
+        return
+    }
 }
 
 # We've gone right through the list and haven't been before

@@ -1,4 +1,4 @@
-subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps,nerror)
+subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps)
 
 # Apply Stokes' theorem to find the area of a polygon;
 # we are looking at the boundary segment from (x1,y1)
@@ -17,33 +17,36 @@ subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps,nerror)
 
 implicit double precision(a-h,o-z)
 dimension rw(4)
+dimension ndi(1)
 logical value
 
+# Set dummy integer for call to intpr(...).
+ndi(1) = 0
+
 zero   = 0.d0
-nerror = -1
 
 # If the segment is vertical, the area is zero.
 call testeq(x1,x2,eps,value)
 if(value) {
-        area = 0.
-        s1   = 0.
-        return
+    area = 0.
+    s1   = 0.
+    return
 }
 
 # Find which is the right-hand end, and which is the left.
 if(x1<x2) {
-        xl = x1
-        yl = y1
-        xr = x2
-        yr = y2
-        s1 = -1.
+    xl = x1
+    yl = y1
+    xr = x2
+    yr = y2
+    s1 = -1.
 }
 else {
-        xl = x2
-        yl = y2
-        xr = x1
-        yr = y1
-        s1 = 1.
+    xl = x2
+    yl = y2
+    xr = x1
+    yr = y1
+    s1 = 1.
 }
 
 # Dig out the corners of the rectangular window.
@@ -67,8 +70,8 @@ xr = x
 yr = y
 
 if(xr<=xmin|xl>=xmax) {
-        area = 0.
-        return
+    area = 0.
+    return
 }
 
 # We're now looking at a trapezoidal region which may or may
@@ -81,73 +84,72 @@ ytop = max(yl,yr)
 # The `roof' of the trapezoid is entirely above the
 # horizontal strip.
 if(ymax<=ybot) {
-        area = (xr-xl)*(ymax-ymin)
-        return
+    area = (xr-xl)*(ymax-ymin)
+    return
 }
 
 # Case 2; ymin <= ybot <= ymax <= ytop:
 # The `roof' of the trapezoid intersects the top of the
 # horizontal strip (y = ymax) but not the bottom (y = ymin).
 if(ymin<=ybot&ymax<=ytop) {
-        call testeq(slope,zero,eps,value)
-        if(value) {
-                w1 = 0.
-                w2 = xr-xl
+    call testeq(slope,zero,eps,value)
+    if(value) {
+        w1 = 0.
+        w2 = xr-xl
+    } else {
+        xit = xl+(ymax-yl)/slope
+        w1 = xit-xl
+        w2 = xr-xit
+        if(slope<0.) {
+            tmp = w1
+            w1  = w2
+            w2  = tmp
         }
-        else {
-                xit = xl+(ymax-yl)/slope
-                w1 = xit-xl
-                w2 = xr-xit
-                if(slope<0.) {
-                        tmp = w1
-                        w1  = w2
-                        w2  = tmp
-                }
-        }
-        area = 0.5*w1*((ybot-ymin)+(ymax-ymin))+w2*(ymax-ymin)
-        return
+    }
+    area = 0.5*w1*((ybot-ymin)+(ymax-ymin))+w2*(ymax-ymin)
+    return
 }
 
 # Case 3; ybot <= ymin <= ymax <= ytop:
 # The `roof' intersects both the top (y = ymax) and
 # the bottom (y = ymin) of the horizontal strip.
 if(ybot<=ymin&ymax<=ytop) {
-        xit = xl+(ymax-yl)/slope
-        xib = xl+(ymin-yl)/slope
-        if(slope>0.) {
-                w1 = xit-xib
-                w2 = xr-xit
-        }
-        else {
-                w1 = xib-xit
-                w2 = xit-xl
-        }
-        area = 0.5*w1*(ymax-ymin)+w2*(ymax-ymin)
-        return
+    xit = xl+(ymax-yl)/slope
+    xib = xl+(ymin-yl)/slope
+    if(slope>0.) {
+            w1 = xit-xib
+            w2 = xr-xit
+    }
+    else {
+        w1 = xib-xit
+        w2 = xit-xl
+    }
+    area = 0.5*w1*(ymax-ymin)+w2*(ymax-ymin)
+    return
 }
 
 # Case 4; ymin <= ybot <= ytop <= ymax:
 # The `roof' is ***between*** the bottom (y = ymin) and
 # the top (y = ymax) of the horizontal strip.
 if(ymin<=ybot&ytop<=ymax) {
-        area = 0.5*(xr-xl)*((ytop-ymin)+(ybot-ymin))
-        return
+    area = 0.5*(xr-xl)*((ytop-ymin)+(ybot-ymin))
+    return
 }
 
 # Case 5; ybot <= ymin <= ytop <= ymax:
 # The `roof' intersects the bottom (y = ymin) but not
 # the top (y = ymax) of the horizontal strip.
 if(ybot<=ymin&ymin<=ytop) {
-        call testeq(slope,zero,eps,value)
-        if(value) {
-                area = 0.
-                return
-        }
-        xib = xl+(ymin-yl)/slope
-        if(slope>0.) w = xr-xib
-        else w = xib-xl
-        area = 0.5*w*(ytop-ymin)
+    call testeq(slope,zero,eps,value)
+    if(value) {
+        area = 0.
         return
+    }
+    xib = xl+(ymin-yl)/slope
+    if(slope>0.) w = xr-xib
+    else w = xib-xl
+    area = 0.5*w*(ytop-ymin)
+    return
 }
 
 # Case 6; ytop <= ymin:
@@ -159,7 +161,8 @@ if(ytop<=ymin) {
 }
 
 # Default; all stuffed up:
-nerror = 8
-return
-
+call intpr("Fell through all six cases.",-1,ndi,0)
+call intpr("Something is totally stuffed up!",-1,ndi,0)
+call intpr("Chaos and havoc in stoke.",-1,ndi,0)
+call rexit("Bailing out of stoke.")
 end

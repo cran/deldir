@@ -1,11 +1,13 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,n
-     *error)
+      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,i
+     *ncadj,incseg)
       implicit double precision(a-h,o-z)
       logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsgs(10,ndir), rw(4)
-      nerror = -1
+      dimension ndi(1)
+      ndi(1) = 0
+      incseg = 0
       xmin = rw(1)
       xmax = rw(2)
       ymin = rw(3)
@@ -28,44 +30,29 @@ C Output from Public domain Ratfor, version 1.03
       x(i) = xmin-c
       y(i) = ymax+c
       do23000 j = nstt,ntot 
-      call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
-      ntri = ntri + 3
-      if(nerror .gt. 0)then
+      call addpt(j,nadj,madj,x,y,ntot,eps,ntri,incadj)
+      if(incadj.eq.1)then
       return
       endif
+      ntri = ntri + 3
 23000 continue
 23001 continue
       kseg = 0
       do23004 i = 2,npd 
       do23006 j = 1,i-1 
-      call adjchk(i,j,adjace,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
+      call adjchk(i,j,adjace,nadj,madj,ntot)
       if(adjace)then
-      call pred(k,i,j,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
-      call circen(i,k,j,a,b,x,y,ntot,eps,collin,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
+      call pred(k,i,j,nadj,madj,ntot)
+      call circen(i,k,j,a,b,x,y,ntot,eps,collin)
       if(collin)then
-      nerror = 12
-      return
+      call intpr("Vertices of triangle are collinear.",-1,ndi,0)
+      call rexit("Bailing out of dirseg.")
       endif
-      call succ(l,i,j,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
-      call circen(i,j,l,c,d,x,y,ntot,eps,collin,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
+      call succ(l,i,j,nadj,madj,ntot)
+      call circen(i,j,l,c,d,x,y,ntot,eps,collin)
       if(collin)then
-      nerror = 12
-      return
+      call intpr("Vertices of triangle are collinear.",-1,ndi,0)
+      call rexit("Bailing out of dirseg.")
       endif
       xi = x(i)
       xj = x(j)
@@ -80,13 +67,17 @@ C Output from Public domain Ratfor, version 1.03
       endif
       call dldins(a,b,slope,rwu,ai,bi,rw,intfnd,bptab,nedgeab)
       if(.not.intfnd)then
-      nerror = 16
-      return
+      call intpr("Line from midpoint to circumcenter",-1,ndi,0)
+      call intpr("does not intersect rectangle boundary!",-1,ndi,0)
+      call intpr("But it HAS to!!!",-1,ndi,0)
+      call rexit("Bailing out of dirseg.")
       endif
       call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedgecd)
       if(.not.intfnd)then
-      nerror = 16
-      return
+      call intpr("Line from midpoint to circumcenter",-1,ndi,0)
+      call intpr("does not intersect rectangle boundary!",-1,ndi,0)
+      call intpr("But it HAS to!!!",-1,ndi,0)
+      call rexit("Bailing out of dirseg.")
       endif
       goferit = .false.
       if(bptab .and. bptcd)then
@@ -102,7 +93,7 @@ C Output from Public domain Ratfor, version 1.03
       if(goferit)then
       kseg = kseg + 1
       if(kseg .gt. ndir)then
-      nerror = 15
+      incseg = 1
       return
       endif
       dirsgs(1,kseg) = ai

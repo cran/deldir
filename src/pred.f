@@ -1,12 +1,14 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine pred(kpr,i,j,nadj,madj,ntot,nerror)
+      subroutine pred(kpr,i,j,nadj,madj,ntot)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj)
-      nerror = -1
+      dimension ndi(1)
+      ndi(1) = 0
       n = nadj(i,0)
       if(n.eq.0)then
-      nerror = 5
-      return
+      call intpr("Adjacency list of i is empty, and so cannot contain j.
+     *",-1,ndi,0)
+      call rexit("Bailing out of pred.")
       endif
       do23002 k = 1,n 
       if(j.eq.nadj(i,k))then
@@ -19,6 +21,6 @@ C Output from Public domain Ratfor, version 1.03
       endif
 23002 continue
 23003 continue
-      nerror = 6
-      return
+      call intpr("Adjacency list of i does not contain j.",-1,ndi,0)
+      call rexit("Bailing out of pred.")
       end

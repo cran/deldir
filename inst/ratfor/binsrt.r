@@ -1,4 +1,4 @@
-subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst,nerror)
+subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst)
 # Sort the data points into bins.
 # Called by master.
 
@@ -7,8 +7,11 @@ dimension x(npd), y(npd), tx(npd), ty(npd)
 integer rind(npd)
 dimension ind(npd), ilst(npd)
 dimension rw(4)
+dimension ndi(1)
 
-nerror = -1
+# Set dummy integer for call to intpr(...).
+ndi(1) = 0
+
 kdiv   = int(1+dble(npd)**0.25) # Round high.
 xkdiv  = dble(kdiv)
 
@@ -38,45 +41,45 @@ ink  = 1
 k    = 0
 do i = 1,npd { ilst(i) = 0 } # Keeps a list of those points already added
 while(ky<=kdiv) {            # to the new list.
-        do i = 1,npd {
-                if(ilst(i)==1) next  # The i-th point has already been added
-                                     # to the new list.
-                # If the i-th point is in the current bin, add it to the list.
-                xt = x(i)
-                yt = y(i)
-                ix = int(1+(xt-xmin)/dw)
-                if(ix>kdiv) ix = kdiv
-                jy = int(1+(yt-ymin)/dh)
-                if(jy>kdiv) jy = kdiv
-                if(ix==kx&jy==ky) {
-                        k = k+1
-                        ind(i)  = k  # Index i is the pos'n. of (x,y) in the
-                        rind(k) = i  # old list; k is its pos'n. in the new one.
-                        tx(k)   = xt
-                        ty(k)   = yt
-                        ilst(i) = 1  # Cross the i-th point off the old list.
-                }
+    do i = 1,npd {
+        if(ilst(i)==1) next  # The i-th point has already been added
+                             # to the new list.
+# If the i-th point is in the current bin, add it to the list.
+        xt = x(i)
+        yt = y(i)
+        ix = int(1+(xt-xmin)/dw)
+        if(ix>kdiv) ix = kdiv
+        jy = int(1+(yt-ymin)/dh)
+        if(jy>kdiv) jy = kdiv
+        if(ix==kx&jy==ky) {
+            k = k+1
+            ind(i)  = k  # Index i is the pos'n. of (x,y) in the
+            rind(k) = i  # old list; k is its pos'n. in the new one.
+            tx(k)   = xt
+            ty(k)   = yt
+            ilst(i) = 1  # Cross the i-th point off the old list.
         }
-        # Move to the next bin.
-        kc = kx+ink
-        if((1<=kc)&(kc<=kdiv)) kx = kc
-        else {
-                ky  = ky+1
-                ink = -ink
-        }
+    }
+# Move to the next bin.
+    kc = kx+ink
+    if((1<=kc)&(kc<=kdiv)) kx = kc
+    else {
+        ky  = ky+1
+        ink = -ink
+    }
 }
 
 # Check that all points from old list have been added to the new,
 # with no spurious additions.
 if(k!=npd) {
-	nerror = 2
-	return
+    call intpr("Number of points jumbled.",-1,ndi,0)
+    call rexit("Bailing out of binsrt.")
 }
 
-# Copy the new sorted vector back on top of the old ones.
+# Copy the new sorted vectors back on top of the old ones.
 do i = 1,npd {
-        x(i)   = tx(i)
-        y(i)   = ty(i)
+    x(i)   = tx(i)
+    y(i)   = ty(i)
 }
 
 return

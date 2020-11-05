@@ -1,8 +1,8 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine insrt1(i,j,kj,nadj,madj,ntot,nerror)
+      subroutine insrt1(i,j,kj,nadj,madj,ntot,incadj)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj)
-      nerror = -1
+      incadj = 0
       n = nadj(i,0)
       if(n.eq.0)then
       nadj(i,0) = 1
@@ -11,7 +11,7 @@ C Output from Public domain Ratfor, version 1.03
       endif
       kk = n+1
       if(kk.gt.madj)then
-      nerror = 4
+      incadj = 1
       return
       endif
 23004 if(kk.gt.kj)then

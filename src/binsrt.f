@@ -1,11 +1,12 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst,nerror)
+      subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst)
       implicit double precision(a-h,o-z)
       dimension x(npd), y(npd), tx(npd), ty(npd)
       integer rind(npd)
       dimension ind(npd), ilst(npd)
       dimension rw(4)
-      nerror = -1
+      dimension ndi(1)
+      ndi(1) = 0
       kdiv = int(1+dble(npd)**0.25)
       xkdiv = dble(kdiv)
       xmin = rw(1)
@@ -60,8 +61,8 @@ C Output from Public domain Ratfor, version 1.03
       endif
 23003 continue
       if(k.ne.npd)then
-      nerror = 2
-      return
+      call intpr("Number of points jumbled.",-1,ndi,0)
+      call rexit("Bailing out of binsrt.")
       endif
       do23018 i = 1,npd 
       x(i) = tx(i)

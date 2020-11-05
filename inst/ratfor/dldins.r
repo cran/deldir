@@ -37,11 +37,11 @@ ymax = rw(4)
 
 # Check if (a,b) is inside the rectangle.
 if(xmin<=a&a<=xmax&ymin<=b&b<=ymax) {
-        ai = a
-        bi = b
-	bpt = .false.
-        nedge = 0
-        return
+    ai = a
+    bi = b
+    bpt = .false.
+    nedge = 0
+    return
 }
 
 # Look for appropriate intersections with the four lines forming
@@ -52,16 +52,16 @@ if(xmin<=a&a<=xmax&ymin<=b&b<=ymax) {
 
 if(!rwu) {
     if(b < ymin) {
-            ai = a
-            bi = ymin
-            nedge = 1
-            if(xmin<=ai&ai<=xmax) return
+        ai = a
+        bi = ymin
+        nedge = 1
+        if(xmin<=ai&ai<=xmax) return
     }
     if(b > ymax) {
-            ai = a
-            bi = ymax
-            nedge = 3
-            if(xmin<=ai&ai<=xmax) return
+        ai = a
+        bi = ymax
+        nedge = 3
+        if(xmin<=ai&ai<=xmax) return
     }
     intfnd = .false.
     return
@@ -69,34 +69,34 @@ if(!rwu) {
 
 # Line 1: x = xmin.
 if(a<xmin) {
-        ai = xmin
-        bi = b + slope*(ai-a)
-        nedge = 2
-        if(ymin<=bi&bi<=ymax) return
+    ai = xmin
+    bi = b + slope*(ai-a)
+    nedge = 2
+    if(ymin<=bi&bi<=ymax) return
 }
 
 # Line 2: y = ymin.
 if(b<ymin) {
-        bi = ymin
-        ai = a + (bi-b)/slope
-        nedge = 1
-        if(xmin<=ai&ai<=xmax) return
+    bi = ymin
+    ai = a + (bi-b)/slope
+    nedge = 1
+    if(xmin<=ai&ai<=xmax) return
 }
 
 # Line 3: x = xmax.
 if(a>xmax) {
-        ai = xmax
-        bi = b + slope*(ai-a)
-        nedge = 4
-        if(ymin<=bi&bi<=ymax) return
+    ai = xmax
+    bi = b + slope*(ai-a)
+    nedge = 4
+    if(ymin<=bi&bi<=ymax) return
 }
 
 # Line 4: y = ymax.
 if(b>ymax) {
-        bi = ymax
-        ai = a + (bi-b)/slope
-        nedge = 3
-        if(xmin<=ai&ai<=xmax) return
+    bi = ymax
+    ai = a + (bi-b)/slope
+    nedge = 3
+    if(xmin<=ai&ai<=xmax) return
 }
 
 intfnd = .false.

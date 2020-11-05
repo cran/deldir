@@ -1,8 +1,9 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine adjchk(i,j,adj,nadj,madj,ntot,nerror)
+      subroutine adjchk(i,j,adj,nadj,madj,ntot)
       dimension nadj(-3:ntot,0:madj)
       logical adj
-      nerror = -1
+      dimension ndi(1)
+      ndi(1) = 0
       adj = .false.
       ni = nadj(i,0)
       if(ni.gt.0)then
@@ -21,16 +22,16 @@ C Output from Public domain Ratfor, version 1.03
       if(adj)then
       return
       else
-      nerror = 1
-      return
+      call intpr("Contradictory adjacency lists.",-1,ndi,0)
+      call rexit("Bailing out of adjchk.")
       endif
       endif
 23008 continue
 23009 continue
       endif
       if(adj)then
-      nerror = 1
-      return
+      call intpr("Contradictory adjacency lists.",-1,ndi,0)
+      call rexit("Bailing out of adjchk.")
       endif
       return
       end

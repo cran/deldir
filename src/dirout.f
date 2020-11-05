@@ -1,9 +1,11 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps,nerror)
+      subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension dirsum(npd,3), rw(4)
+      dimension ndi(1)
       logical collin, intfnd, bptab, bptcd, rwu
+      ndi(1) = 0
       xmin = rw(1)
       xmax = rw(2)
       ymin = rw(3)
@@ -15,34 +17,19 @@ C Output from Public domain Ratfor, version 1.03
       np = nadj(i,0)
       do23002 j1 = 1,np 
       j = nadj(i,j1)
-      call pred(k,i,j,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
-      call succ(l,i,j,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
-      call circen(i,k,j,a,b,x,y,ntot,eps,collin,nerror)
-      if(nerror.gt.0)then
-      return
-      endif
+      call pred(k,i,j,nadj,madj,ntot)
+      call succ(l,i,j,nadj,madj,ntot)
+      call circen(i,k,j,a,b,x,y,ntot,eps,collin)
       if(collin)then
-      nerror = 13
-      return
+      call intpr("Vertices of triangle are collinear.",-1,ndi,0)
+      call rexit("Bailing out of dirout.")
       endif
-      call circen(i,j,l,c,d,x,y,ntot,eps,collin,nerror)
-      if(nerror.gt.0)then
-      return
-      endif
+      call circen(i,j,l,c,d,x,y,ntot,eps,collin)
       if(collin)then
-      nerror = 13
-      return
+      call intpr("Vertices of triangle are collinear.",-1,ndi,0)
+      call rexit("Bailing out of dirout.")
       endif
-      call stoke(a,b,c,d,rw,tmp,sn,eps,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
+      call stoke(a,b,c,d,rw,tmp,sn,eps)
       area = area+sn*tmp
       xi = x(i)
       xj = x(j)
@@ -59,8 +46,10 @@ C Output from Public domain Ratfor, version 1.03
       if(intfnd)then
       call dldins(c,d,slope,rwu,ci,di,rw,intfnd,bptcd,nedge)
       if(.not.intfnd)then
-      nerror = 17
-      return
+      call intpr("Line from midpoint to circumcenter",-1,ndi,0)
+      call intpr("does not intersect rectangle boundary!",-1,ndi,0)
+      call intpr("But it HAS to!!!",-1,ndi,0)
+      call rexit("Bailing out of dirout.")
       endif
       if(bptab .and. bptcd)then
       xm = 0.5*(ai+ci)

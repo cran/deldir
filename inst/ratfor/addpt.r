@@ -1,4 +1,4 @@
-subroutine addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
+subroutine addpt(j,nadj,madj,x,y,ntot,eps,ntri,incAdj)
 # Add point j to the triangulation.
 # Called by master, dirseg.
 
@@ -8,8 +8,7 @@ logical didswp
 
 # Put the new point in, joined to the vertices of its
 # enclosing triangle.
-call initad(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
-if(nerror > 0) return
+call initad(j,nadj,madj,x,y,ntot,eps,ntri,incAdj)
 
 # Look at each `gap', i.e. pair of adjacent segments
 # emanating from the new point; they form two sides of a
@@ -21,15 +20,13 @@ nxt = nadj(j,2)
 ngap = 0
 
 repeat {
-	call swap(j,now,nxt,didswp,nadj,madj,x,y,ntot,eps,nerror)
-	if(nerror > 0) return
-        n = nadj(j,0)
-        if(!didswp) {         # If no swap of diagonals
-                now  = nxt    # move to the next gap.
-                ngap = ngap+1
-        }
-        call succ(nxt,j,now,nadj,madj,ntot,nerror)
-	if(nerror > 0) return
+    call swap(j,now,nxt,didswp,nadj,madj,x,y,ntot,eps,incAdj)
+    n = nadj(j,0)
+    if(!didswp) {     # If no swap of diagonals
+        now  = nxt    # move to the next gap.
+        ngap = ngap+1
+    }
+    call succ(nxt,j,now,nadj,madj,ntot)
 }
 until(ngap==n)
 

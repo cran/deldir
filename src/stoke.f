@@ -1,10 +1,11 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps,nerror)
+      subroutine stoke(x1,y1,x2,y2,rw,area,s1,eps)
       implicit double precision(a-h,o-z)
       dimension rw(4)
+      dimension ndi(1)
       logical value
+      ndi(1) = 0
       zero = 0.d0
-      nerror = -1
       call testeq(x1,x2,eps,value)
       if(value)then
       area = 0.
@@ -101,6 +102,8 @@ C Output from Public domain Ratfor, version 1.03
       area = 0.
       return
       endif
-      nerror = 8
-      return
+      call intpr("Fell through all six cases.",-1,ndi,0)
+      call intpr("Something is totally stuffed up!",-1,ndi,0)
+      call intpr("Chaos and havoc in stoke.",-1,ndi,0)
+      call rexit("Bailing out of stoke.")
       end

@@ -1,4 +1,4 @@
-subroutine qtest1(h,i,j,k,x,y,ntot,eps,shdswp,nerror)
+subroutine qtest1(h,i,j,k,x,y,ntot,eps,shdswp)
 
 # The Lee-Schacter test for the LOP (all points are real,
 # i.e. non-ideal).  If the LOP is ***not*** satisfied (i.e. if
@@ -10,8 +10,12 @@ implicit double precision(a-h,o-z)
 dimension x(-3:ntot), y(-3:ntot), xt(3), yt(3), indv(3)
 dimension itmp(1)
 dimension xtmp(1)
+dimension ndi(1)
 integer h
 logical shdswp, collin
+
+# Set dummy integer for call to intpr(...).
+ndi(1) = 0
 
 # The vertices of the quadrilateral are labelled
 # h, i, j, k in the anticlockwise direction, h
@@ -64,7 +68,6 @@ if(collin) {
 # a shuddering halt.
     if(alpha>0) {
         itmp(1) = 1
-        call intpr("error detected in qtest1",-1,itmp,0)
         indv(1) = i
         indv(2) = j
         indv(3) = k
@@ -73,7 +76,8 @@ if(collin) {
         call intpr("now, other vertex, nxt:",-1,indv,3)
         xtmp(1) = alpha
         call dblepr("Test value:",-1,xtmp,1)
-        call rexit("Points are collinear but h not between i and k.")
+        call intpr("Points are collinear but h is not between i and k.",-1,ndi,0)
+        call rexit("Bailing out of qtest1.")
     }
 # Collinear, and in the right order; think of this as meaning
 # that the circumcircle in question has infinite radius.
@@ -87,11 +91,10 @@ xj = x(j)
 yj = y(j)
 
 # Find the centre of the circumcircle of vertices h, i, k.
-call circen(h,i,k,x0,y0,x,y,ntot,eps,shdswp,nerror)
-if(nerror>0) return
+call circen(h,i,k,x0,y0,x,y,ntot,eps,shdswp)
 if(shdswp) return # The points h, i, and k are colinear, so
                   # the circumcircle has `infinite radius', so
-                  # (xj,yj) is definitely inside.
+                  # (xj,yj) is definitely inside!
 
 # Check whether (xj,yj) is inside the circle of centre
 # (x0,y0) and radius r = dist[(x0,y0),(xh,yh)]

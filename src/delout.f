@@ -1,5 +1,5 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine delout(delsum,nadj,madj,x,y,ntot,npd,nerror)
+      subroutine delout(delsum,nadj,madj,x,y,ntot,npd)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension delsum(npd,4)
@@ -26,10 +26,7 @@ C Output from Public domain Ratfor, version 1.03
       endif
       xj = x(j)
       yj = y(j)
-      call succ(k,i,j,nadj,madj,ntot,nerror)
-      if(nerror .gt. 0)then
-      return
-      endif
+      call succ(k,i,j,nadj,madj,ntot)
       if(k.le.0)then
       goto 23008
       endif

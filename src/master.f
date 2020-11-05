@@ -1,6 +1,6 @@
 C Output from Public domain Ratfor, version 1.03
       subroutine master(x,y,rw,npd,ntot,nadj,madj,eps,delsgs,ndel,delsum
-     *, dirsgs,ndir,dirsum,nerror)
+     *, dirsgs,ndir,dirsum,incadj,incseg)
       implicit double precision(a-h,o-z)
       dimension x(-3:ntot), y(-3:ntot)
       dimension nadj(-3:ntot,0:madj)
@@ -30,41 +30,39 @@ C Output from Public domain Ratfor, version 1.03
       if(k.gt.0)then
       k = -3
       endif
-      call insrt(j,k,nadj,madj,x,y,ntot,nerror,eps)
-      if(nerror.gt.0)then
+      call insrt(j,k,nadj,madj,x,y,ntot,eps,incadj)
+      if(incadj.eq.1)then
       return
       endif
 23004 continue
 23005 continue
       do23010 i = 1,4 
       j = i-4
-      call insrt(1,j,nadj,madj,x,y,ntot,nerror,eps)
-      if(nerror.gt.0)then
+      call insrt(1,j,nadj,madj,x,y,ntot,eps,incadj)
+      if(incadj.eq.1)then
       return
       endif
 23010 continue
 23011 continue
       ntri = 4
       do23014 j = 2,npd 
-      call addpt(j,nadj,madj,x,y,ntot,eps,ntri,nerror)
-      if(nerror.gt.0)then
+      call addpt(j,nadj,madj,x,y,ntot,eps,ntri,incadj)
+      if(incadj.eq.1)then
       return
       endif
       ntri = ntri + 3
 23014 continue
 23015 continue
-      call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,nerror)
-      if(nerror.gt.0)then
+      call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,incseg)
+      if(incseg.eq.1)then
       return
       endif
-      call delout(delsum,nadj,madj,x,y,ntot,npd,nerror)
-      if(nerror.gt.0)then
+      call delout(delsum,nadj,madj,x,y,ntot,npd)
+      call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,incadj,
+     *incseg)
+      if(incadj.eq.1 .or. incseg.eq.1)then
       return
       endif
-      call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,nerror)
-      if(nerror.gt.0)then
-      return
-      endif
-      call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps,nerror)
+      call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps)
       return
       end

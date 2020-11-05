@@ -35,19 +35,18 @@ function(x,y,dpl=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
 # infinite Dirichlet tiles) with corners (xmin,ymin) etc.  This rectangle
 # is referred to elsewhere as `the' rectangular window.
 if(exists("deldirMsgeDone",envir=EnvSupp)) suppressMsge <- TRUE
-if(!suppressMsge){
-    mess <- paste("\n     PLEASE NOTE:  The components \"delsgs\"",
-                  "and \"summary\" of the\n object returned by deldir()",
-                  "are now DATA FRAMES rather than\n matrices (as they",
-                  "were prior to release 0.0-18).\n See help(\"deldir\").\n",
-                  "\n     PLEASE NOTE: The process that deldir() uses for",
-                  "determining\n duplicated points has changed from that",
-                  "used in version\n 0.0-9 of this package (and previously).",
-                  "See help(\"deldir\").\n\n")
+mess <- NULL
+#
+# Example message:
+# mess <- paste("\n     Go stick your head right up a dead bear's",
+#               "\n     pohutukawa.  Or something like that.\n\n")
+#
+if(!(is.null(mess) | suppressMsge)){
     message(mess)
     assign("deldirMsgeDone","xxx",envir=EnvSupp)
 }
 
+#
 # If the first argument is a data frame, extract the column
 # named "z", if there is one, to be the "z weights".  Remove
 # this column from the first argument.  Extract the column named
@@ -285,42 +284,38 @@ repeat {
 			dirsgs=double(tdir),
 			ndir=as.integer(ndir),
 			dirsum=double(ntdir),
-			nerror=integer(1),
+                        incAdj=integer(1),
+                        incSeg=integer(1),
 			PACKAGE='deldir'
+
 		)
 
-# Check for errors:
-	nerror <- tmp$nerror
-	if(nerror < 0) break
-
-	else {
-		if(nerror==4) {
-			cat('nerror =',nerror,'\n')
-			nmadj <- ceiling(1.2*madj)
-			cat('Increasing madj from',madj,'to',nmadj,'and trying again.\n')
-			madj <- nmadj
-			tadj <- (madj+1)*(ntot+4)
-			ndel <- max(ndel,madj*(madj+1)/2)
-			tdel <- 6*ndel
-			ndir <- ndel
-			tdir <- 10*ndir
-			}
-		else if(nerror==14|nerror==15) {
-			cat('nerror =',nerror,'\n')
-                        nndel <- ceiling(1.2*ndel)
-                        wrds <-paste('Increasing ndel and ndir from',ndel,
-                                     'to',nndel,'and trying again.\n')
-                        cat(wrds)
-			ndel <- nndel
-			tdel <- 6*ndel
-	                ndir <- ndel
-	                tdir <- 10*ndir
-		}
-		else {
-			cat('nerror =',nerror,'\n')
-			return(invisible())
-		}
-	}
+# Check for problems with insufficient storage:
+    incAdj <- tmp$incAdj
+    incSeg <- tmp$incSeg
+    if(incAdj==0 & incSeg==0) break
+    if(incAdj==1) {
+        nmadj <- ceiling(1.2*madj)
+        wrds <- paste('Increasing madj from',madj,'to',nmadj,
+                      'and trying again.')
+        message(wrds)
+        madj <- nmadj
+        tadj <- (madj+1)*(ntot+4)
+        ndel <- max(ndel,madj*(madj+1)/2)
+        tdel <- 6*ndel
+        ndir <- ndel
+        tdir <- 10*ndir
+    }
+    if(incSeg==1) {
+        nndel <- ceiling(1.2*ndel)
+        wrds <-paste('Increasing ndel and ndir from',ndel,
+                     'to',nndel,'and trying again.')
+        message(wrds)
+        ndel <- nndel
+        tdel <- 6*ndel
+        ndir <- ndel
+        tdir <- 10*ndir
+    }
 }
 
 # Collect up the results for return:

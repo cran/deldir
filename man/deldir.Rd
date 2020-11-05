@@ -151,7 +151,8 @@ created. See \bold{Warnings}.
 \item{suppressMsge}{
 Logical scalar indicating whether a message (alerting the user to
 changes from previous versions of \code{deldir}) should be
-suppressed.
+suppressed.  Currently (package version 0.2-1) no such message
+is produced, so this argument has no effect.
 }
 \item{...}{
 Auxiliary arguments \code{add}, \code{wlines}, \code{wpoints},
@@ -284,14 +285,15 @@ is produced or added to an existing plot.
 }
 
 \details{
-This package is a (straightforward) adaptation of the Splus library
-section ``delaunay'' to R.  That library section is an implementation
-of the Lee-Schacter algorithm, which was originally written as a
-stand-alone Fortran program in 1987/88 by Rolf Turner, while with the
-Division of Mathematics and Statistics, CSIRO, Sydney, Australia.  It
-was re-written as an Splus function (using dynamically loaded Fortran
-code), by Rolf Turner while visiting the University of Western
-Australia, May, 1995.
+This package had its origins (way back in the mists of time!)  as an
+Splus library section named \dQuote{delaunay}.  That library section
+in turn was a re-write of a stand-alone Fortran program written
+in 1987/88 while the author was with the Division of Mathematics
+and Statistics, CSIRO, Sydney, Australia.  This program was an
+implementation of the second (iterative) Lee-Schacter algorithm.
+The stand-alone Fortran program was re-written as an Splus function
+(which called upon dynamically loaded Fortran code) while the author
+was visiting the University of Western Australia, May, 1995.
 
 Further revisions were made December 1996. The author gratefully
 acknowledges the contributions, assistance, and guidance of Mark
@@ -315,71 +317,82 @@ See the \code{ChangeLog} for information about further revisions
 and bug-fixes.
 }
 
+\section{Notes on Memory Allocation}{
+It is difficult-to-impossible to determine \emph{a priori}
+how much memory needs to be allocated for storing the edges
+of the Delaunay triangles and Dirichlet tiles, and for storing
+the \dQuote{adjacency list} used by the Lee-Schacter algorithm.
+In the code, an attempt is made to allocate sufficient storage.
+If, during the course of running the algorithm, the amount of
+storage turns out to be inadquate, the algorithm is halted, the
+storage is incremented, and the algorithm is restarted (with an
+informative message).  This message may be suppressed by wrapping
+the call to \code{deldir()} in \code{\link{suppressMessages}()}.
+}
+
 \section{Notes on error messages}{
 
-In the underlying Fortran code, error traps have been set for
-17 different errors, which are identified by an error number
-\code{nerror}.  When one of these traps detects an error, the
-value of \code{nerror} is passed back along the call stack to the
-\code{R} function \code{deldir()} that calls the Fortran subroutines.
-(I.e. to \emph{this} function, the documentation of which you are
-currently reading.)  The \code{deldir()} function then prints out a
-message and returns (invisibly) a \code{NULL} value.  The  message
-consists only of the value of \code{nerror}.  A glossary of the
-meanings of the values of \code{nerror} is to be found in the file
-\code{err.list}, located in the top level of the package directory
-(\dQuote{folder} if you are a Windoze weenie).
+In previous versions of this package, error traps were set in
+the underlying Fortran code for 17 different errors. These were
+identified by an error number which was passed back up the call stack
+and finally printed out by \code{deldir()} which then invisibly
+returned a \code{NULL} value.  A glossary of the meanings of the
+values of was provided in a file to be found in a file located in the
+\code{inst} directory (\dQuote{folder} if you are a Windoze weenie).
 
-Note that the values 4, 14 and 15 of \code{nerror} do not cause
-\code{deldir()} to return a \code{NULL} value but rather cause
-a message to be printed, storage (memory) to be re-allocated
-(increased) and \code{deldir()} to be re-started so as to take
-advantage of the increased amount of storage.
+This was a pretty shaganappi system.  Consequently and as of version
+1.2-1 conversion to \dQuote{proper} error trapping was implemented.
+Such error trapping is effected via the \code{rexit()} subroutine
+which is now available in \code{R}.  (See \dQuote{Writing R Extensions},
+section 6.2.1.)
 
-In version \code{0.1-16} of \code{deldir} a new error trap was
-introduced, and this new trap triggers a genuine error and does
-so in a direct and perspicuous manner.
+Note that when an error is detected \code{deldir()} now exits with
+a genuine error, rather than returning \code{NULL}.  The glossary
+of the meanings of \dQuote{error numbers} is now irrelevant and has
+been removed from the \code{inst} directory.
 
-This new error trap relates to \dQuote{triangle problems}.  It was
-drawn to my attention by Adam Dadvar (on 18 December, 2018) that in
-some data sets collinearity problems may cause the \dQuote{triangle
-finding} procedure, used by the algorithm to successively add new
-points to a tessellation, to go into an infinite loop.  A symptom of
-the collinearity is that the vertices of a putative triangle appear
-\emph{not} to be in anticlockwise order irrespective of whether
-they are presented in the order \code{i, j, k} or \code{k, j, i}.
-The result of this anomaly is that the procedure keeps alternating
-between moving to \dQuote{triangle} \code{i, j, k} and moving to
-\dQuote{triangle} \code{k, j, i}, forever.
+An error trap that merits particular mention was introduced in
+version \code{0.1-16} of \code{deldir}.  This error trap relates to
+\dQuote{triangle problems}.  It was drawn to my attention by Adam
+Dadvar (on 18 December, 2018) that in some data sets collinearity
+problems may cause the \dQuote{triangle finding} procedure, used
+by the algorithm to successively add new points to a tessellation,
+to go into an infinite loop.  A symptom of the collinearity is
+that the vertices of a putative triangle appear \emph{not} to be
+in anticlockwise order irrespective of whether they are presented
+in the order \code{i, j, k} or \code{k, j, i}.  The result of this
+anomaly is that the procedure keeps alternating between moving to
+\dQuote{triangle} \code{i, j, k} and moving to \dQuote{triangle}
+\code{k, j, i}, forever.
 
-The new error trap, set in \code{trifnd}, the triangle finding
-subroutine, detects such occurrences of \dQuote{clockwise in either
-orientation} vertices.  The trap causes the \code{deldir()} function
-to throw an error rather than disappearing into a black hole.
-The error is thrown \dQuote{directly} rather than via passing a
-\code{nerror} number back up the call stack.  The facility for
-triggering an error in this manner was not available when the
-\code{deldir} package was originally written.  In the reasonably
-near future the \code{deldir} package will be adjusted so that all
-error traps throw errors in the \dQuote{direct} manner, and use of
-the \code{nerror} numbers will be eliminated.
+The error trap in question is set in \code{trifnd}, the triangle
+finding subroutine.  It detects such occurrences of \dQuote{clockwise
+in either orientation} vertices.  The trap causes the \code{deldir()}
+function to throw an error rather than disappearing into a black
+hole.
 
 When an error of the \dQuote{triangle problems} nature occurs, a
 \emph{possible} remedy is to increase the value of the \code{eps}
 argument of \code{deldir()}. (See the \bold{Examples}.)  There may
 conceiveably be other problems that lead to infinite loops and so I
-have put in another error trap to detect whether the procedure has
+put in another error trap to detect whether the procedure has
 inspected more triangles than actually exist, and if so to throw
 an error.
 
 Note that the strategy of increasing the value of \code{eps}
-is \emph{probably} the appropriate one in most (if not all)
-of the cases where errors of this nature arise.  (Similarly this
-strategy is \emph{probably} the appropriate response to errors with
-\code{nerror} equal to 3, 12 and 13.) However it is impossible to
-be sure.  The intricacy and numerical delicacy of triangulations
-is too great for anyone to be able to foresee all the possibilities
-that could arise.
+is \emph{probably} the appropriate response in most (if not all)
+of the cases where errors of this nature arise.  Similarly this
+strategy is \emph{probably} the appropriate response to the errors
+\itemize{
+    \item Vertices of 'triangle' are collinear and vertex 2 is not
+    between 1 and 3.  Error in circen.
+    \item Vertices of triangle are collinear.  Error in dirseg.
+    \item Vertices of triangle are collinear.  Error in dirout.
+}
+
+However it is impossible to be sure.  The intricacy and numerical
+delicacy of triangulations is too great for anyone to be able to
+foresee all the possibilities that could arise.
 
 If there is any doubt as the appropriateness of the \dQuote{increase
 \code{eps}} strategy, the user is advised to do his or her best to
