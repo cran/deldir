@@ -11,10 +11,7 @@ binsrtR <- function(x,y,rw) {
                      tx=double(n),
                      ty=double(n),
                      ilst=integer(n),
-                     nerror=as.integer(0),
                      PACKAGE="deldir"
                 )
-    if(rslt$nerror > 0)
-        stop("Mismatch between number of points and number of sorted points.\n")
     list(x=rslt$tx,y=rslt$ty,ind=rslt$ind,rind=rslt$rind)
 }

@@ -72,7 +72,8 @@ while(ky<=kdiv) {            # to the new list.
 # Check that all points from old list have been added to the new,
 # with no spurious additions.
 if(k!=npd) {
-    call intpr("Number of points jumbled.",-1,ndi,0)
+    call intpr("Mismatch between number of points",-1,ndi,0)
+    call intpr("and number of sorted points.",-1,ndi,0)
     call rexit("Bailing out of binsrt.")
 }
 

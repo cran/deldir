@@ -8,7 +8,7 @@
 
 /* .Fortran calls */
 extern void F77_NAME(binsrt)(double *, double *, double *, int *, int *,
-                             int *, double *, double *, int *, int *);
+                             int *, double *, double *, int *);
 extern void F77_NAME(intri)(double *, double *, double *, double *, int *,
                             int *);
 extern void F77_NAME(master)(double *, double *, double *, int *, int *,
@@ -17,7 +17,7 @@ extern void F77_NAME(master)(double *, double *, double *, int *, int *,
 extern void F77_NAME(mnnd)(double *, double *, int *, double *, double *);
 
 static const R_FortranMethodDef FortranEntries[] = {
-    {"binsrt", (DL_FUNC) &F77_NAME(binsrt), 10},
+    {"binsrt", (DL_FUNC) &F77_NAME(binsrt),  9},
     {"intri",  (DL_FUNC) &F77_NAME(intri),   6},
     {"master", (DL_FUNC) &F77_NAME(master), 16},
     {"mnnd",   (DL_FUNC) &F77_NAME(mnnd),    5},

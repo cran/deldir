@@ -61,7 +61,8 @@ C Output from Public domain Ratfor, version 1.03
       endif
 23003 continue
       if(k.ne.npd)then
-      call intpr("Number of points jumbled.",-1,ndi,0)
+      call intpr("Mismatch between number of points",-1,ndi,0)
+      call intpr("and number of sorted points.",-1,ndi,0)
       call rexit("Bailing out of binsrt.")
       endif
       do23018 i = 1,npd 

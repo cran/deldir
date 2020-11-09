@@ -5,7 +5,6 @@ subroutine  succ(ksc,i,j,nadj,madj,ntot)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj)
-dimension ntmp(42)
 dimension ndi(1)
 
 # Set dummy integer for call to intpr(...).

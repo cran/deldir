@@ -2,7 +2,7 @@ C Output from Public domain Ratfor, version 1.03
       subroutine swap(j,k1,k2,shdswp,nadj,madj,x,y,ntot,eps,incadj)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      logical shdswp, anticl
+      logical shdswp
       call adjchk(k1,k2,shdswp,nadj,madj,ntot)
       if(.not.shdswp)then
       return

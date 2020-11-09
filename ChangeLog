@@ -1,4 +1,12 @@
 
+ Version 0.2-3 06/11/2020
+
+ Fixed up glitch in binsrt.R --- was still using "nerror", although
+ this argument had been eliminated from the ratfor code in binsrt.r.
+ Adjusted init.c appropriately.
+
+ Eliminated redundant variables ntpm (succ.r) and anticl (swap.r).
+
  Version 0.2-2 05/11/2020
 
  Adjusted calls to intpr() in the Ratfor/Fortran, changing

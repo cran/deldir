@@ -1,9 +1,9 @@
-aae14ce5009d8bd648c26291955406fb *ChangeLog
-f625ef8ccd29a99a919c0b9bad87a1fa *DESCRIPTION
+069dfe89b851c43c8d78a83747aa6b90 *ChangeLog
+c8056cc7e196062689e4caaac1c13d1c *DESCRIPTION
 feaa5112ceb7df995f229ceb1a0c56b1 *NAMESPACE
 43fbe6ef64d7c4a5fbc541dd951c2a29 *R/First.R
 73e1fe7de214e92456cd97ad52a32f44 *R/acw.R
-6a846af3d0ab4ab78512bee974ec6162 *R/binsrt.R
+e3a2a2668bc0f9ef0d2d845c0a712c31 *R/binsrt.R
 a5842c4dc1d0741931cff3cfaea988e4 *R/deldir.R
 e93cf566c9d47595ee8fd48fd53c49ff *R/divchain.R
 b6bc4dcf957c3deea31c6f8784b4257e *R/divchain.default.R
@@ -83,7 +83,7 @@ ed46e23d86abafd7a3331ffaf6fbecf9 *inst/code.discarded/xsucc.f
 32332f6b7cc4f78b3307c77566bb5a89 *inst/ratfor/acchk.r
 b9c54c685473db6aa20bb66285f7f8fb *inst/ratfor/addpt.r
 a1ac1dda0ced59d1e8730a5150c00cf9 *inst/ratfor/adjchk.r
-8a8996049ed71e0be7306c51f00cfa55 *inst/ratfor/binsrt.r
+5efd815d9fd1a94ac2905b5c314914d5 *inst/ratfor/binsrt.r
 c31451d26339744d6e359496d5a1c9c0 *inst/ratfor/circen.r
 34c25873cabac8bbc3ec6f15776ba980 *inst/ratfor/cross.r
 57f36d42aa80b65acc75f430adc50dd6 *inst/ratfor/delet.r
@@ -105,8 +105,8 @@ b0b4711c3a3980c39a7251dde6d5dff4 *inst/ratfor/makefor
 e998c41602f609d46f84d14964b1ff58 *inst/ratfor/qtest.r
 9518c1675e2c0bddf7d2e057a5e9d2fa *inst/ratfor/qtest1.r
 0213f6a1cabf89102d3088079f654b35 *inst/ratfor/stoke.r
-502bd2b003623d7b966928a57c5581c6 *inst/ratfor/succ.r
-17ef0b7ca8d8e40e47cc685d83c62cac *inst/ratfor/swap.r
+762ceb33bb4fddca802af2daef31bab3 *inst/ratfor/succ.r
+26eb432daa670f32be964afd764af624 *inst/ratfor/swap.r
 fd5fe33dcd585cd6097f0706dcd32366 *inst/ratfor/testeq.r
 728e4e2b3d69a1ea05c3373ce5c378f5 *inst/ratfor/triar.r
 921825b1723feb639f006d7046b37f94 *inst/ratfor/trifnd.r
@@ -136,7 +136,7 @@ b19b7f645ad78070a72b9e3b4f04adbf *man/which.tile.Rd
 76a558eb6db0bdbeef0087d1f3c35b92 *src/acchk.f
 7d2377f097ca33c632fe1b480db17157 *src/addpt.f
 2fad5c2879e7914a44b088f94b01e00f *src/adjchk.f
-ef39599d80fe986eef3ef22c0f559ea8 *src/binsrt.f
+2fe160bc16e26dc49c7f74713336f254 *src/binsrt.f
 72439c771ce85aa37afac5a0a80c44e8 *src/circen.f
 5db09a2919e8de068cb510d559b1aa7b *src/cross.f
 54417788fe806ff9997252bdeb34ff08 *src/crossutil.f
@@ -147,7 +147,7 @@ ed00a7b3f1038dfaa35c7761188d5a01 *src/delseg.f
 a7317fb3db8bff9385056b744be1e430 *src/dirout.f
 5660808c59963f54b957c0b42c5f4628 *src/dirseg.f
 f48c9c8fa1c57a814ad5b2666e501fc1 *src/dldins.f
-6f502dd51b2b81552f5e3842a66e5afa *src/init.c
+046a6ff08ecc3053d65cde90ee7829e3 *src/init.c
 746b9a1b7a7c28333682f831bba4f03e *src/initad.f
 2effcd8b77de6e4eae6026e73f064966 *src/insrt.f
 8d63ea0188b72a8843e8de3ac39b6890 *src/insrt1.f
@@ -159,8 +159,8 @@ e8eaff0b0bfcfb4e8c8424b113c88775 *src/mnnd.f
 b3904cbd826e4f345ec288e7024933da *src/qtest.f
 47fc946055f81d80941b9bf48bf404b8 *src/qtest1.f
 2038f3812d00b8db955902200dae108b *src/stoke.f
-9df366d3f93ef3cee74d4784efa24be6 *src/succ.f
-1db8bb4bc45e386e048b3633838e0858 *src/swap.f
+15807f5c25d8cd6a7a2b4fcd1d1003cb *src/succ.f
+1d5815cff90b307f9968d54e641ef690 *src/swap.f
 dd0d239dae76f72a42e6cb3a23ce7899 *src/testeq.f
 1e9b80939787f9aec36624d9fdb5b845 *src/triar.f
 44e955943c767dddf1f5cf610e40df9d *src/trifnd.f

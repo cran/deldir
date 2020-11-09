@@ -8,7 +8,7 @@ subroutine swap(j,k1,k2,shdswp,nadj,madj,x,y,ntot,eps,incAdj)
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-logical shdswp, anticl
+logical shdswp
 
 
 # If vertices k1 and k2 are not connected there is no diagonal to swap.

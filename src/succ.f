@@ -2,7 +2,6 @@ C Output from Public domain Ratfor, version 1.03
       subroutine succ(ksc,i,j,nadj,madj,ntot)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj)
-      dimension ntmp(42)
       dimension ndi(1)
       ndi(1) = 0
       n = nadj(i,0)
