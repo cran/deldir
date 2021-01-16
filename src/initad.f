@@ -16,10 +16,13 @@ C Output from Public domain Ratfor, version 1.03
       if(k.eq.kk)then
       call insrt(j,k,nadj,madj,x,y,ntot,eps,incadj)
       endif
+      if(incadj.eq.1)then
+      return
       endif
-      do23006 i = 1,3 
+      endif
+      do23008 i = 1,3 
       call insrt(j,tau(i),nadj,madj,x,y,ntot,eps,incadj)
-23006 continue
-23007 continue
+23008 continue
+23009 continue
       return
       end

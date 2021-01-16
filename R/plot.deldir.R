@@ -1,19 +1,19 @@
 plot.deldir <- local({
 
 fixColours <- function(cmpnt_col) {
-    col_nms <- c("tri","tess","data","dummy","num","rect")
+    cmpnt_nms <- c("tri","tess","data","dummy","num","rect")
     if(is.null(cmpnt_col)) {
         cmpnt_col <- rep(1,6)
-        names(cmpnt_col) <- col_nms
+        names(cmpnt_col) <- cmpnt_nms
     } else {
-        cmpnt_col <- as.vector(cmpnt_col)
+        cmpnt_col <- unlist(cmpnt_col)
         if(length(cmpnt_col) > 6) cmpnt_col <- cmpnt_col[1:6]
         if(!is.null(names(cmpnt_col))) {
-            if(!all(names(cmpnt_col) %in% col_nms)) {
+            if(!all(names(cmpnt_col) %in% cmpnt_nms)) {
                 stop("Argument \"cmpnt_col\" has incorrect names.\n")
             }
             ctmp <- rep(NA,6)
-            names(ctmp) <- col_nms
+            names(ctmp) <- cmpnt_nms
             ctmp[names(cmpnt_col)] <- cmpnt_col
             cmpnt_col <- ctmp
             if(any(is.na(cmpnt_col))) {
@@ -26,7 +26,7 @@ fixColours <- function(cmpnt_col) {
             }
         } else {
             cmpnt_col <- rep(cmpnt_col,length.out=6)
-            names(cmpnt_col) <- col_nms
+            names(cmpnt_col) <- cmpnt_nms
         }
     }
     cmpnt_col
@@ -38,7 +38,7 @@ fixLines <- function(cmpnt_lty) {
         cmpnt_lty <- rep(1,2)
         names(cmpnt_lty) <- lty_nms
     } else {
-        cmpnt_lty <- as.vector(cmpnt_lty)
+        cmpnt_lty <- unlist(cmpnt_lty)
         if(length(cmpnt_lty) > 2) cmpnt_lty <- cmpnt_lty[1:2]
         if(mode(cmpnt_lty) != "numeric") {
             stop("Argument \"cmpnt_lty\" must be of numeric mode.\n")

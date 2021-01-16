@@ -9,7 +9,7 @@ edgeLengths <- function(x,y) {
     el 
 }
 
-function (object,minEdgeLength=NULL) {
+function (object,minEdgeLength=NULL,clipp=NULL) {
   if (!inherits(object, "deldir"))
     stop("Argument \"object\" is not of class \"deldir\".\n")
   ptp <- object$summary$pt.type
@@ -68,12 +68,27 @@ function (object,minEdgeLength=NULL) {
       names(tmp)[3] <- "ptType"
     }
     rslt[[i]] <-acw(tmp)
-    if(haveZ)
-      rslt[[i]]["z"] <- z[i]
-  }
-  class(rslt) <- "tile.list"
-  attr(rslt, "rw") <- object$rw
-  return(rslt)
+    if(haveZ) {
+        rslt[[i]]["z"] <- z[i]
+    }
+    if(is.null(clipp)) {
+        attr(rslt[[i]],"ncomp") <- 1
+    } else {
+        if(requireNamespace("polyclip",quietly=TRUE)) {
+            rslt[[i]] <- doClip(rslt[[i]],clipp,rw)
+        } else {
+            stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
+        }
+    }
+}
+    ok <- !sapply(rslt,is.null)
+    rslt <- rslt[ok]
+    ptNums <- sapply(rslt,function(x){x$ptNum})
+    names(rslt) <- paste0("pt.",ptNums)
+    class(rslt) <- "tile.list"
+    attr(rslt, "rw") <- object$rw
+    attr(rslt,"clipp") <- clipp
+    return(rslt)
 }
 
 })

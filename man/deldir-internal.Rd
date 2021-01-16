@@ -3,7 +3,9 @@
 \alias{[.triang.list}
 \alias{acw}
 \alias{binsrtR}
+\alias{doClip}
 \alias{dumpts}
+\alias{findNewInOld}
 \alias{get.cnrind}
 \alias{getCol}
 \alias{mid.in}
@@ -19,7 +21,9 @@
 \method{[}{triang.list}(x,i,\dots)
 acw(xxx)
 dumpts(x,y,dpl,rw)
+doClip(object,clipp,rw)
 binsrtR(x,y,rw)
+findNewInOld(xnew,xold,ynew,yold,tolerance=sqrt(.Machine$double.eps))
 get.cnrind(x,y,rw)
 getCol(x,warn=FALSE)
 mid.in(x,y,rx,ry)

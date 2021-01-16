@@ -31,6 +31,10 @@ do k = 1,n {
 }
 
 # The adjacency list doesn't contain j.  Something's wrong.
+ndi(1) = i
+call intpr("i =",-1,ndi,1)
+ndi(1) = j
+call intpr("j =",-1,ndi,1)
 call intpr("Adjacency list of i does not contain j.",-1,ndi,0)
 call rexit("Bailing out of succ.")
 end

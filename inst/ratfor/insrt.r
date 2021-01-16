@@ -16,7 +16,9 @@ call locn(j,i,ki,nadj,madj,x,y,ntot,eps)
 
 # Put them in each other's lists in the appropriate position.
 call insrt1(i,j,kj,nadj,madj,ntot,incAdj)
+if(incAdj==1) return
 call insrt1(j,i,ki,nadj,madj,ntot,incAdj)
+if(incAdj==1) return
 
 return
 end

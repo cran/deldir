@@ -21,6 +21,10 @@ C Output from Public domain Ratfor, version 1.03
       endif
 23002 continue
 23003 continue
+      ndi(1) = i
+      call intpr("i =",-1,ndi,1)
+      ndi(1) = j
+      call intpr("j =",-1,ndi,1)
       call intpr("Adjacency list of i does not contain j.",-1,ndi,0)
       call rexit("Bailing out of succ.")
       end

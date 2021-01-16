@@ -17,6 +17,9 @@ C Output from Public domain Ratfor, version 1.03
       if(shdswp)then
       call delet(k1,k2,nadj,madj,ntot)
       call insrt(j,k,nadj,madj,x,y,ntot,eps,incadj)
+      if(incadj.eq.1)then
+      return
+      endif
       endif
       return
       end

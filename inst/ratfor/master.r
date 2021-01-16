@@ -7,6 +7,9 @@ subroutine master(x,y,rw,npd,ntot,nadj,madj,eps,delsgs,ndel,delsum,
 # One subroutine to bring them all in,
 # And in the darkness bind them.
 
+# Note: "incAdj" <--> increase size of adjacency list.
+#       "incSeg" <--> increase size of storage for segments.
+
 implicit double precision(a-h,o-z)
 dimension x(-3:ntot), y(-3:ntot)
 dimension nadj(-3:ntot,0:madj)

@@ -22,6 +22,7 @@ if(nedge!=0) {
     call succ(kk,tau(ip),tau(i),nadj,madj,ntot)
     call delet(tau(i),tau(ip),nadj,madj,ntot)
     if(k==kk) call insrt(j,k,nadj,madj,x,y,ntot,eps,incAdj)
+    if(incAdj==1) return
 }
 
 # Join the new point to each of the three vertices.

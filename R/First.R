@@ -4,10 +4,10 @@
 
 .onAttach <- function(lib, pkg) {
 	ver <- read.dcf(file.path(lib, pkg, "DESCRIPTION"), "Version")
-        nick <- "Nickname: \"Stack Smashing Detected\""
+        #nick <- "Nickname: \"Stack Smashing Detected\""
         # 02/11/2020
-        # Next one (???):
-        #nick <- "Nickname: \"Morpheus and Euripides\""
+        nick <- "Nickname: \"Morpheus and Euripides\""
+        # 05/01/2021
         #nick <- "Nickname: \"Dyslexical Scoping\""
         #nick <- "Nickname: \"Mendacious Cosmonaut\""
         #nick <- "Nickname: \"Partial Distinction\""

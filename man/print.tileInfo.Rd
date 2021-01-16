@@ -29,7 +29,7 @@
   of tiles.  This print method produces a screen display which
   is somewhat more perspicuous.
  
-  There are three components to the display:
+  There are four components to the display:
 
   \itemize{
   \item A matrix, each row of which is the vector of edge
@@ -41,6 +41,8 @@
   the original sequence of points that is being tessellated.
   \item A table of the edge counts of the tiles.
   \item A simple print out of the areas of the tiles (rounded
+  to a maximum of \code{digits} decimal digits).
+  \item A simple print out of the perimeters of the tiles (rounded
   to a maximum of \code{digits} decimal digits).
   }
 
@@ -73,5 +75,16 @@ ixy1 <- tileInfo(dxy)
 print(ixy1)
 ixy2 <- tileInfo(dxy,bndry=TRUE)
 print(ixy2)
+if(require(polyclip)) {
+    CP <- list(x=c(0.49,0.35,0.15,0.20,0.35,0.42,
+                   0.43,0.62,0.46,0.63,0.82,0.79),
+               y=c(0.78,0.86,0.79,0.54,0.58,0.70,
+                   0.51,0.46,0.31,0.20,0.37,0.54))
+    ixy3 <- tileInfo(dxy,clipp=CP)
+    options(width=120) # And enlarge the console window.
+    print(ixy3) # 33 tiles are retained.
+    print(ixy3$perimeters$perComps) # The tiles for points 9 and 94 have
+                                    # been split into two components.
+}
 }
 \keyword{ utilities }

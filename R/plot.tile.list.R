@@ -2,12 +2,17 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                             fillcol = getCol(x,warn=warn), col.pts=NULL,
                             col.num=NULL,border=NULL, showpoints = !number,
                             add = FALSE, asp = 1, clipp=NULL, xlab = "x",
-                            ylab = "y", main = "", warn=FALSE,
+                            ylab = "y", main = "", warn=TRUE,
                             number=FALSE,adj=NULL,...) {
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
     clip  <- !is.null(clipp)
+    if(clip & !is.null(attr(object,"clipp"))) {
+        whinge <- paste0("Argument \"x\" is already clipped.  Re-clip it\n",
+                         "  if you want a different clipping polygon.\n")
+        stop(whinge)
+    }
     n     <- length(object)
     rw    <- attr(object, "rw")
     rx    <- rw[1:2]
@@ -53,23 +58,32 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
     if(is.null(Adj)) Adj <- if(showpoints) -1 else 0
     pch <- rep(pch,n)
     okn <- logical(n)
+    pgons <- vector("list",n)
+    icol <- 0
     for(i in 1:n) {
         if(clip) {
             if(requireNamespace("polyclip",quietly=TRUE)) {
-                pgon <- polyclip::polyclip(object[[i]],clipp)
+                pgon <- doClip(object[[i]],clipp,rw)
                 ok   <- length(pgon) > 0
+                pgons[[i]] <- pgon
             } else {
                 stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
             }
         } else {
-            pgon <- list(object[[i]])
-            ok <- TRUE
+            pgon <- object[[i]]
+            ok   <- TRUE
         }
+        if(is.null(pgon)) next
+        icol <- icol+1
+        if(is.null(attr(pgon,"ncomp"))) attr(pgon,"ncomp") <- 1
+        if(attr(pgon,"ncomp") > 1) {
+            pgon <- pgon$tileParts
+        } else pgon <- list(pgon)
         okn[i] <- ok
-        inner <- !any(object[[i]]$bp)
         for(ii in seq(along=pgon)){
             ptmp <- pgon[[ii]]
-            polygon(ptmp,col=fillcol[i],border=NA)
+            inner <- !any(ptmp$bp)
+            polygon(ptmp,col=fillcol[icol],border=NA)
             if (close | inner) { 
                 polygon(ptmp,col = NA, border = border, lwd = lnwid)
             } else {
@@ -99,5 +113,7 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
     if (number & !verbose) 
     text(x.pts[okn], y.pts[okn], labels = ptNums[okn], col = col.num[okn],
          adj=Adj,...)
-    invisible()
+    pgons <- pgons[!sapply(pgons,is.null)]
+    pgons <- if(length(pgons)) pgons else NULL
+    invisible(pgons)
 }

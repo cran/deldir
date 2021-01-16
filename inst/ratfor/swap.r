@@ -32,6 +32,7 @@ call qtest(j,k1,k,k2,shdswp,x,y,ntot,eps)
 if(shdswp) {
     call delet(k1,k2,nadj,madj,ntot)
     call insrt(j,k,nadj,madj,x,y,ntot,eps,incAdj)
+    if(incAdj==1) return
 }
 return
 end

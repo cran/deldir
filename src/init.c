@@ -15,12 +15,15 @@ extern void F77_NAME(master)(double *, double *, double *, int *, int *,
                              int *, int *, double *, double *, int *,
                              double *, double *, int *, double *, int *, int *);
 extern void F77_NAME(mnnd)(double *, double *, int *, double *, double *);
+extern void F77_NAME(stoke)(double *, double *, double *, double *,
+                            double *, double *, double *, double *);
 
 static const R_FortranMethodDef FortranEntries[] = {
     {"binsrt", (DL_FUNC) &F77_NAME(binsrt),  9},
     {"intri",  (DL_FUNC) &F77_NAME(intri),   6},
     {"master", (DL_FUNC) &F77_NAME(master), 16},
     {"mnnd",   (DL_FUNC) &F77_NAME(mnnd),    5},
+    {"stoke",  (DL_FUNC) &F77_NAME(stoke),   8},
     {NULL, NULL, 0}
 };
 

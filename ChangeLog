@@ -1,4 +1,83 @@
 
+ Version 0.2-9 16/01/2021
+
+ Fixed (???) a bug in doClip() revealed by reverse-dependent package
+ visualFields.  My logic (using almost.match()) was completely out
+ to luntch.  Got rid of almost.match() and introduced a new function
+ findNewInOld() which I *think* does things right.
+
+ Adjusted tile.list() so that when it clipps tiles it checks for
+ the availability of the polyclip package (and throws an error if
+ this package is not available).
+
+ Adjusted the help for plot.tile.list(), doing the same
+ re-arrangement of plotting colours in one of the examples, as is
+ used in the help for tile.Perim().  The re-arrangement serves to
+ produce better contrasts between contiguous tiles.
+
+ Version 0.2.8 09/01/2021
+
+ Changed the URL in the help for Vol.Tri.Points from
+
+    http://www.gwsdat.net
+
+ (insecure) to
+
+    https://protect-au.mimecast.com/s/demRC91WzLH6qo3TorzN7?domain=gwsdat.net
+
+ (kludgy but secure).
+
+ Corrected a typo in the help for Vol.Tri.Points.
+
+ Version 0.2-7 07/01/2021
+
+ Fixed a problem that the Debian compiler objected to; changed calls,
+ in succ.r, to intpr() of the form "... -1,i,1)" to "... -1,ndi,1)"
+ where ndi (dummy integer) is an integer array with ndi(1) = i. This
+ is to satisfy the idiosynchrasies of the compiler that Debian uses.
+
+ Added the Vol.Tri.Points data set provided by Wayne W. Jones
+
+ Version 0.2-6 05/01/2021
+
+ Fixed bug whereby inadquate memory allocation for the
+ adjacency list went undetected.  Problem point out
+ by Wayne Jones.
+
+ Version 0.2-5 29/12/2020
+
+ Made adjustments to tile.list() so that the listed tile could
+ be clipped by a specified polygon, in the same manner as that
+ in which tiles were clipped in the past by plot.tile.list().
+
+ This adjustment was made at the request of Vasileia
+ Papathanasopoulous.
+
+ Note that plot.tile.list() retains the capacity to clip the
+ tiles, but if the tiles have *already* been clipped by tile.list()
+ then an error is thrown.
+
+ Changed the default for the "warn" argment in plot.tile.list()
+ from FALSE to TRUE.
+
+ Made the necssary corresponding adjustments to tilePerim()
+ so that it can handle clipped tiles.
+
+ Added a "clipp" argument to tileInfo() so that the tiles in
+ question can be clipped.
+
+ Amended tileInfo() so that it now includes tile perimeters in
+ the information summary produced.
+
+ Adjusted naming conventions slightly so that names are of the
+ form "pt.1", "pt.2", ..., rather than "tile.1", "tile.2", ....
+
+ Version 0.2-4 09/11/2020
+
+ Fixed glitches in plot.deldir() --- replaced as.vector() by
+ unlist().  If x is a list, as.vector(x) is the same as x!!!
+ (A list *is* a vector!!!)
+
  Version 0.2-3 06/11/2020
 
  Fixed up glitch in binsrt.R --- was still using "nerror", although
@@ -6,6 +85,8 @@
  Adjusted init.c appropriately.
 
  Eliminated redundant variables ntpm (succ.r) and anticl (swap.r).
+
+ Submitted to CRAN 06/11/2020.
 
  Version 0.2-2 05/11/2020
 

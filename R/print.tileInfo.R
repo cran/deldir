@@ -12,7 +12,7 @@ fmt <- paste0("%",ld,".",digits,"f")
 for(i in 1:m) {
     M[i,1:nel[i]] <- sprintf(fmt,lel[[i]])
 }
-rownames(M) <- paste0("tile ",pNs,": ")
+rownames(M) <- paste0("point ",pNs,": ")
 colnames(M) <- rep("",n)
 cat("\nEdge lengths:\n")
 cat("=============\n")
@@ -31,6 +31,12 @@ print(tec,quote=FALSE)
 cat("\nTile areas:\n")
 cat("===========\n\n")
 print(round(x$Areas,digits=digits))
+cat("\n")
+
+# Perimeters:
+cat("\nTile perimeters:\n")
+cat("================\n\n")
+print(round(x$perimeters$perimeters,digits=digits))
 cat("\n")
 
 invisible()

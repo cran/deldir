@@ -451,15 +451,14 @@ associated with the dummy points are all taken to be missing values
 
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
 }
 
 \references{
-Lee, D. T., and Schacter, B. J.  Two algorithms for constructing a
-Delaunay triangulation, Int. J. Computer and Information Sciences,
-Vol. 9, No. 3, 1980, pp. 219 -- 242.
+Lee, D. T. and Schacter, B. J. (1980)  Two algorithms for
+constructing a Delaunay triangulation, \emph{International Journal
+of Computer and Information Sciences} \bold{9} (3), pp. 219 -- 242.
 
-Ahuja, N. and Schacter, B. J. (1983). Pattern Models.  New York: Wiley.
+Ahuja, N. and Schacter, B. J. (1983).  Pattern Models.  New York: Wiley.
 }
 \seealso{
   \code{\link{plot.deldir}()}, \code{\link{tile.list}()}, \code{\link{triang.list}()}

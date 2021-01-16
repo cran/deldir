@@ -8,7 +8,7 @@ the tiles associated with each point in the set being tessellated. }
                          fillcol = getCol(x,warn=warn), col.pts=NULL,
                          col.num=NULL,border=NULL, showpoints = !number,
                          add = FALSE, asp = 1, clipp=NULL, xlab = "x",
-                         ylab = "y", main = "", warn=FALSE,
+                         ylab = "y", main = "", warn=TRUE,
                          number=FALSE,adj=NULL,...) 
 }
 \arguments{
@@ -177,11 +177,13 @@ the tiles associated with each point in the set being tessellated. }
                          # or cm.colors(20), or rainbow(20).
   plot(w,fillcol=ccc,close=TRUE)
   if(require(polyclip)) {
-     CP <- list(x=c(0.49,0.35,0.15,0.20,0.35,0.42,
-                          0.43,0.62,0.46,0.63,0.82,0.79),
-                      y=c(0.78,0.86,0.79,0.54,0.58,0.70,
-                          0.51,0.46,0.31,0.20,0.37,0.54))
-     plot(w,clipp=CP,showpoints=FALSE,fillcol=topo.colors(20))
+     CP  <- list(x=c(0.49,0.35,0.15,0.20,0.35,0.42,
+                     0.43,0.62,0.46,0.63,0.82,0.79),
+                 y=c(0.78,0.86,0.79,0.54,0.58,0.70,
+                     0.51,0.46,0.31,0.20,0.37,0.54))
+     cul <- rainbow(10)[c(1,7,3:6,2,8:10)] # Rearranging colours to improve
+                                           # the contrast between contiguous tiles.
+     plot(w,clipp=CP,showpoints=FALSE,fillcol=cul)
   }
   plot(w,number=TRUE,col.num="red")
   plot(w,number=TRUE,col.num="red",cex=0.5)
