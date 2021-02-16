@@ -9,10 +9,10 @@ Given a list of Dirichlet tiles, as produced by \code{tile.list()},
 produces a data frame consisting of the centroids of those tiles.
 }
 \usage{
-tile.centroids(xxx)
+tile.centroids(tl)
 }
 \arguments{
-  \item{xxx}{A list of the tiles (produced by \code{tile.list()})
+  \item{tl}{A list of the tiles (produced by \code{tile.list()})
   in a Dirichlet tessellation of a set of planar points.}
 }
 \value{

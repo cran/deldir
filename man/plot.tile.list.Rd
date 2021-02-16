@@ -39,9 +39,9 @@ the tiles associated with each point in the set being tessellated. }
   \code{FALSE}.
   }
   \item{col.num}{Optional vector like unto \code{col.pts}. Determines
-  the colours in which the point numbers (see \code{number} below).
-  This argument will be replicated to have length equal to the
-  number of tiles.  Ignored if \code{number} is \code{FALSE}.
+  the colours in which the point numbers (see \code{number} below)
+  are plotted.  This argument will be replicated to have length equal
+  to the number of tiles.  Ignored if \code{number} is \code{FALSE}.
   }
   \item{border}{A \emph{scalar} indicating the colour with which to plot
   the tile boundaries.  Defaults to black unless all of the
@@ -155,7 +155,7 @@ the tiles associated with each point in the set being tessellated. }
   the request of Chris Triggs.
 
   \item The argument \code{asp} was added at the request of Zubin
-  Dowlaty.
+  Dowlaty (who presumably knows what he's doing!).
   }
 }
 

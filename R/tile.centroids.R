@@ -1,5 +1,11 @@
-tile.centroids <- function(xxx){
-foo <- function (x,y) {
+tile.centroids <- function(tl){
+#
+# "tl" <--> "tile list".
+#
+coit <- function (x,y) {
+#
+# "coit" <--> "centroid of individual tile".
+#
 	x <- c(x,x[1])
 	y <- c(y,y[1])
 	n <- length(x)
@@ -12,7 +18,7 @@ foo <- function (x,y) {
 	Cy <- sum(z*(u-v))/A
 	c(Cx,Cy)
 }
-ccc <- lapply(xxx,function(x){foo(x$x,x$y)})
+ccc <- lapply(tl,function(x){coit(x$x,x$y)})
 ccc <- as.data.frame(matrix(unlist(ccc),ncol=2,byrow=TRUE))
 names(ccc) <- c("x","y")
 ccc

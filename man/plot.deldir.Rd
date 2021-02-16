@@ -16,7 +16,7 @@ This is a method for plot.
 }
 \arguments{
 \item{x}{
-An object of class "deldir" as constructed by the function deldir.
+An object of class "deldir" as returned by the function deldir.
 }
 \item{add}{
 logical argument; should the plot be added to an existing plot?

@@ -1,4 +1,27 @@
 
+ Version 0.2-10 09/02/2021
+
+ Added the cvt() (Centroidal Voronoi Tiles) function at the
+ request of Michaél Aupetit.
+
+ Amended deldir() so that the returned object has attributes
+ "round" (TRUE if argument "round" was TRUE) and "digits"
+ (equal to the value of argument "digits" if "round" is TRUE,
+ equal to NA otherwise.)
+
+ Made some adjustments to the help for deldir() and plot.tile.list().
+
+ Changed the name of Vol.Tri.Points to volTriPoints, so as to make
+ it more consistent with my usual naming conventions.
+
+ Added the "\version" macro.
+
+ 10/02/2021
+ Made some adjustments to the help for cvt().
+
+ 16/02/2021
+ Submitted to CRAN
+
  Version 0.2-9 16/01/2021
 
  Fixed (???) a bug in doClip() revealed by reverse-dependent package
@@ -12,7 +35,7 @@
 
  Adjusted the help for plot.tile.list(), doing the same
  re-arrangement of plotting colours in one of the examples, as is
- used in the help for tile.Perim().  The re-arrangement serves to
+ used in the help for tilePerim().  The re-arrangement serves to
  produce better contrasts between contiguous tiles.
 
  Version 0.2.8 09/01/2021

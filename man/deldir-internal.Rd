@@ -12,6 +12,7 @@
 \alias{mnndR}
 \alias{prelimtlist}
 \alias{tilePerim0}
+\alias{verGetter}
 \title{Internal deldir functions}
 \description{
   Internal deldir functions.
@@ -30,6 +31,7 @@ mid.in(x,y,rx,ry)
 mnndR(x,y)
 prelimtlist(object)
 tilePerim0(object,inclbdry=TRUE)
+verGetter()
 }
 \details{
   These functions are auxiliary and are not intended to be called by

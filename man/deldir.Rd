@@ -151,7 +151,7 @@ created. See \bold{Warnings}.
 \item{suppressMsge}{
 Logical scalar indicating whether a message (alerting the user to
 changes from previous versions of \code{deldir}) should be
-suppressed.  Currently (package version 0.2-1) no such message
+suppressed.  Currently (package version \version) no such message
 is produced, so this argument has no effect.
 }
 \item{...}{
@@ -309,9 +309,11 @@ were extremely valuable in tracking down some errors in the code.
 
 Don MacQueen, of Lawrence Livermore National Lab, wrote an Splus
 driver function for the old stand-alone version of this software.
-That driver, which was available on Statlib, is now deprecated in
-favour of the current package ``delaunay'' package.  Don also
-collaborated in the preparation of that package.
+That driver, which was available on Statlib, was deprecated in
+favour of the Statlib package \dQuote{delaunay}.  Don also
+collaborated in the preparation of that package.  It is not clear
+to me whether the \dQuote{delaunay} package, or indeed Statlib
+(or indeed Splus!) still exist.
 
 See the \code{ChangeLog} for information about further revisions
 and bug-fixes.

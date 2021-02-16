@@ -1,6 +1,6 @@
 Package: deldir
-Version: 0.2-9
-Date: 2021-01-16
+Version: 0.2-10
+Date: 2021-02-16
 Title: Delaunay Triangulation and Dirichlet (Voronoi) Tessellation
 Author: Rolf Turner
 Maintainer: Rolf Turner <r.turner@auckland.ac.nz>
@@ -11,12 +11,13 @@ Description: Calculates the Delaunay triangulation and the Dirichlet
 	or Voronoi tessellation (with respect to the entire plane) of
 	a planar point set. Plots triangulations and tessellations in
 	various ways.  Clips tessellations to sub-windows. Calculates
-	perimeters of tessellations.  Summarises information about the
-	tiles of the tessellation.
+	perimeters of tessellations.  Summarises information about
+	the tiles of the tessellation.	Calculates the centroidal
+	Voronoi (Dirichlet) tessellation using Lloyd's algorithm.
 LazyData: true
 ByteCompile: true
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2021-01-16 01:32:13 UTC; rolf
+Packaged: 2021-02-15 21:57:02 UTC; rolf
 Repository: CRAN
-Date/Publication: 2021-01-16 05:40:15 UTC
+Date/Publication: 2021-02-16 17:50:02 UTC

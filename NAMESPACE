@@ -14,3 +14,4 @@ S3method(print,deldir)
 importFrom("grDevices", "col2rgb", "rgb")
 importFrom("graphics", "axis", "box", "par", "plot", "points",
              "polygon", "rect", "segments", "text", "title")
+importFrom("utils","packageVersion")

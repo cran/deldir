@@ -405,6 +405,8 @@ rw     <- if(round) round(rw,digits) else rw
 rslt <- list(delsgs=delsgs,dirsgs=dirsgs,summary=allsum,n.data=nn,
              n.dum=ndm,del.area=del.area,dir.area=dir.area,rw=rw,
              ind.orig=ind.orig)
+attr(rslt,"round") <- round
+attr(rslt,"digits") <- if(round) digits else NA
 class(rslt) <- 'deldir'
 if(plot) {
 	plot(rslt,...)

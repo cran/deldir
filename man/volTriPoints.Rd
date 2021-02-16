@@ -1,5 +1,5 @@
-\name{Vol.Tri.Points}
-\alias{Vol.Tri.Points}
+\name{volTriPoints}
+\alias{volTriPoints}
 \docType{data}
 \title{
    Solute plume concentration data set.
@@ -13,7 +13,7 @@ The \code{deldir} package is used in this project as part of a
 numerical routine to estimate plume quantities (mass, average
 concentration and centre of mass).
 }
-\usage{Vol.Tri.Points}
+\usage{volTriPoints}
 \format{
   A data frame with 232 observations on the following 3 variables.
   \describe{
@@ -30,7 +30,9 @@ concentration and centre of mass).
 }
 \source{
   These data were kindly provided by Wayne W. Jones of the GWSDAT
-  project.
+  project.  The data set was originally named \code{Vol.Tri.Points};
+  the name was changed so as to be more consistent with my usual
+  naming conventions.
 }
 \references{
 Jones, W. R., Spence, M. J., Bowman, A. W., Evers, L. and Molinari,
@@ -39,7 +41,7 @@ and reporting of groundwater monitoring data. \emph{Environmental
 Modelling & Software} \bold{55}, pp. 242--249.
 }
 \examples{
-dvtp <- deldir(Vol.Tri.Points)
+dvtp <- deldir(volTriPoints)
 plot(dvtp)
 }
 \keyword{datasets}
