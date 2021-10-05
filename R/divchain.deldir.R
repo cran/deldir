@@ -1,12 +1,13 @@
 divchain.deldir <- function (x,...) {
 #
     z <- x$summary$z 
-    if(!is.factor(z)) {
+    if(is.null(z)) {
         xc <- deparse(substitute(x))
-        whinge <- paste("The class deldir object",xc,"was created without\n",
-                        "a factor-valued \"weights\" argument \"z\" being supplied.\n")
+        whinge <- paste("The class \"deldir\" object",xc,"was created without\n",
+                        "a tag argument \"z\" being supplied.\n")
         stop(whinge)
     }
+    z    <- factor(z)
     ddd  <- x$dirsgs
     ddd  <- ddd[z[ddd$ind1] != z[ddd$ind2],]
     id1  <- as.matrix(ddd[,c("ind1","ind2","thirdv1")])

@@ -48,10 +48,9 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
         })
         col.num <- rep(col.num, length = length(object))
     }
-    if(is.null(border))
+    if(is.null(border)) {
         border <- if(all(fillcol == hexbla)) hexwhi else hexbla
-    else if(length(border) > 1)
-        stop("Argument \"border\" must be a scalar or NULL.\n")
+    } else if(length(border) > 1) border <- border[1]
     lnwid <- if(all(fillcol == hexbla)) 2 else 1
     ptNums <- sapply(x,function(u){u$ptNum})
     Adj <- adj

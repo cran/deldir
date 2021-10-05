@@ -4,7 +4,7 @@
   Produce a Lewis-Aboav-Weaire summary of a tessellation.
 }
 \description{
-  Produce a summary of a Direchlet (Voronoi) tessellation in terms
+  Produce a summary of a Dirichlet (Voronoi) tessellation in terms
   of parameters relevant to Lewis's law and Aboav-Weaire's law.
   Note that \dQuote{law} in the function name corresponds to
   \dQuote{Lewis-Aboav-Weaire}.
@@ -53,9 +53,16 @@ lawSummary(object)
   the remaining (\dQuote{interior}) tiles.  These components are:
   \itemize{
      \item \code{tile.vertices} A list whose entries are data frames
-     giving the coorinates of the vertices of the interior tiles.
+     giving the coordinates of the vertices of the interior tiles.
      \item \code{tile.areas} A vector of the areas of the interior tiles
      in the tessellation in question.
+     \item{tile.tags} A vector or factor whose values are the \dQuote{tags}
+     of the interior tiles.  The \dQuote{original} of this object (the
+     \dQuote{tags} associated with all of the tiles) is provided
+     as the \code{z} argument to \code{deldir()}.  The \code{tile.tags}
+     component of the value returned by \code{lawSummary()} is present
+     only if \code{deldir()} was called with a (non-\code{NULL}) value
+     of the \code{z} argument.
      \item \code{num.edges} A vector of the number of edges of each
      such tile.
      \item \code{num.nbr.edges} A list with a component for each

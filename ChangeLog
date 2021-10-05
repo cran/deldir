@@ -1,3 +1,72 @@
+ Version 1.0-2 05/10/2021
+
+ Adjusted plot.deldir() so that it no longer insists that cmpnt_lty
+ be numeric, but also allows (as it should) the text strings "solid",
+ "dashed", "dotted", "dotdash", "longdash", and "twodash".
+
+ Version 1.0-1 30/09/2021
+
+ Modified deldir() so that if argument "x" is a data frame it is
+ *NOT* required to have columns named "x" and "y".  If there is no
+ column named "x", the x-coordinates are taken to be the *first*
+ column named neither "y" nor "z".  Likewise if there is no column
+ named "y", the y-coordinates are taken to be the *first* column
+ that is named neither "x" nor "z" and is not equal to the column
+ previously selected to be the x-coordinates.
+
+ Also modified deldir() so that the "x" argument is allowed to be
+ a matrix.  The same convention that was used when "x" is a data
+ frame is applied.
+
+ This modification was made in response to an observation made by
+ Jakob Bossek and makes use of a suggestion from Duncan Murdoch.
+
+ Version 1.0-0 27/09/2021
+
+ Removed/eliminated all traces of the (basically useless) facility
+ for incorporating dummy points into the triangulation/tessellation.
+ This facility was a historical artefact that had hung around much
+ too long.
+
+ Made an adjustment to plot.tile.list(); it no longer throws an
+ error if the border argument is of length greater than 1; it now
+ simply uses the first entry.
+
+ 29/09/2021
+
+ Ran the *.Rd files through ispell and found and corrected an
+ embarrassing number of errors.  Did not increment the version
+ number.
+
+ Version 0.2-13 26/09/2021
+
+ Made some adjustments to the syntax of deldir() to accommodate
+ problems encountered with finding the "z" argument.
+
+ Changed the position of "z" in the argument list (to follow "x"
+ and "y").
+
+ Got rid of the message being issued on the first call, and the
+ suppressMessage argument.
+
+ Version 0.2-12 28/05/2021
+
+ Adjusted the application of "\dontrun{...}" in the help files,
+ eliminating its unnecessary application in some instances, and
+ replacinng it by "\donttest{...}" in one instance.
+
+ Version 0.2-11 12/05/2021
+
+ Changed the terminology in the help and code comments so as to
+ refer to the entries of the "z" argument as "tags" and not
+ as "weights".  The latter term is misleading.
+
+ Adjusted divchain() so as not to insist that the "z" argument
+ be a factor.  It may now be a factor or a vector of any mode.
+ If is not a factor then it is coerced into one.
+
+ Added a "tags" component to the list returned by lawSummary().
+ (This was instigated by an enquiry from Art Stock.)
 
  Version 0.2-10 09/02/2021
 

@@ -4,7 +4,6 @@
 \alias{acw}
 \alias{binsrtR}
 \alias{doClip}
-\alias{dumpts}
 \alias{findNewInOld}
 \alias{get.cnrind}
 \alias{getCol}
@@ -21,7 +20,6 @@
 \method{[}{tile.list}(x,i,\dots)
 \method{[}{triang.list}(x,i,\dots)
 acw(xxx)
-dumpts(x,y,dpl,rw)
 doClip(object,clipp,rw)
 binsrtR(x,y,rw)
 findNewInOld(xnew,xold,ynew,yold,tolerance=sqrt(.Machine$double.eps))

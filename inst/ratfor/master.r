@@ -1,4 +1,4 @@
-subroutine master(x,y,rw,npd,ntot,nadj,madj,eps,delsgs,ndel,delsum,
+subroutine master(x,y,rw,nn,ntot,nadj,madj,eps,delsgs,ndel,delsum,
                   dirsgs,ndir,dirsum,incAdj,incSeg)
 
 # Master subroutine:
@@ -15,7 +15,7 @@ dimension x(-3:ntot), y(-3:ntot)
 dimension nadj(-3:ntot,0:madj)
 dimension rw(4)
 dimension delsgs(6,ndel), dirsgs(10,ndir)
-dimension delsum(npd,4), dirsum(npd,3)
+dimension delsum(nn,4), dirsum(nn,3)
 
 # Define one.
 one = 1.d0
@@ -60,20 +60,20 @@ do i = 1,4 {
 ntri = 4
 
 # Now add the rest of the point set
-do j = 2,npd {
+do j = 2,nn {
     call addpt(j,nadj,madj,x,y,ntot,eps,ntri,incAdj)
     if(incAdj==1) return
     ntri = ntri + 3
 }
 
 # Obtain the description of the triangulation.
-call delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,incSeg)
+call delseg(delsgs,ndel,nadj,madj,nn,x,y,ntot,incSeg)
 if(incSeg==1) return
 
-call delout(delsum,nadj,madj,x,y,ntot,npd)
+call delout(delsum,nadj,madj,x,y,ntot,nn)
 
-call dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,incAdj,incSeg)
+call dirseg(dirsgs,ndir,nadj,madj,nn,x,y,ntot,rw,eps,ntri,incAdj,incSeg)
 if(incAdj==1 | incSeg==1) return
-call dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps)
+call dirout(dirsum,nadj,madj,x,y,ntot,nn,rw,eps)
 return
 end

@@ -23,7 +23,7 @@ tileArea(x, y, rw)
 }
   \item{rw}{
   A vector of length 4 specifying the rectangular window in
-  which the relevant tessellation was construced.  See
+  which the relevant tessellation was constructed.  See
   \code{\link{deldir}()} for more detail.  Actually this
   can be any rectangle containing the tile in question.
 }

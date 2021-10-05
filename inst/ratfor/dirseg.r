@@ -1,4 +1,4 @@
-subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,incAdj,incSeg)
+subroutine dirseg(dirsgs,ndir,nadj,madj,nn,x,y,ntot,rw,eps,ntri,incAdj,incSeg)
 
 # Output the endpoints of the segments of boundaries of Dirichlet
 # tiles.  (Do it economically; each such segment once and only once.)
@@ -35,8 +35,8 @@ a = xmax-xmin
 b = ymax-ymin
 c = sqrt(a*a+b*b)
 
-npd  = ntot-4
-nstt = npd+1
+nn  = ntot-4
+nstt = nn+1
 i = nstt
 x(i) = xmin-c
 y(i) = ymin-c
@@ -62,7 +62,7 @@ do j = nstt,ntot {
 # adjacent.  If so, find the circumcentres of the triangles lying on each
 # side of the segment joining them.
 kseg = 0
-do i = 2,npd {
+do i = 2,nn {
     do j = 1,i-1 {
         call adjchk(i,j,adjace,nadj,madj,ntot)
         if(adjace) {

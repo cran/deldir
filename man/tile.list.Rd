@@ -40,7 +40,7 @@ point.
 }
 \value{
 A list with one entry for each of the points in the set being
-tesselated, or for each of the tiles that are retained after clipping
+tessellated, or for each of the tiles that are retained after clipping
 if \code{clipp} is not \code{NULL}.  Each entry is in turn a list
 with a number of components.  These components always include:
 
@@ -70,11 +70,7 @@ component of \code{tileParts} is yet another list with four
 components \code{x}, \code{y}, \code{bp} and \code{area} as described above
 and as are appropriate for the part in question. 
 
-The components of the overall list for each tile may also include:
-\item{ptType}{The \dQuote{type} of the \code{pt}, either \dQuote{data}
-or \dQuote{dummy}.  Present only if any dummy points were specified.
-}
-\item{z}{The \dQuote{auxiliary value} or \dQuote{weight} associated
+\item{z}{The \dQuote{auxiliary value} or \dQuote{tag} associated
 with the \code{pt}; present only if such values were supplied in
 the call to \code{deldir()}.}
 }

@@ -1,9 +1,9 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine delout(delsum,nadj,madj,x,y,ntot,npd)
+      subroutine delout(delsum,nadj,madj,x,y,ntot,nn)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension delsum(npd,4)
-      do23000 i = 1,npd 
+      dimension delsum(nn,4)
+      do23000 i = 1,nn 
       area = 0.
       np = nadj(i,0)
       xi = x(i)

@@ -17,23 +17,19 @@ triang.list(object)
 }
 }
 \value{
-  A list each of whose components is a \eqn{3 \times 3}{3 x 3},
-  \eqn{3 \times 4}{3 x 4} or \eqn{3 \times 5}{3 x 5} data frame
-  corresponding to one of the Delaunay triangles specified by
-  \dQuote{object}.  The rows of each such data frame correspond
-  to the vertices of the corresponding Delaunay triangle. The
-  columns are:
+  A list each of whose components is a \eqn{3 \times 3}{3 x 3} or
+  \eqn{3 \times 4}{3 x 4} data frame corresponding to one of the
+  Delaunay triangles specified by \dQuote{object}.  The rows of each
+  such data frame correspond to the vertices of the corresponding
+  Delaunay triangle. The columns are:
   \itemize{
   \item \code{ptNum} (the index of the point in the original sequence
   of points that is being triangulated.  Note that if a point is
   one of a set of \emph{duplicated} points then \code{ptNum} is
   the \emph{first} of the indices of the points in this set.)
-  \item \code{ptType} (the type of the vertex; \dQuote{data}
-  or \dQuote{dummy}; present only if there were any dummy points
-  specified)
   \item \code{x} (the \eqn{x}-coordinate of the vertex)
-  \item \code{y} (the \eqn{x}-coordinate of the vertex)
-  \item \code{z} (the \dQuote{auxiliary value} or \dQuote{weight}
+  \item \code{y} (the \eqn{y}-coordinate of the vertex)
+  \item \code{z} (the \dQuote{auxiliary value} or \dQuote{tag}
   \code{z} associated with the vertex; present only if such values
   were supplied in the call to \code{deldir()})
   }

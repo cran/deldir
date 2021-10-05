@@ -1,8 +1,7 @@
 \name{tile.centroids}
-\Rdversion{1.1}
 \alias{tile.centroids}
 \title{
-Compute centroids of Dirchlet (Voronoi) tiles
+Compute centroids of Dirichlet (Voronoi) tiles
 }
 \description{
 Given a list of Dirichlet tiles, as produced by \code{tile.list()},
@@ -17,7 +16,7 @@ tile.centroids(tl)
 }
 \value{
   A data frame with two columns named \code{x} and \code{y}.
-  Each row of this data frame consitutes the centroid of one
+  Each row of this data frame constitutes the centroid of one
   of the Dirichlet tiles.
 }
 \references{
@@ -36,9 +35,7 @@ y <- runif(20)
 d <- deldir(x,y)
 l <- tile.list(d)
 g <- tile.centroids(l)
-\dontrun{
 plot(l,close=TRUE)
 points(g,pch=20,col="red")
-}
 }
 \keyword{ spatial }

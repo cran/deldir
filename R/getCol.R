@@ -6,7 +6,7 @@ if(is.null(ccc)) return(NA)
 ccc <- try(apply(col2rgb(ccc, TRUE), 2,
              function(x){do.call(rgb, as.list(x/255))}),silent=TRUE)
 if(inherits(ccc,"try-error")){
-    if(warn) warn(paste("Cannot interpret the z-components of",
+    if(warn) warning(paste("Cannot interpret the z-components of",
                         "argument \"x\" as colours.\n"))
     return(NA)
 }

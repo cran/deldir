@@ -1,18 +1,18 @@
-subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst)
+subroutine binsrt(x,y,rw,nn,ind,rind,tx,ty,ilst)
 # Sort the data points into bins.
 # Called by master.
 
 implicit double precision(a-h,o-z)
-dimension x(npd), y(npd), tx(npd), ty(npd)
-integer rind(npd)
-dimension ind(npd), ilst(npd)
+dimension x(nn), y(nn), tx(nn), ty(nn)
+integer rind(nn)
+dimension ind(nn), ilst(nn)
 dimension rw(4)
 dimension ndi(1)
 
 # Set dummy integer for call to intpr(...).
 ndi(1) = 0
 
-kdiv   = int(1+dble(npd)**0.25) # Round high.
+kdiv   = int(1+dble(nn)**0.25) # Round high.
 xkdiv  = dble(kdiv)
 
 # Dig out the corners of the rectangular window.
@@ -24,8 +24,8 @@ ymax = rw(4)
 w = xmax-xmin
 h = ymax-ymin
 
-# Number of bins is to be approx. sqrt(npd); thus number of subdivisions
-# on each side of rectangle is approx. npd**(1/4).
+# Number of bins is to be approx. sqrt(nn); thus number of subdivisions
+# on each side of rectangle is approx. nn**(1/4).
 dw  = w/xkdiv
 dh  = h/xkdiv
 
@@ -39,9 +39,9 @@ kx   = 1
 ky   = 1
 ink  = 1
 k    = 0
-do i = 1,npd { ilst(i) = 0 } # Keeps a list of those points already added
+do i = 1,nn { ilst(i) = 0 } # Keeps a list of those points already added
 while(ky<=kdiv) {            # to the new list.
-    do i = 1,npd {
+    do i = 1,nn {
         if(ilst(i)==1) next  # The i-th point has already been added
                              # to the new list.
 # If the i-th point is in the current bin, add it to the list.
@@ -71,14 +71,14 @@ while(ky<=kdiv) {            # to the new list.
 
 # Check that all points from old list have been added to the new,
 # with no spurious additions.
-if(k!=npd) {
+if(k!=nn) {
     call intpr("Mismatch between number of points",-1,ndi,0)
     call intpr("and number of sorted points.",-1,ndi,0)
     call rexit("Bailing out of binsrt.")
 }
 
 # Copy the new sorted vectors back on top of the old ones.
-do i = 1,npd {
+do i = 1,nn {
     x(i)   = tx(i)
     y(i)   = ty(i)
 }

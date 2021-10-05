@@ -7,12 +7,11 @@ Plot objects produced by deldir
 This is a method for plot.
 }
 \usage{
-\method{plot}{deldir}(x,add=FALSE,wlines=c('both','triang','tess'),
-                      wpoints=c('both','real','dummy','none'),
-                      number=FALSE,cex=1,nex=1,cmpnt_col=NULL,cmpnt_lty=NULL,
-                      pch=NULL,xlim=NULL,ylim=NULL,axes=FALSE,
-                      xlab=if(axes) 'x' else '',ylab=if(axes) 'y' else'',
-                      showrect=FALSE,asp=1,...)
+\method{plot}{deldir}(x,add=FALSE,wlines=c("both","triang","tess"),
+                      showpoints=TRUE,number=FALSE,cex=1,nex=1,
+                      cmpnt_col=NULL,cmpnt_lty=NULL,pch=1,xlim=NULL,
+                      ylim=NULL,axes=FALSE,xlab=if(axes) "x" else "",
+                      ylab=if(axes) "y" else"",showrect=FALSE,asp=1,...)
 }
 \arguments{
 \item{x}{
@@ -23,15 +22,13 @@ logical argument; should the plot be added to an existing plot?
 }
 \item{wlines}{
 "which lines?".  I.e.  should the Delaunay triangulation be plotted
-(wlines='triang'), should the Dirichlet tessellation be plotted
-(wlines='tess'), or should both be plotted (wlines='both', the
+(wlines="triang"), should the Dirichlet tessellation be plotted
+(wlines="tess"), or should both be plotted (wlines="both", the
 default) ?
 }
-\item{wpoints}{
-"Which points to plot?".  I.e.  should the real points be plotted
-(wpoints='real'), should the dummy points be plotted
-(wpoints='dummy'), should both be plotted (wpoints='both', the
-default) or should no points be plotted (wpoints='none')?
+\item{showpoints}{
+Logical scalar; should the points being triangulated/tessellated
+be plotted?
 }
 \item{number}{
 Logical argument, defaulting to \code{FALSE}; if \code{TRUE} then the
@@ -50,42 +47,43 @@ if number=\code{TRUE}.
 }
 \item{cmpnt_col}{
 A vector or list specifying the colours to be used for plotting
-the (up to six) different components of the graphic, explictly the
-triangulation, the tesselation, the data points, the dummy points,
+the (up to five) different components of the graphic, explicitly the
+triangulation, the tessellation, the data points,
 the point numbers and the enclosing rectangle (\code{x$rw}) in that
 order.  The components of this vector or list may be named, with the
-names chosen from \code{"tri","tess","data","dummy","num","rect".}
-The default is \code{c(tri=1,tess=1,data=1,dummy=1,num=1,rect=1)}.
+names chosen from \code{"tri","tess","points","num","rect".}
+The default is \code{c(tri=1,tess=1,points=1,num=1,rect=1)}.
 If the vector or list is not named, the component names are assumed
 to be from the default list of names in the given order.
 
 Colours may be specified as positive integers, corresponding to
 the entries of the current \code{\link{palette}()}, or as names of
-colours (from the list given by \code{link{colors}()}), or  in terms
+colours (from the list given by \code{\link{colors}()}), or  in terms
 of their RGB components with strings of the form \code{"#RRGGBB"}.
 (See \bold{Color Specification} in \code{\link{par}()}.)
 
-If fewer than six colours are given, the missing components are
+If fewer than five colours are given, the missing components are
 filled in with \code{1} or \code{palette()[1]} as is appropriate.
 If \code{cmpnt_col} does not have names then the components are
-simply recycled.  If more than six colours are given, the redundant
-ones are ignored (i.e. only the first six are used).
+simply recycled.  If more than five colours are given, the redundant
+ones are ignored (i.e. only the first five are used).
 }
 \item{cmpnt_lty}{
-A vector or list (of length two) of line type numbers for plotting
-the two components of the graphic that consist of lines, i.e. the
-triangulation and the tesselation.  The components of this vector
-or list may have names (\code{"tri","tess"}).  The default is
-c(tri=1,tess=1).  If a single value is given the missing one
-is filled in as \code{1}.  If more than two numbers are given,
+A vector or list (of length two) of line types for plotting
+the two components of the graphic that consist of lines,
+i.e. the triangulation and the tessellation.  The types may
+consist of integers between 1 and 6, or of approriate text
+strings ("solid", "dashed", "dotted", "dotdash", "longdash" or
+"twodash"; see the discussion of \code{lty} in \code{\link{par}()}).
+The components of \code{cmpnt_lty} (vector or list) may have names
+(\code{"tri","tess"}).  The default is c(tri=1,tess=2).  If a
+single value is given, the missing one is filled in as \code{1} or
+\code{"solid"} as is appropriate.  If more than two values are given,
 the redundant ones are ignored, i.e. only the first two are used.
-See \code{\link{par}()} for the meaning of these numbers.
 }
 \item{pch}{
-The plotting symbols for plotting the data points and the dummy
-points, in that order; may be either integer or character; defaults
-to 1:2.  If only one value is given it is repeated.  (If more than
-two values are given, the redundant ones are ignored.)
+The plotting symbol for plotting the points.  May be either
+integer or character.
 }
 \item{xlim}{
 The limits on the x-axis.  Defaults to \code{rw[1:2]} where \code{rw} is the
@@ -133,13 +131,8 @@ as the \code{col} argument of \code{segments} (and the values of
 A plot of the edges of the Delaunay triangles and/or of the Dirichlet
 tiles is produced or added to an existing plot.  By default the
 triangles are plotted with solid lines (lty=1) and the tiles with
-dotted lines (lty=2).  In addition the (data and dummy) points
+dotted lines (lty=2).  In addition the points
 being triangulated may be plotted.
-}
-\details{
-The points in the set being triangulated are plotted with distinguishing
-symbols.  By default the real points are plotted as circles (pch=1) and the
-dummy points are plotted as triangles (pch=2).
 }
 \section{Warning}{
 In previous versions of the \code{deldir} package, the aspect
@@ -150,7 +143,7 @@ To reproduce previous behaviour set \code{asp=NA} (and possibly
 they \emph{really} understand what they are doing and why they are
 doing it, are now \emph{strongly advised} not to set the value of
 \code{asp} but rather to leave \code{asp} equal to its default value
-of \code{1}.  Any other value may distort the tesselation and destroy
+of \code{1}.  Any other value may distort the tessellation and destroy
 the perpendicular appearance of lines which are indeed perpendicular.
 (And conversely may cause lines which are not perpendicular to
 appear as if they are.)
@@ -162,21 +155,22 @@ appear as if they are.)
 \examples{
 x <- c(2.3,3.0,7.0,1.0,3.0,8.0) + 0.5
 y <- c(2.3,3.0,2.0,5.0,8.0,9.0) + 0.5
-dxy <- deldir(x,y,dpl=list(x=c(1,10,10,1),y=c(1,1,10,10)),rw=c(0,11,0,11))
+x <- c(x,1,10,10,1)
+y <- c(y,1,1,10,10)
+dxy <- deldir(x,y,rw=c(0,11,0,11))
 plot(dxy)
 
-# Plots the tesselation, but does not save the results:
-deldir(x,y,dpl=list(x=c(1,10,10,1),y=c(1,1,10,10),rw=c(0,11,0,11)),plot=TRUE,
-       wl='tess',cmpnt_col=c(1,1,2,3,4,5),num=TRUE)
+# Plots the tessellation, but does not save the results:
+deldir(x,y,rw=c(0,11,0,11),plot=TRUE,
+       wl="tess",cmpnt_col=c(1,1,2,3,4),num=TRUE)
 
 # Plots the triangulation, but not the tessellation or the points,
 # and saves the returned structure:
 
-dxy <- deldir(x,y,dpl=list(x=c(1,10,10,1),y=c(1,1,10,10)),rw=c(0,11,0,11),plot=TRUE,
-       wl='triang',wp="none")
+dxy <- deldir(x,y,rw=c(0,11,0,11),plot=TRUE,wl="triang",wp="none")
 
 # Plot everything:
-plot(dxy,cmpnt_col=c("orange","green","red","blue","black","black"),cmpnt_lty=1,
+plot(dxy,cmpnt_col=c("orange","green","red","blue","black"),cmpnt_lty=1,
      number=TRUE,nex=1.5,pch=c(19,9),showrect=TRUE,axes=TRUE)
 
 # Complicated example from He Huang:
@@ -207,7 +201,7 @@ use_col <- all_col[i]
 ind     <- as.matrix(dH$delsgs[,c("ind1","ind2")])
 lwv <- ldm[ind]
 lwv <- 10*lwv/max(lwv)
-plot(dH,wlines="triang",col=use_col,wpoints="none",
+plot(dH,wlines="triang",col=use_col,showpoints=FALSE,
      lw=lwv,asp=NA)
 with(dH,text(x,y,id,cex=1.5))
 }

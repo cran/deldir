@@ -1,8 +1,8 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps)
+      subroutine dirout(dirsum,nadj,madj,x,y,ntot,nn,rw,eps)
       implicit double precision(a-h,o-z)
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-      dimension dirsum(npd,3), rw(4)
+      dimension dirsum(nn,3), rw(4)
       dimension ndi(1)
       logical collin, intfnd, bptab, bptcd, rwu
       ndi(1) = 0
@@ -10,7 +10,7 @@ C Output from Public domain Ratfor, version 1.03
       xmax = rw(2)
       ymin = rw(3)
       ymax = rw(4)
-      do23000 i = 1,npd 
+      do23000 i = 1,nn 
       area = 0.
       nbpt = 0
       npt = 0

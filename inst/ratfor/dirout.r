@@ -1,13 +1,13 @@
-subroutine dirout(dirsum,nadj,madj,x,y,ntot,npd,rw,eps)
+subroutine dirout(dirsum,nadj,madj,x,y,ntot,nn,rw,eps)
 
 # Output the description of the Dirichlet tile centred at point
-# i for i = 1, ..., npd.  Do this in the original order of the
+# i for i = 1, ..., nn.  Do this in the original order of the
 # points, not in the order into which they have been bin-sorted.
 # Called by master.
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension dirsum(npd,3), rw(4)
+dimension dirsum(nn,3), rw(4)
 dimension ndi(1)
 logical collin, intfnd, bptab, bptcd, rwu
 
@@ -29,7 +29,7 @@ xmax = rw(2)
 ymin = rw(3)
 ymax = rw(4)
 
-do i = 1,npd {
+do i = 1,nn {
     area = 0. # Initialize the area of the ith tile to zero.
     nbpt = 0  # Initialize the number of boundary points of
               # the ith tile to zero.

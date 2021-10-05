@@ -1,12 +1,7 @@
 print.deldir <- function(x,digits=NULL,...) {
     cat("\n")
-    cat("Delaunay triangulation and Dirchlet tessellation\n")
-    kount <- if(x$n.dum) {
-        paste0("of ",x$n.data," data points and ",x$n.dum," dummy points.\n")
-    } else {
-        paste0("of ",x$n.data," data points.\n")
-    }
-    cat(kount)
+    cat("Delaunay triangulation and Dirchlet tessellation\n",
+        "of",x$n.data," points.\n")
     cat("\n")
     if(is.null(digits)) {
         rw <- x$rw

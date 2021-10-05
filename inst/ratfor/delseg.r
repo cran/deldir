@@ -1,4 +1,4 @@
-subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,incSeg)
+subroutine delseg(delsgs,ndel,nadj,madj,nn,x,y,ntot,incSeg)
 
 # Output the endpoints of the line segments joining the
 # vertices of the Delaunay triangles.
@@ -14,9 +14,9 @@ incSeg = 0
 
 # For each distinct pair of points i and j, if they are adjacent
 # then put their endpoints into the output array.
-npd = ntot-4
+nn = ntot-4
 kseg = 0
-do i = 2,npd {
+do i = 2,nn {
     do j = 1,i-1 {
         call adjchk(i,j,value,nadj,madj,ntot)
         if(value) {

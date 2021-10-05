@@ -57,7 +57,7 @@ Qatar Computing Research Institute, Hamad Bin Khalifa University.
   \code{"y"} specifying the coordinates of the limiting locations
   of the tile centroids.}
   \item{tiles}{An object of class \code{"tile.list"} specifying
-  the Dirchlet (Voronoi) tiles in the tessellation of the points
+  the Dirichlet (Voronoi) tiles in the tessellation of the points
   whose coordinates are given in \code{centroids}.  Note the tile
   associated with the \eqn{i}th point has centroid \emph{equal}
   to that point.}
@@ -77,7 +77,7 @@ pp. 129--137, doi:10.1109/TIT.1982.1056489.
 \code{\link{deldir}()} \code{\link{tile.list}()}
 }
 \examples{
-\dontrun{ # Takes too long.
+\donttest{ # Takes too long.
     set.seed(42)
     x <- runif(20)
     y <- runif(20)

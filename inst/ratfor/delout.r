@@ -1,16 +1,16 @@
-subroutine delout(delsum,nadj,madj,x,y,ntot,npd)
+subroutine delout(delsum,nadj,madj,x,y,ntot,nn)
 
 # Put a summary of the Delaunay triangles with a vertex at point i,
-# for i = 1, ..., npd, into the array delsum.  Do this in the original
+# for i = 1, ..., nn, into the array delsum.  Do this in the original
 # order of the points, not the order into which they have been
 # bin-sorted.
 # Called by master.
 
 implicit double precision(a-h,o-z)
 dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
-dimension delsum(npd,4)
+dimension delsum(nn,4)
 
-do i = 1,npd {
+do i = 1,nn {
     area = 0.   # Initialize area of polygon consisting of triangles
                 # with a vertex at point i.
 # Get the coordinates of the point and the number of

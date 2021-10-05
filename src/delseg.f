@@ -1,13 +1,13 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine delseg(delsgs,ndel,nadj,madj,npd,x,y,ntot,incseg)
+      subroutine delseg(delsgs,ndel,nadj,madj,nn,x,y,ntot,incseg)
       implicit double precision(a-h,o-z)
       logical value
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
       dimension delsgs(6,ndel)
       incseg = 0
-      npd = ntot-4
+      nn = ntot-4
       kseg = 0
-      do23000 i = 2,npd 
+      do23000 i = 2,nn 
       do23002 j = 1,i-1 
       call adjchk(i,j,value,nadj,madj,ntot)
       if(value)then

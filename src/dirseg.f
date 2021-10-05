@@ -1,6 +1,6 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine dirseg(dirsgs,ndir,nadj,madj,npd,x,y,ntot,rw,eps,ntri,i
-     *ncadj,incseg)
+      subroutine dirseg(dirsgs,ndir,nadj,madj,nn,x,y,ntot,rw,eps,ntri,in
+     *cadj,incseg)
       implicit double precision(a-h,o-z)
       logical collin, adjace, intfnd, bptab, bptcd, goferit, rwu
       dimension nadj(-3:ntot,0:madj), x(-3:ntot), y(-3:ntot)
@@ -15,8 +15,8 @@ C Output from Public domain Ratfor, version 1.03
       a = xmax-xmin
       b = ymax-ymin
       c = sqrt(a*a+b*b)
-      npd = ntot-4
-      nstt = npd+1
+      nn = ntot-4
+      nstt = nn+1
       i = nstt
       x(i) = xmin-c
       y(i) = ymin-c
@@ -38,7 +38,7 @@ C Output from Public domain Ratfor, version 1.03
 23000 continue
 23001 continue
       kseg = 0
-      do23004 i = 2,npd 
+      do23004 i = 2,nn 
       do23006 j = 1,i-1 
       call adjchk(i,j,adjace,nadj,madj,ntot)
       if(adjace)then

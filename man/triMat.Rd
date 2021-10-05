@@ -16,9 +16,9 @@ triMat(object)
 }
 \arguments{
   \item{object}{
-  An object of class \code{deldir} (as produced by the funtion
+  An object of class \code{deldir} (as produced by the function
   \code{\link{deldir}()}) specifying the Delaunay triangulation
-  and Dirichlet (Voronoi) tesselation of a planar point set.
+  and Dirichlet (Voronoi) tessellation of a planar point set.
 }
 }
 \details{

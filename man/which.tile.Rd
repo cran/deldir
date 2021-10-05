@@ -4,8 +4,8 @@
   Determine the tile containing a given point.
 }
 \description{
-  Finds the Dirchlet/Voronoi tile of a tessellation produced
-  by deldir that contains a given point.
+  Finds the Dirichlet/Voronoi tile, of a tessellation produced
+  by \code{deldir()}, that contains a given point.
 }
 \usage{
 which.tile(x, y, tl)
@@ -48,4 +48,4 @@ plot(txy,showpoints=FALSE)
 text(x,y,labels=1:length(txy),col="red")
 points(30,50,pch=20,col="blue")
 }
-\keyword{spatial}% use one of  RShowDoc("KEYWORDS")
+\keyword{ spatial }

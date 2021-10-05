@@ -1,6 +1,6 @@
 \name{plot.tile.list}
 \alias{plot.tile.list}
-\title{ Plot Dirchlet (Voronoi) tiles }
+\title{ Plot Dirichlet (Voronoi) tiles }
 \description{ A method for \code{plot}.  Plots (sequentially)
 the tiles associated with each point in the set being tessellated. }
 \usage{
@@ -12,53 +12,69 @@ the tiles associated with each point in the set being tessellated. }
                          number=FALSE,adj=NULL,...) 
 }
 \arguments{
-  \item{x}{ A list of the tiles in a tessellation, as produced
-  the function \code{\link{tile.list}()}.}
-  \item{verbose}{ Logical scalar; if \code{TRUE} the tiles are
-  plotted one at a time (with a ``Go?'' prompt after each)
-  so that the process can be watched.}
-  \item{close}{ Logical scalar; if \code{TRUE} the outer edges of
+  \item{x}{
+  A list of the tiles in a tessellation, as produced
+  the function \code{\link{tile.list}()}.
+}
+  \item{verbose}{
+  Logical scalar; if \code{TRUE} the tiles are
+  plotted one at a time (with a \dQuote{Go?} prompt after each)
+  so that the process can be watched.
+}
+  \item{close}{
+  Logical scalar; if \code{TRUE} the outer edges of
   of the tiles (i.e. the edges which are contained in the enclosing
   rectangle) are drawn.  Otherwise tiles on the periphery of the
-  tessellation are left ``open''.}
-  \item{pch}{The plotting character (or vector of plotting
+  tessellation are left \dQuote{open}.
+}
+  \item{pch}{
+  The plotting character (or vector of plotting
   characters) with which to plot the points of the pattern which
-  was tessellated.  Ignored if \code{showpoints} is \code{FALSE}.}
-  \item{fillcol}{Optional vector (possibly of length 1, i.e. a scalar)
-  whose entries can be interpreted as colours by \code{\link{col2rgb}()}.
-  The \eqn{i}-th entry indicates with which colour to fill
-  the \eqn{i}-th tile.  Note that an \code{NA} entry cause the
-  tile to be left unfilled.  This argument will be replicated
-  to have length equal to the number of tiles.
-  }
-  \item{col.pts}{Optional vector like unto \code{fillcol} whose
+  was tessellated.  Ignored if \code{showpoints} is \code{FALSE}.
+}
+  \item{fillcol}{
+  Optional vector (possibly of length 1, i.e. a scalar) whose
   entries can be interpreted as colours by \code{\link{col2rgb}()}.
-  The \eqn{i}-th entry indicates with which colour to plot the
-  \eqn{i}-th point.  This argument will be replicated to have length
-  equal to the number of tiles.  Ignored if \code{showpoints} is
-  \code{FALSE}.
-  }
-  \item{col.num}{Optional vector like unto \code{col.pts}. Determines
-  the colours in which the point numbers (see \code{number} below)
-  are plotted.  This argument will be replicated to have length equal
-  to the number of tiles.  Ignored if \code{number} is \code{FALSE}.
-  }
-  \item{border}{A \emph{scalar} indicating the colour with which to plot
-  the tile boundaries.  Defaults to black unless all of the
-  fill colours specified by \code{fillcol} are black, in which
-  case it defaults to white.  If \code{length(border) > 1} then
-  an error is given.
-  }
+  The \eqn{i}-th entry indicates with which colour to fill the
+  \eqn{i}-th tile.  Note that an \code{NA} entry cause the tile
+  to be left unfilled.  This argument will be replicated to have
+  length equal to the number of tiles.  The default value is
+  created (using the tile \dQuote{tags}, if these exist) by
+  the undocumented function \code{getCol()}.
+}
+  \item{col.pts}{
+  Optional vector like unto \code{fillcol} whose entries can be
+  interpreted as colours by \code{\link{col2rgb}()}.  The \eqn{i}-th
+  entry indicates with which colour to plot the \eqn{i}-th point.
+  This argument will be replicated to have length equal to the
+  number of tiles.  Ignored if \code{showpoints} is \code{FALSE}.
+}
+  \item{col.num}{
+  Optional vector like unto \code{col.pts}. Determines the colours
+  in which the point numbers (see \code{number} below) are plotted.
+  This argument will be replicated to have length equal to the
+  number of tiles.  Ignored if \code{number} is \code{FALSE}.
+}
+  \item{border}{
+  A scalar that can be interpreted as a colour by \code{col2rgb()},
+  indicating the colour with which to plot the tile boundaries.
+  Defaults to black unless all of the fill colours specified by
+  \code{fillcol} are black, in which case it defaults to white.
+  If \code{length(border) > 1} then only its first entry is used.
+}
   \item{showpoints}{Logical scalar; if \code{TRUE} the points of
-  the pattern which was tesselated are plotted.}
+  the pattern which was triangulated/tessellated are plotted.
+}
   \item{add}{
   Logical scalar; should the plot of the tiles be added
-  to an existing plot?  }
+  to an existing plot?
+}
   \item{asp}{The aspect ratio of the plot; integer scalar or
   \code{NA}.  Set this argument equal to \code{NA} to allow the data
   to determine the aspect ratio and hence to make the plot occupy the
   complete plotting region in both \code{x} and \code{y} directions.
-  This is inadvisable; see the \bold{Warnings}.}
+  This is inadvisable; see the \bold{Warnings}.
+}
   \item{clipp}{An object specifying a polygon to which the tessellation
   being plotted should be clipped.  It should consist either of:
   \itemize{
@@ -70,9 +86,10 @@ the tiles associated with each point in the set being tessellated. }
   }
   If this argument is provided then the plot of the tessellation
   is \dQuote{clipped} to the polygon specified by \code{clipp}.
-  }
+}
   \item{xlab}{
-   Label for the \code{x}-axis (used only if \code{add} is \code{FALSE}).}
+   Label for the \code{x}-axis (used only if \code{add} is \code{FALSE}).
+}
   \item{ylab}{
    Label for the \code{y}-axis (used only if \code{add} is \code{FALSE}).}
   \item{main}{
@@ -106,7 +123,7 @@ the tiles associated with each point in the set being tessellated. }
   Clipping is now effected via the new package \code{polyclip}.
   The \code{spatstat} package is no longer used.  The argument
   \code{use.gpclib} has been eliminated, since \code{gpclib} (which
-  used to be called upon by \code{spatstat} has been superceded by
+  used to be called upon by \code{spatstat} has been superseded by
   \code{polyclip} which has an unrestrictive license.
 
   \item As of release 0.1-1 of the \code{deldir} package, the

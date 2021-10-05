@@ -2,7 +2,6 @@ triang.list <- function (object)
 {
     stopifnot(inherits(object,"deldir"))
     io <- object$ind.orig
-    pt <- object$summary$pt.type
     tlist <- prelimtlist(object)
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
@@ -45,8 +44,6 @@ triang.list <- function (object)
 	)
 	if(as.logical(tmp$okay)) {
                 tmp <- data.frame(ptNum=io[tlist[i,]],x=xtri[i,],y=ytri[i,])
-                if(length(pt)) tmp <- cbind(tmp[,1,drop=FALSE],
-                                            ptType=pt[tlist[i,]],tmp[,2:3])
                 if(haveZ) tmp <- cbind(tmp,z=ztri[i,])
 		K <- K+1
                 rslt[[K]] <- tmp

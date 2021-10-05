@@ -5,89 +5,45 @@
 }
 \description{
 This function computes the Delaunay triangulation (and hence the
-Dirichlet or Voronoi tesselation) of a planar point set according
-to the second (iterative) algorithm of Lee and Schacter ---
-see REFERENCES.  The triangulation is made to be with respect to
-the whole plane by \code{suspending} it from so-called ideal points
+Dirichlet or Voronoi tessellation) of a planar point set according
+to the second (iterative) algorithm of Lee and Schacter --- see
+\bold{References}.  The triangulation is made to be with respect to
+the whole plane by \dQuote{suspending} it from so-called ideal points
 (-Inf,-Inf), (Inf,-Inf) (Inf,Inf), and (-Inf,Inf).  The triangulation
-is also enclosed in a finite rectangular window.  A set of dummy
-points may be added, in various ways, to the set of data points
-being triangulated.
+is also enclosed in a finite rectangular window.
 }
 \usage{
-deldir(x, y, dpl=NULL, rw=NULL, eps=1e-09, sort=TRUE, plot=FALSE,
-       round=TRUE,digits=6, z=NULL, zdum=NULL, suppressMsge=FALSE, \dots)
+deldir(x, y, z=NULL, rw=NULL, eps=1e-09, sort=TRUE, plot=FALSE,
+       round=TRUE,digits=6, \dots)
 }
 \arguments{
 \item{x,y}{
 These arguments specify the coordinates of the point set being
-triangulated or tessellated. These can be given by two separate
-arguments x and y which are vectors or by a single argument x
-which is either a data frame or a generic list, possibly one of
-class \code{ppp}.  (See package \code{spatstat}.)
-
-If \code{x} is a data frame then the \code{x} coordinates of the
-points to be triangulated or tessellated are taken to be the column
-of this data frame which is named \dQuote{x} if there is one,
-else the first column of the data frame which is not named either
-\dQuote{y} or \dQuote{z}. The \code{y} coordinates are taken to be
-the column of this data frame which is named \dQuote{y} if there is
-one.  If there is no column named \dQuote{y} but there are columns
-named \dQuote{x} and \dQuote{z} then the \code{y} coordinates
-are taken to be the first \dQuote{other} column.  If there no
-columns named either \dQuote{x} or \dQuote{y}, then the \code{x}
-coordinates are taken to be the first column not named \dQuote{z}
-and the \code{y} coordinates are taken to be the \emph{second}
-column not named \dQuote{z}.
-
-If there is a column named \dQuote{z} and if the argument \code{z}
-(see below) is NULL, then this the column named \dQuote{z} is taken
-to be the value of \code{z}.
-
-If \code{x} is a list (but not a data frame) then it must have
-components named \code{x} and \code{y}, and possibly a component
-named \code{z}.  The \code{x} and \code{y} components give the
-\code{x} and \code{y} coordinates respectively of the points to
-be triangulated or tessellated. If \code{x} is \emph{not} of class
-\code{ppp}, if it has a component \code{z} and if argument \code{z}
-is \code{NULL}, then the \code{z} argument is set equal to this
-component \code{z}.  If \code{x} \emph{is} of class \dQuote{ppp}, if
-the argument \code{z} is \code{NULL}, if \code{x} is \dQuote{marked}
-(see package \code{spatstat}) and if the marks of \code{x} are a
-vector or a factor (as opposed to a data frame) then the \code{z}
-argument is set equal to these marks.  In this case \code{x}
-should \emph{not} have a component \code{z}, and at any rate such
-a component would be ignored.
+triangulated/tessellated. These can be given by two separate vector
+arguments \code{x} and \code{y} or by a single argument \code{x}
+which is a data structure that may be matrix, a data frame, a
+generic list, or an object of class \code{"ppp"}.  (See package
+\code{spatstat}.)  In this case the \code{"x"} and \code{"y"}
+coordinates are extracted from the argument \code{x}, and argument
+\code{y} is ignored.  See \bold{Notes on extracting the coordinates}.
 }
-\item{dpl}{
-A list describing the structure of the dummy points to be added to
-the data being triangulated.  The addition of these dummy points
-is effected by the auxiliary function dumpts().  The list may
-have components:
-\itemize{
-\item \code{ndx}: The x-dimension of a rectangular grid; if either
-ndx or ndy is null, no grid is constructed.
-\item \code{ndy}: The y-dimension of the aforementioned rectangular
-grid.
-\item \code{nrad}: The number of radii or \dQuote{spokes}, emanating from
-each data point, along which dummy points are to be added.
-\item \code{nper}: The number of dummy points per spoke.
-\item \code{fctr}: A numeric \dQuote{multiplicative factor}
-determining the length of each spoke; each spoke is of length equal
-to fctr times the mean nearest neighbour distance of the data.
-(This distance is calculated by the auxiliary function mnnd().)
-\item \code{x}: A vector of x-coordinates of \dQuote{ad hoc} dummy points
-\item \code{y}: A vector of the corresponding y-coordinates of
-\dQuote{ad hoc} dummy points
-}
-
+\item{z}{
+Optional argument specifying \dQuote{auxiliary} values or
+\dQuote{tags} associated with the respective points.  (See
+\bold{Notes on \dQuote{tags}}.) This argument may be a vector or
+factor whose entries constitute these tags, or it may be a text
+string naming such a vector or factor.  If \code{z}, or the object
+named by \code{z} is a vector (rather than a factor) it may be
+of any mode (numeric, character, logical, etc.).  See \bold{Notes
+on extracting \code{z}} for how \code{z} is handled when argument
+\code{x} is a data structure (rather than a numeric vector).
 }
 \item{rw}{
 The coordinates of the corners of the rectangular window enclosing
 the triangulation, in the order (xmin, xmax, ymin, ymax).  Any data
-points (including dummy points) outside this window are discarded.
-If this argument is omitted, it defaults to values given by the range
-of the data, plus and minus 10 percent.
+points outside this window are discarded.  If this argument is
+omitted, it defaults to values given by the range of the data,
+plus and minus 10 percent.
 }
 \item{eps}{
 A value of epsilon used in testing whether a quantity is zero, mainly
@@ -96,14 +52,14 @@ arise, it is possible that these may averted by adjusting the value
 of eps upward or downward.
 }
 \item{sort}{
-Logical argument; if \code{TRUE} (the default) the data (including dummy
-points) are sorted into a sequence of \dQuote{bins} prior to triangulation;
-this makes the algorithm slightly more efficient.  Normally one would
-set \code{sort} equal to \code{FALSE} only if one wished to observe some of the
-fine detail of the way in which adding a point to a data set affected
-the triangulation, and therefore wished to make sure that the point
-in question was added last.  Essentially this argument would get used
-only in a de-bugging process.
+Logical argument; if \code{TRUE} (the default) the data are sorted
+into a sequence of \dQuote{bins} prior to triangulation; this makes
+the algorithm slightly more efficient.  Normally one would set
+\code{sort} equal to \code{FALSE} only if one wished to observe
+some of the fine detail of the way in which adding a point to a
+data set affected the triangulation, and therefore wished to make
+sure that the point in question was added last.  Essentially this
+argument would get used only in a debugging process.
 }
 \item{plot}{
 Logical argument; if \code{TRUE} a plot is produced.  The nature
@@ -115,7 +71,7 @@ and of both the triangulation and the tessellation is produced;
 \item{round}{
 Logical scalar.  Should the data stored in the returned value
 be rounded to \code{digits} decimal digits?  This is essentially
-for cosmetic purposes.  This argument is a \dQuote{new addtion}
+for cosmetic purposes.  This argument is a \dQuote{new addition}
 to \code{deldir()}, as of version 0.1-26.  Previously rounding
 was done willy-nilly.  The change was undertaken when Kodi
 Arfer pointed out that the rounding might have unwanted effects
@@ -126,36 +82,8 @@ The number of decimal places to which all numeric values in the
 returned list should be rounded.  Defaults to 6. Ignored if
 \code{round} (see above) is set to \code{FALSE}.
 }
-\item{z}{
-An optional vector of \dQuote{auxiliary} values or \dQuote{weights}
-associated with the respective points. (\bold{NOTE:} These
-\dQuote{weights} are values associated with the points and hence
-with the tiles of the tessellation produced.  They \bold{DO NOT}
-affect the tessellation, i.e.  the tessellation produced is the
-same as is it would be if there were no weights.  The \code{deldir}
-package \bold{DOES NOT} do weighted tessellation.  The so-called
-weights in fact need not be numeric.)
-
-If \code{z} is left \code{NULL} then it is taken to be the third
-column of \code{x}, if \code{x} is a data frame or to be the \code{z}
-component of \code{x} if \code{x} is a generic list. If \code{z}
-is left \code{NULL} and if \code{x} is of class \dQuote{ppp} and is
-\dQuote{marked} (see package \code{spatstat}) and if in addition
-the marks are atomic (i.e. \emph{not} a data frame) then \code{z}
-is taken to be the marks of \code{x}.
-}
-\item{zdum}{
-Values of \code{z} to be associated with any dummy points that are
-created. See \bold{Warnings}.
-}
-\item{suppressMsge}{
-Logical scalar indicating whether a message (alerting the user to
-changes from previous versions of \code{deldir}) should be
-suppressed.  Currently (package version \version) no such message
-is produced, so this argument has no effect.
-}
 \item{...}{
-Auxiliary arguments \code{add}, \code{wlines}, \code{wpoints},
+Auxiliary arguments \code{add}, \code{wlines},
 \code{number}, \code{nex}, \code{col}, \code{lty}, \code{pch},
 \code{xlim}, and \code{ylim} (and possibly other plotting parameters)
 may be passed to \code{\link{plot.deldir}()} through \code{\dots}
@@ -184,7 +112,7 @@ of the corresponding edge of a Dirichlet tile is a boundary point
 (a point on the boundary of the rectangular window).  Likewise for
 the entry in column \code{bp2} and the second endpoint of the edge.
 
-The nineth and tenth entries, in columns named \code{thirdv1}
+The ninth and tenth entries, in columns named \code{thirdv1}
 and \code{thirdv2} are the indices of the respective third
 vertices of the Delaunay triangle whose circumcentres constitute
 the corresponding endpoints of the edge under consideration.
@@ -212,18 +140,16 @@ Similarly for columns \code{thirdv2} and \code{bp2}.
 a data frame with 9, 10 or 11 columns and \code{n.data + n.dum} rows
 (see below).  The rows correspond to the points in the set being
 triangulated.  Note that the row names are the indices of the points
-in the orginal sequence of points being triangulated/tessellated.
-Usually these will be the sequence 1, 2, ..., npd ("n plus dummy").
-However if there were \emph{duplicated} points then the row name
-corresponding to a point is the \emph{first} of the indices of
-the set of duplicated points in which the given point appears.
-The columns are:
+in the original sequence of points being triangulated/tessellated.
+Usually these will be the sequence 1, 2, ..., n.  However if there
+were \emph{duplicated} points then the row name corresponding to a
+point is the \emph{first} of the indices of the set of duplicated
+points in which the given point appears.  The columns are:
+
 \itemize{
 \item \code{x} (the \eqn{x}-coordinate of the point)
 \item \code{y} (the \eqn{y}-coordinate of the point)
-\item \code{pt.type} (a character vector with entries \dQuote{data}
-and \dQuote{dummy}; present only if \code{n.dum > 0})
-\item \code{z} (the auxiliary values or \dQuote{weights}; present
+\item \code{z} (the auxiliary values or \dQuote{tags}; present
 only if these were specified)
 \item \code{n.tri} (the number of Delaunay triangles emanating from
 the point)
@@ -245,17 +171,10 @@ Note that the factor of 1/3 associated with the del.area column
 arises because each triangle occurs three times --- once for
 each corner.
 }
-
 \item{n.data}{
-the number of real (as opposed to dummy) points in the set which was
-triangulated, with any duplicate points eliminated.  The first n.data
-rows of \code{summary} correspond to real points.
-}
-\item{n.dum}{
-the number of dummy points which were added to the set being triangulated,
-with any duplicate points (including any which duplicate real points)
-eliminated.  The last n.dum rows of \code{summary} correspond to dummy
-points.
+the number of points in the set which was triangulated, with any
+duplicate points eliminated.  It is the same as the number of rows
+of \code{summary}.
 }
 \item{del.area}{
 the area of the convex hull of the set of points being triangulated,
@@ -270,15 +189,10 @@ the specification of the corners of the rectangular window enclosing
 the data, in the order (xmin, xmax, ymin, ymax).
 }
 \item{ind.orig}{A vector of the indices of the points (x,y) in the
-set of coordinates initially supplied (as data points or as dummy
-points) to \code{deldir()} before duplicate points (if any) were
-removed.  These indices are used by \code{\link{triang.list}()}.
+set of coordinates initially supplied to \code{deldir()} before
+duplicate points (if any) were removed.  These indices are used
+by \code{\link{triang.list}()}.
 }}
-\section{Remark:}{
-If ndx >= 2 and ndy >= 2, then the rectangular window IS the convex
-hull, and so the values of del.area and dir.area (if the latter is
-not \code{NULL}) are identical.
-}
 \section{Side Effects}{
 If \code{plot=TRUE} a plot of the triangulation and/or tessellation
 is produced or added to an existing plot.
@@ -302,21 +216,66 @@ was originally undertaken.  The author also acknowledges much useful
 advice from Adrian Baddeley, formerly of D.M.S., CSIRO (now
 Professor of Statistics at Curtin University).
 Daryl Tingley of the Department of Mathematics
-and Statistics, University of New Brunswick provided some helpful
+and Statistics, University of New Brunswick, provided some helpful
 insight.  Special thanks are extended to Alan Johnson, of the
 Alaska Fisheries Science Centre, who supplied two data sets which
 were extremely valuable in tracking down some errors in the code.
 
 Don MacQueen, of Lawrence Livermore National Lab, wrote an Splus
 driver function for the old stand-alone version of this software.
-That driver, which was available on Statlib, was deprecated in
-favour of the Statlib package \dQuote{delaunay}.  Don also
-collaborated in the preparation of that package.  It is not clear
-to me whether the \dQuote{delaunay} package, or indeed Statlib
-(or indeed Splus!) still exist.
+That driver, which was available on Statlib, was deprecated in favour
+of the Statlib package \dQuote{delaunay}.  Don also collaborated
+in the preparation of the latter package.  It is not clear to me
+whether the \dQuote{delaunay} package, or indeed Statlib (or indeed
+Splus!) still exist.
 
 See the \code{ChangeLog} for information about further revisions
 and bug-fixes.
+}
+
+\section{Notes on extracting the coordinates}{
+If \code{x} is a generic list, or if it is an object of class
+\code{"ppp"}, then the coordinates are taken to be the components
+of \code{x} named \code{"x"} and \code{"y"}.  In this case \code{x}
+\emph{must} have such components otherwise an error is thrown.
+
+If \code{x} is a matrix or a data frame, then the coordinates are
+taken to be the columns named \code{"x"} and \code{"y"} if there
+are such columns.  If there is no column named \code{"x"} then the
+\code{x}-coordinates are taken to be the first column that is not
+named either \code{"y"} or \code{znm} (where \code{znm} is the name
+of the object providing the \dQuote{tags}, if \dQuote{tags} have
+been specified).  Likewise if there is no column named \code{"y"}
+then the \code{y}-coordinates are taken to be the first column that
+is not named either \code{"x"} or \code{znm} and is not equal to
+the column previously selected to be the \code{x}-coordinates.
+}
+
+\section{Notes on extracting \code{z}}{
+If argument \code{x} is a data structure (rather than a numeric
+vector) and is \emph{not} an object of class \code{"ppp"} then
+\code{z} (if specified) is searched for \emph{first} in \code{x} and
+then \dQuote{elsewhere}.  If \code{x} \emph{is} of class \code{"ppp"}
+then what happens depends on whether \code{z} was specified or
+left to take its default value of \code{NULL}.  In the former case,
+\code{z} takes the specified value.  In the latter case the value of
+\code{"z"} is taken from the marks of \code{x} provided that \code{x}
+is indeed a marked point pattern and that the marks are \emph{atomic}
+(essentially if the marks are not a data frame). Otherwise \code{z}
+is left \code{NULL}, i.e. there are no \dQuote{tags} associated
+with the points.
+}
+
+\section{Notes on \dQuote{tags}}{
+The \dQuote{tags} are simply values that are associated in some way
+with the data points and hence with the tiles of the tessellation
+produced.  They \bold{DO NOT} affect the tessellation.  In previous
+versions of this package (0.2-10 and earlier) the entries of \code{z}
+were referred to as \dQuote{weights}.  This terminology has been
+changed since it is misleading.  The tessellation produced when
+a \code{z} argument is supplied is the same as is it would be
+if there were no \code{z} argument (i.e. no \dQuote{weights}).
+The \code{deldir} package \bold{DOES NOT do weighted tessellation}.
 }
 
 \section{Notes on Memory Allocation}{
@@ -326,7 +285,7 @@ of the Delaunay triangles and Dirichlet tiles, and for storing
 the \dQuote{adjacency list} used by the Lee-Schacter algorithm.
 In the code, an attempt is made to allocate sufficient storage.
 If, during the course of running the algorithm, the amount of
-storage turns out to be inadquate, the algorithm is halted, the
+storage turns out to be inadequate, the algorithm is halted, the
 storage is incremented, and the algorithm is restarted (with an
 informative message).  This message may be suppressed by wrapping
 the call to \code{deldir()} in \code{\link{suppressMessages}()}.
@@ -342,16 +301,16 @@ returned a \code{NULL} value.  A glossary of the meanings of the
 values of was provided in a file to be found in a file located in the
 \code{inst} directory (\dQuote{folder} if you are a Windoze weenie).
 
-This was a pretty shaganappi system.  Consequently and as of version
-1.2-1 conversion to \dQuote{proper} error trapping was implemented.
+This was a pretty shaganappi system.  Consequently, as of version
+1.2-1, conversion to \dQuote{proper} error trapping was implemented.
 Such error trapping is effected via the \code{rexit()} subroutine
-which is now available in \code{R}.  (See \dQuote{Writing R Extensions},
-section 6.2.1.)
+which is now available in \code{R}.  (See \dQuote{Writing R
+Extensions}, section 6.2.1.)
 
 Note that when an error is detected \code{deldir()} now exits with
 a genuine error, rather than returning \code{NULL}.  The glossary
-of the meanings of \dQuote{error numbers} is now irrelevant and has
-been removed from the \code{inst} directory.
+of the meanings of \dQuote{error numbers} is now irrelevant and
+has been removed from the \code{inst} directory.
 
 An error trap that merits particular mention was introduced in
 version \code{0.1-16} of \code{deldir}.  This error trap relates to
@@ -376,7 +335,7 @@ hole.
 When an error of the \dQuote{triangle problems} nature occurs, a
 \emph{possible} remedy is to increase the value of the \code{eps}
 argument of \code{deldir()}. (See the \bold{Examples}.)  There may
-conceiveably be other problems that lead to infinite loops and so I
+conceivably be other problems that lead to infinite loops and so I
 put in another error trap to detect whether the procedure has
 inspected more triangles than actually exist, and if so to throw
 an error.
@@ -386,8 +345,8 @@ is \emph{probably} the appropriate response in most (if not all)
 of the cases where errors of this nature arise.  Similarly this
 strategy is \emph{probably} the appropriate response to the errors
 \itemize{
-    \item Vertices of 'triangle' are collinear and vertex 2 is not
-    between 1 and 3.  Error in circen.
+    \item Vertices of \dQuote{triangle} are collinear and vertex 2 is not
+          between 1 and 3.  Error in circen.
     \item Vertices of triangle are collinear.  Error in dirseg.
     \item Vertices of triangle are collinear.  Error in dirout.
 }
@@ -425,38 +384,14 @@ matrices.  The component \code{summary} was changed to allow the
 not necessarily numeric).  The component \code{delsgs} was then
 changed for consistency.  Note that the other \dQuote{matrix-like}
 component \code{dirsgs} has been a data frame since time immemorial.
-
-A message alerting the user to the foregoing two items is printed
-out the first time that \code{deldir()} is called with
-\code{suppressMsge=FALSE} in a given session.  In succeeding
-calls to \code{deldir()} in the same session, no message is printed.
-(I.e. the \dQuote{alerting} message is printed \emph{at most once}
-in any given session.)
-
-The \dQuote{alerting} message is \emph{not} produced via the
-\code{warning()} function, so \code{suppressWarnings()} will
-\emph{not} suppress its appearance.  To effect such suppression
-(necessary only on the first call to \code{deldir()} in a
-given session) one must set the \code{suppressMsge} argument of
-\code{deldir} equal to \code{TRUE}.
-
-\item If any dummy points are created, and if a vector \code{z}, of
-\dQuote{auxiliary} values or \dQuote{weights} associated with the
-points being triangulated, is supplied, then it is up to the user to
-supply the corresponding auxiliary values or weights associated with
-the dummy points.  These values should be supplied as \code{zdum}.
-If \code{zdum} is not supplied then the auxiliary values or weights
-associated with the dummy points are all taken to be missing values
-(i.e. \code{NA}).
 }
 }
-
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
 }
 
 \references{
-Lee, D. T. and Schacter, B. J. (1980)  Two algorithms for
+Lee, D. T. and Schacter, B. J. (1980). Two algorithms for
 constructing a Delaunay triangulation, \emph{International Journal
 of Computer and Information Sciences} \bold{9} (3), pp. 219 -- 242.
 
@@ -466,8 +401,8 @@ Ahuja, N. and Schacter, B. J. (1983).  Pattern Models.  New York: Wiley.
   \code{\link{plot.deldir}()}, \code{\link{tile.list}()}, \code{\link{triang.list}()}
 }
 \examples{
-x    <- c(2.3,3.0,7.0,1.0,3.0,8.0)
-y    <- c(2.3,3.0,2.0,5.0,8.0,9.0)
+x <- c(2.3,3.0,7.0,1.0,3.0,8.0)
+y <- c(2.3,3.0,2.0,5.0,8.0,9.0)
 
 # Let deldir() choose the rectangular window.
 dxy1 <- deldir(x,y)
@@ -475,25 +410,42 @@ dxy1 <- deldir(x,y)
 # User chooses the rectangular window.
 dxy2 <- deldir(x,y,rw=c(0,10,0,10))
 
-# Put dummy points at the corners of the rectangular
+# Put "dummy" points at the corners of the rectangular
 # window, i.e. at (0,0), (10,0), (10,10), and (0,10)
-dxy3 <- deldir(x,y,dpl=list(ndx=2,ndy=2),rw=c(0,10,0,10))
+xx <- c(x,0,10,10,0)
+yy <- c(y,0,0,10,10)
+dxy3 <- deldir(xx,yy,rw=c(0,10,0,10))
 
-# Plot the triangulation created (but not the tesselation).
-\dontrun{
-dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl='tr')
-}
-
-# Auxiliary values associated with points; 4 dummy points to be
-# added so 4 dummy "z-values" provided.
-z    <- c(1.63,0.79,2.84,1.56,0.22,1.07)
-zdum <- rep(42,4)
-dxy4 <- deldir(x,y,dpl=list(ndx=2,ndy=2),rw=c(0,10,0,10),z=z,zdum=zdum)
+# Plot the triangulation created (but not the tessellation).
+dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl="tr")
 
 # Example of collinearity error.
 \dontrun{
     dniP <- deldir(niProperties) # Throws an error
 }
     dniP <- deldir(niProperties,eps=1e-8) # No error.
+# Example of using data stored in a data frame.
+dsw  <- deldir(seaweed)
+# Example where "data" is of class "ppp".
+\dontrun{
+    dll <- deldir(spatstat.data::longleaf)
 }
+# The "tags", in dll$summary$z, are numeric, the DBH values for
+# the longleaf pines.
+#
+# Artificial example of tags.
+set.seed(42)
+trees1  <- sample(c("spruce","birch","poplar","shoe"),20,TRUE)
+trees2  <- sample(c("fir","maple","larch","palm"),20,TRUE)
+egDat   <- data.frame(x=runif(20),y=runif(20),species=trees1)
+tagNm   <- "species"
+species <- trees2
+dd1     <- deldir(egDat) # No tags.
+dd2     <- deldir(egDat,z=species)  # Uses trees1 as the tags.
+dd3     <- deldir(egDat,z="species") # Same as dd2.
+dd4     <- deldir(egDat,z=tagNm) # Same as dd2 and dd3.
+spec    <- species
+dd5     <- deldir(egDat,z=spec) # Uses trees2 as the tags.
+}
+
 \keyword{spatial}

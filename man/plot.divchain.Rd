@@ -4,11 +4,11 @@
    Plot a dividing chain.
 }
 \description{
-   Plot the dividing chain of a Dirchlet tesselation.
+   Plot the dividing chain of a Dirichlet tessellation.
    The tessellation must have been created from a set of points
-   having associated categorical \dQuote{weights}.  The dividing
+   having associated categorical \dQuote{tags}.  The dividing
    chain consists of those edges of Dirichlet tiles which separate
-   points having different values of the given weights.
+   points having different values of the given tags.
 }
 \usage{
    \method{plot}{divchain}(x, add = FALSE, ...)

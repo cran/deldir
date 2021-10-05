@@ -1,13 +1,13 @@
 C Output from Public domain Ratfor, version 1.03
-      subroutine binsrt(x,y,rw,npd,ind,rind,tx,ty,ilst)
+      subroutine binsrt(x,y,rw,nn,ind,rind,tx,ty,ilst)
       implicit double precision(a-h,o-z)
-      dimension x(npd), y(npd), tx(npd), ty(npd)
-      integer rind(npd)
-      dimension ind(npd), ilst(npd)
+      dimension x(nn), y(nn), tx(nn), ty(nn)
+      integer rind(nn)
+      dimension ind(nn), ilst(nn)
       dimension rw(4)
       dimension ndi(1)
       ndi(1) = 0
-      kdiv = int(1+dble(npd)**0.25)
+      kdiv = int(1+dble(nn)**0.25)
       xkdiv = dble(kdiv)
       xmin = rw(1)
       xmax = rw(2)
@@ -21,12 +21,12 @@ C Output from Public domain Ratfor, version 1.03
       ky = 1
       ink = 1
       k = 0
-      do23000 i = 1,npd 
+      do23000 i = 1,nn 
       ilst(i) = 0 
 23000 continue
 23001 continue
 23002 if(ky.le.kdiv)then
-      do23004 i = 1,npd 
+      do23004 i = 1,nn 
       if(ilst(i).eq.1)then
       goto 23004
       endif
@@ -60,12 +60,12 @@ C Output from Public domain Ratfor, version 1.03
       goto 23002
       endif
 23003 continue
-      if(k.ne.npd)then
+      if(k.ne.nn)then
       call intpr("Mismatch between number of points",-1,ndi,0)
       call intpr("and number of sorted points.",-1,ndi,0)
       call rexit("Bailing out of binsrt.")
       endif
-      do23018 i = 1,npd 
+      do23018 i = 1,nn 
       x(i) = tx(i)
       y(i) = ty(i)
 23018 continue
