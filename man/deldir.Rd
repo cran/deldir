@@ -19,13 +19,15 @@ deldir(x, y, z=NULL, rw=NULL, eps=1e-09, sort=TRUE, plot=FALSE,
 \arguments{
 \item{x,y}{
 These arguments specify the coordinates of the point set being
-triangulated/tessellated. These can be given by two separate vector
-arguments \code{x} and \code{y} or by a single argument \code{x}
-which is a data structure that may be matrix, a data frame, a
-generic list, or an object of class \code{"ppp"}.  (See package
-\code{spatstat}.)  In this case the \code{"x"} and \code{"y"}
-coordinates are extracted from the argument \code{x}, and argument
-\code{y} is ignored.  See \bold{Notes on extracting the coordinates}.
+triangulated/tessellated.  Argument \code{x} may be a numeric
+vector or it may be a data structure consisting of a matrix, a
+data frame, a generic list, or an object of class \code{"ppp"}.
+(See package \code{spatstat}.)  Argument \code{y}, if specified, is
+always a numeric vector.  The \code{"x"} and \code{"y"} coordinates
+are extracted from arguments \code{x} and \code{y}  according to
+(what can be, in some instances) a rather complicated protocol.
+See \bold{Notes on extracting the coordinates} for details of
+this protocol.
 }
 \item{z}{
 Optional argument specifying \dQuote{auxiliary} values or
@@ -114,7 +116,7 @@ the entry in column \code{bp2} and the second endpoint of the edge.
 
 The ninth and tenth entries, in columns named \code{thirdv1}
 and \code{thirdv2} are the indices of the respective third
-vertices of the Delaunay triangle whose circumcentres constitute
+vertices of the Delaunay triangles whose circumcentres constitute
 the corresponding endpoints of the edge under consideration.
 (The other two vertices of the triangle in question are indexed by
 the entries of columns \code{ind1} and \code{ind2}.)
@@ -234,34 +236,89 @@ and bug-fixes.
 }
 
 \section{Notes on extracting the coordinates}{
-If \code{x} is a generic list, or if it is an object of class
-\code{"ppp"}, then the coordinates are taken to be the components
-of \code{x} named \code{"x"} and \code{"y"}.  In this case \code{x}
-\emph{must} have such components otherwise an error is thrown.
+The protocol for extracting the \eqn{x} and \eqn{y} coordinates
+from the arguments \code{x} and \code{y} is a bit complicated
+and confusing.  It is designed to handle a number of different
+desiderata and to accommodate various feature-requests that users
+have made over the years.  Basically the protocol is:
+\itemize{
+   \item If \code{x} is a numeric vector and \code{y} is a numeric
+   vector then \code{x} is used as the \eqn{x}-coordinates and
+   \code{y} is used as the \eqn{y}-coordinates.
 
-If \code{x} is a matrix or a data frame, then the coordinates are
-taken to be the columns named \code{"x"} and \code{"y"} if there
-are such columns.  If there is no column named \code{"x"} then the
-\code{x}-coordinates are taken to be the first column that is not
-named either \code{"y"} or \code{znm} (where \code{znm} is the name
-of the object providing the \dQuote{tags}, if \dQuote{tags} have
-been specified).  Likewise if there is no column named \code{"y"}
-then the \code{y}-coordinates are taken to be the first column that
-is not named either \code{"x"} or \code{znm} and is not equal to
-the column previously selected to be the \code{x}-coordinates.
+   \item If \code{x} is a matrix, a data frame, or a generic list),
+   and \code{y} is a numeric vector, then the \eqn{x}-coordinates
+   are sought amongst the components of \code{x} and \code{y}
+   is used as the \eqn{y}-coordinates.
+
+   \item If \code{x} is a matrix, a data frame, or a generic list
+   and \code{y} is not specified or cannot be found, then both the
+   \eqn{x}-coordinates and \eqn{y}-coordinates are sought amongst
+   the components of \code{x}.
+
+   \item If \code{x} an object of class \code{"ppp"} then both the
+   \eqn{x}-coordinates and \eqn{y}-coordinates are taken from the
+   components of \code{x}.   If \code{y} is specified, it is ignored
+   (with a warning).
+
+   \item If \code{x} is a numeric vector and \code{y} is not specified
+   or cannot be found, then an error is thrown.
+}
+A few more details:
+\itemize{
+  \item If \code{x} is of class \code{"ppp"} then it will definitely
+  have components named \code{"x"} and \code{"y"}.
+
+  \item If \code{x} is a generic list, it \emph{must} have a
+  component named \code{"x"} (otherwise an error is thrown),
+  and the \eqn{x}-coordinates are set equal to this component.
+  If \code{y} is not specified or cannot be found, then a \code{"y"}
+  component of \code{x} is sought.  If such a component exists
+  then the \eqn{y}-coordinates are set equal to this component.
+  Otherwise an error is thrown).
+
+  \item If \code{x} is a matrix or a data frame, the protocol gets
+  a bit more intricate.
+  \itemize{
+     \item If \code{x} has a column named \code{"x"} then this column
+     is taken to be the \eqn{x}-coordinates.
+     \item Otherwise the \eqn{x}-coordinates are taken to be the
+     \emph{first} column of \code{x} that is not named \code{"y"} or
+     \code{znm} (where \code{znm} is the name of the object providing
+     the \dQuote{tags}, if \dQuote{tags} have been specified).
+     \item If there is no such first column (e.g. if there are only
+     two columns and these have names \code{"y"} and \code{znm})
+     then an error is thrown.
+     \item If \code{y} is not specified or cannot be found, and
+     if \code{x} has a column named \code{"y"} then this column is
+     taken to be the \eqn{y}-coordinates.
+     \item Otherwise, in this situation, the \eqn{y}-coordinates
+     are taken to be the \emph{first} column of \code{x} that is
+     not named \code{"x"} or \code{znm} and is not equal to the
+     column previously selected to be the \code{x}-coordinates.
+     \item If there is no such first column (e.g. if there are only
+     two columns and these have names \code{"x"} and \code{znm}),
+     then an error is thrown.
+  }
+}
+
+Got all that? \code{:-) } If these instructions seem rather
+bewildering (and indeed they are!) just keep things simple and make
+calls like \code{deldir(x,y)} where \code{x} and \code{y} are numeric
+vectors that have been previously assigned in the global environment.
 }
 
 \section{Notes on extracting \code{z}}{
 If argument \code{x} is a data structure (rather than a numeric
 vector) and is \emph{not} an object of class \code{"ppp"} then
-\code{z} (if specified) is searched for \emph{first} in \code{x} and
-then \dQuote{elsewhere}.  If \code{x} \emph{is} of class \code{"ppp"}
-then what happens depends on whether \code{z} was specified or
-left to take its default value of \code{NULL}.  In the former case,
-\code{z} takes the specified value.  In the latter case the value of
-\code{"z"} is taken from the marks of \code{x} provided that \code{x}
-is indeed a marked point pattern and that the marks are \emph{atomic}
-(essentially if the marks are not a data frame). Otherwise \code{z}
+\code{z}, if specified and not found, is searched for in \code{x}.
+If \code{x} \emph{is} of class \code{"ppp"} then what happens depends
+on whether \code{z} was specified or left to take its default value
+of \code{NULL}.  In the former case, \code{z} takes the specified
+value.  In the latter case the value of \code{"z"} is taken from
+the marks of \code{x} provided that \code{x} is indeed a marked
+point pattern and that the marks are \emph{atomic} (essentially
+provided that the marks are not a data frame). Otherwise \code{z}
 is left \code{NULL}, i.e. there are no \dQuote{tags} associated
 with the points.
 }
@@ -279,9 +336,9 @@ The \code{deldir} package \bold{DOES NOT do weighted tessellation}.
 }
 
 \section{Notes on Memory Allocation}{
-It is difficult-to-impossible to determine \emph{a priori}
-how much memory needs to be allocated for storing the edges
-of the Delaunay triangles and Dirichlet tiles, and for storing
+It is difficult-to-impossible to determine \emph{a priori} how much
+memory needs to be allocated (in the Fortran code) for storing the
+edges of the Delaunay triangles and Dirichlet tiles, and for storing
 the \dQuote{adjacency list} used by the Lee-Schacter algorithm.
 In the code, an attempt is made to allocate sufficient storage.
 If, during the course of running the algorithm, the amount of
@@ -307,7 +364,7 @@ Such error trapping is effected via the \code{rexit()} subroutine
 which is now available in \code{R}.  (See \dQuote{Writing R
 Extensions}, section 6.2.1.)
 
-Note that when an error is detected \code{deldir()} now exits with
+Note that when an error is detected, \code{deldir()} now exits with
 a genuine error, rather than returning \code{NULL}.  The glossary
 of the meanings of \dQuote{error numbers} is now irrelevant and
 has been removed from the \code{inst} directory.
@@ -355,10 +412,11 @@ However it is impossible to be sure.  The intricacy and numerical
 delicacy of triangulations is too great for anyone to be able to
 foresee all the possibilities that could arise.
 
-If there is any doubt as the appropriateness of the \dQuote{increase
-\code{eps}} strategy, the user is advised to do his or her best to
-explore the data set, graphically or by other means, and thereby
-determine what is actually going on and why problems are occurring.
+If there is any doubt as to the appropriateness of the
+\dQuote{increase \code{eps}} strategy, users are advised to do
+their best to explore the data set, graphically or by other means,
+and thereby determine what is actually going on and why problems
+are occurring.
 }
 
 \section{Warnings}{
@@ -385,6 +443,16 @@ not necessarily numeric).  The component \code{delsgs} was then
 changed for consistency.  Note that the other \dQuote{matrix-like}
 component \code{dirsgs} has been a data frame since time immemorial.
 }
+}
+\section{Acknowledgement}{
+I would like to express my most warm and sincere thanks to Duncan
+Murdoch (Emeritus Professor of Statistics, Western University) for
+helping me, with incredible patience and forbearance, to straighten
+out my thinking in respect of adjustments that I recently (October
+2021) made to the argument processing protocol in the \code{deldir()}
+function.  Duncan provided numerous simple examples to demonstrate
+when and how things were going wrong, and patiently explained to
+me how I was getting one aspect of the protocol backwards.
 }
 \author{Rolf Turner
   \email{r.turner@auckland.ac.nz}
@@ -446,6 +514,30 @@ dd3     <- deldir(egDat,z="species") # Same as dd2.
 dd4     <- deldir(egDat,z=tagNm) # Same as dd2 and dd3.
 spec    <- species
 dd5     <- deldir(egDat,z=spec) # Uses trees2 as the tags.
+
+# Duncan Murdoch's examples.  The deldir() function was not
+# handling such examples correctly until Duncan kindly set
+# me on the right path.
+set.seed(123)
+dd6 <- deldir(rnorm(32),rnorm(32),rnorm(32))
+#
+x <- cbind(x = 1:10, junk = 11:20)
+y <- 21:30
+z <- 31:40
+d7 <- deldir(x=x, y=y, z=z)
+#
+# print(d7$summary) reveals that x is 1:10, y is 21:30
+# and z is 31:40; x[,"junk"] is ignored as it should be.
+x <- cbind(x = 1:10, "rnorm(10)" = 11:20)
+y <- 21:30
+z <- 41:50
+d8 <- deldir(x=x, y=y, z=rnorm(10))  
+#
+# print(d8$summary) reveals that x is 1:10, y is 21:30 and z is a
+# vector of standard normal values.  Even though x has a column with
+# the name of the z argument i.e. "rnorm(10)" (!!!)  the specified
+# value of z takes precedence over this column (and, as per the usual
+# R syntax) over the object named "z" in the global environment.
 }
 
 \keyword{spatial}

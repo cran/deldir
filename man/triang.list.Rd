@@ -41,6 +41,11 @@ triang.list(object)
   \email{r.turner@auckland.ac.nz}
 % \url{https://www.stat.auckland.ac.nz/~rolf}
 }
+\section{Warning}{
+  There may not actually \bold{be} any triangles determined by
+  \code{object}, in which case this function returns an empty
+  list with an \code{"rw"} attribute.  See \bold{Examples}. 
+}
 \note{
    The code of this function was taken more-or-less directly
    from code written by Adrian Baddeley for the \dQuote{delaunay()}
@@ -51,10 +56,15 @@ triang.list(object)
 
 \examples{
 set.seed(42)
-x   <- runif(20)
-y   <- runif(20)
-z   <- sample(1:100,20)
-d   <- deldir(x,y,z=z)
-ttt <- triang.list(d)
+x  <- runif(20)
+y  <- runif(20)
+z  <- sample(1:100,20)
+d1 <- deldir(x,y,z=z)
+t1 <- triang.list(d1)
+# A "triangulation" with no triangles!
+d2 <- deldir(x=1:10,y=11:20)
+plot(d2)
+t2 <- triang.list(d2)
+plot(t2,showrect=TRUE,rectcol="blue") # Pretty boring!
 }
 \keyword{spatial}

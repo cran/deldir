@@ -3,6 +3,12 @@ triang.list <- function (object)
     stopifnot(inherits(object,"deldir"))
     io <- object$ind.orig
     tlist <- prelimtlist(object)
+    if(nrow(tlist)==0) {
+        rslt <- list()
+        attr(rslt,"rw") <- object$rw
+        class(rslt) <- "triang.list"
+        return(rslt)
+    }
     x <- object$summary[,"x"]
     y <- object$summary[,"y"]
     if("z" %in% colnames(object$summary)) {
@@ -31,7 +37,7 @@ triang.list <- function (object)
     }
     rslt <- list()
     K <- 0
-    for(i in 1:nrow(xtri)) {
+    for(i in seq(length.out=nrow(xtri))) {
 	tmp <- .Fortran(
 		"intri",
 		x=as.double(xtri[i,]),

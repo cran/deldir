@@ -1,3 +1,38 @@
+ Version 1.0-5 10/10/2021
+
+ Changed the protocol for "digging out" x and y, and
+ "digging out" z.  The rule now is: if the specified argument
+ is found (located in the global environment, or given explicitly)
+ then *use* it!  Only if it is *not* found elsewhere should it be
+ sought in the "x" argument.  (This change was implemented after
+ Duncan Murdoch convinced me to see the error of my previous ways.)
+
+ Adjusted/corrected the processing of generic lists, as the x
+ argument, in deldir()
+
+ Re-wrote the discussion of the argument processing protocol in
+ deldir.Rd, so as to make it properly reflect the current behaviour
+ of the function.  It is also hoped that the clarity of the
+ discussion has been improved.
+
+ Fixed various glitches and typos in the code and the help files.
+ 
+ Version 1.0-4 06/10/2021
+
+ Fixed more bugs in deldir() w.r.t. argument processing, again
+ pointed out to me by Duncan Murdoch.
+
+ Fixed a bug in triang.list(); it crashed if there were not
+ any actual triangles in the "triangulation"!
+
+ Made an adjustment to plot.triang.list() (added an argument to
+ specify a colour for the enclosing rectangle.
+ 
+ Version 1.0-3 06/10/2021
+
+ Fixed bug in deldir() (more explicitly in digOutz()) that
+ was pointed out to me by Duncan Murdoch.
+
  Version 1.0-2 05/10/2021
 
  Adjusted plot.deldir() so that it no longer insists that cmpnt_lty

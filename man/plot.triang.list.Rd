@@ -5,7 +5,8 @@
 a Delaunay triangulation of a set of points in the plane.}
 \usage{
 \method{plot}{triang.list}(x, showrect = FALSE, add = FALSE,
-              xlab = "x", ylab = "y", main = "", asp = 1, ...)
+              xlab = "x", ylab = "y", main = "", asp = 1,
+              rectcol="black", ...)
 }
 \arguments{
   \item{x}{
@@ -33,22 +34,29 @@ a Delaunay triangulation of a set of points in the plane.}
   \code{NA}.  Set this argument equal to \code{NA} to allow the data
   to determine the aspect ratio and hence to make the plot occupy the
   complete plotting region in both \code{x} and \code{y} directions.
-  This is inadvisable; see the \bold{Warnings}.}
+  This is inadvisable; see the \bold{Warnings}.
+}
+  \item{rectcol}{
+  Text string or integer specifying the colour in which the enclosing
+  rectangle should be plotted.  Ignored unless \code{showrect} is
+  \code{TRUE}.
+}
   \item{\dots}{
   Arguments passed to \code{\link{polygon}()} which does the actual
   plotting of the triangles.
 }
 }
 \section{Warnings}{
-  The user is \emph{strongly advised} not to set the value of
-  \code{asp} but rather to leave \code{asp} equal to its default
-  value of \code{1}.  Any other value distorts the tesselation
-  and destroys the perpendicular appearance of lines which are
-  indeed perpendicular.  (And conversely can cause lines which
-  are not perpendicular to appear as if they are.)
+  Users are \emph{strongly advised} not to set the value of
+  \code{asp} (unless they really know what they are doing) but rather
+  to leave \code{asp} equal to its default value of \code{1}.
+  Any other value distorts the tesselation and destroys the
+  perpendicular appearance of lines which are indeed perpendicular.
+  (And conversely can cause lines which are not perpendicular to
+  appear as if they are.)
 
   The argument \code{asp} was added at the request of Zubin
-  Dowlaty.
+  Dowlaty (who presumably knows what he is doing!).
 }
 \value{
    None.  This function has the side effect of producing (or
@@ -67,9 +75,9 @@ x <- runif(20)
 y <- runif(20)
 d <- deldir(x,y)
 ttt <- triang.list(d)
-plot(ttt,border="red",showrect=TRUE)
+plot(ttt,border="red",showrect=TRUE,rectcol="green")
 sss <- tile.list(d)
 plot(sss)
-plot(ttt,add=TRUE,border="blue")
+plot(ttt,add=TRUE,border="blue",showrect=TRUE,rectcol="red")
 }
 \keyword{ spatial }

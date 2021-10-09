@@ -1,5 +1,5 @@
 plot.triang.list <- function(x,showrect=FALSE,add=FALSE,xlab="x",ylab="y",
-                             main="",asp=1,...) {
+                             main="",asp=1,rectcol="black",...) {
 stopifnot(inherits(x,"triang.list"))
 rw <- attr(x,"rw")
 if(!add) {
@@ -9,6 +9,6 @@ if(!add) {
 for(tri in x) {
 	polygon(as.list(tri),...)
 }
-if(showrect) do.call(rect,as.list(rw)[c(1,3,2,4)])
+if(showrect) do.call(rect,c(as.list(rw)[c(1,3,2,4)],border=rectcol))
 invisible()
 }

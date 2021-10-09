@@ -11,12 +11,16 @@ digOutz <- function(z1,znm,x) {
         stop(whinge)
     }
     if(is.null(z1)) return(NULL)
-    if(inherits(x,"matrix")) {
-        if(znm %in% colnames(x)) return(x[,znm])
-    }
-    if(znm %in% names(x)) return(x[[znm]])
+# Here z1 is explicit vector, or a text string, equal to znm.
+# If the former return it; if the latter look for the
+# object named by that text string.
+    if(!isTRUE(identical(z1,znm))) return(z1)
     z <- try(get(znm,pos=1),silent=TRUE)
     if(inherits(z,"try-error")) {
+        if(inherits(x,"matrix")) {
+            if(znm %in% colnames(x)) return(x[,znm])
+        }
+        if(znm %in% names(x)) return(x[[znm]])
         whinge <- paste0("Object z = ",znm," not found.\n")
         stop(whinge)
     }
@@ -25,22 +29,53 @@ digOutz <- function(z1,znm,x) {
 
 digOutxy <- function(x,y,znm) {
 if(inherits(x,c("data.frame","matrix"))) {
+    whatsit <- if(inherits(x,"data.frame")) "data frame" else "matrix"
     jj   <- 1:ncol(x)
     vnms <- if(inherits(x,"data.frame")) names(x) else colnames(x)
     if(is.null(vnms)) vnms <- paste0("V",jj)
-    nomx <- min(jj[!(vnms %in% c("y",znm))])
+    jt <- jj[!(vnms %in% c("y",znm))]
+    if(length(jt)==0) {
+        whinge <- paste0("Argument \"x\" is a ",whatsit," but does not appear\n",
+                         "  to contain the x-coordinates.\n")
+        stop(whinge)
+    }
+    nomx <- min(jt)
     jx <- match("x",vnms,nomatch=nomx)
     vnms[jx] <- "x"
-    nomy <- min(jj[!(vnms %in% c("x",znm))])
-    jy <- match("y",vnms,nomatch=nomy)
-    jj <- c(jx,jy,setdiff(1:ncol(x),c(jx,jy)))
-    x  <- x[,jj]
+    y1 <- try(y,silent=TRUE)
+    if(inherits(y1,"try-error") || is.null(y1)) {
+        jy <- match("y",vnms)
+        if(is.na(jy)) {
+            jt <- jj[!(vnms %in% c("x",znm))]
+            if(length(jt)==0) {
+                whinge <- paste0("Argument \"x\" is a ",whatsit," but does not appear\n",
+                                 "  to contain the y-coordinates, nor is \"y\" to be\n",
+                                 "  found in the global environment.\n")
+                stop(whinge)
+            }
+            jy <- min(jt)
+        }
+        return(list(x=x[,jx],y=x[,jy]))
+    }
+    return(list(x=x[,jx],y=y1))
 }
-if(inherits(x,c("list","data.frame","matrix"))) y <- NULL
-xy.coords(x,y)
+if(inherits(x,"list")) {
+    if(!("x" %in% names(x))) {
+        whinge <- paste0("When argument \"x\" is a generic list, it must have\n",
+                         "  a component named \"x\". \n")
+        stop(whinge)
+    }
+    y1 <- try(y,silent=TRUE)
+    if(inherits(y1,"try-error") || is.null(y)) {
+        y1 <- x[["y"]]
+    }
+    if(!is.null(y1)) return(list(x=x[["x"]],y=y1))
+    stop("Argument \"y\" not found.\n")
+}
+list(x=x,y=y)
 }
 
-function(x,y,z=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
+function(x,y=NULL,z=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
                    round=TRUE,digits=6,...) {
 # Function deldir to compute the Delaunay Triangulation (and hence
 # the Dirichlet Tesselation) of a planar point set according to the
@@ -71,6 +106,9 @@ if(inherits(x,"ppp")) {
 # and y coordinates from this object. If this object is "marked"
 # and if the marks are atomic (a vector or a factor) and z is NULL,
 # then set z equal to the marks.
+    y1 <- try(y,silent=TRUE)
+    if(!inherits(y1,"try-error"))
+         warning("Since \"x\" is of class \"ppp\", argument \"y\" is ignored.\n")
     if(is.null(z)) {
         marx <- x$marks
         ok   <- !is.null(marx) & is.atomic(marx)
@@ -92,7 +130,6 @@ if(inherits(x,"ppp")) {
     y      <- xyTemp$y
 }
 haveZ <- !is.null(z)
-
 # Check that x and y are numeric.
 if(!is.numeric(x))
     stop("The x-coordinates must be numeric.\n")
