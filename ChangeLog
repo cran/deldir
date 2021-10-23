@@ -1,3 +1,8 @@
+ Version 1.0-6 23/10/2021
+
+ Fixed a bug that kept deldir() from working when "x" is a
+ point pattern.
+
  Version 1.0-5 10/10/2021
 
  Changed the protocol for "digging out" x and y, and

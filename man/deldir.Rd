@@ -495,11 +495,9 @@ dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl="tr")
 # Example of using data stored in a data frame.
 dsw  <- deldir(seaweed)
 # Example where "data" is of class "ppp".
-\dontrun{
-    dll <- deldir(spatstat.data::longleaf)
-}
-# The "tags", in dll$summary$z, are numeric, the DBH values for
-# the longleaf pines.
+dtoy <- deldir(toyPattern)
+# The "tags", in dtoy$summary$z, are the marks of the toy ppp
+# object which consists of the letters "a","b","c" and "d".
 #
 # Artificial example of tags.
 set.seed(42)

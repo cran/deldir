@@ -107,16 +107,16 @@ if(inherits(x,"ppp")) {
 # and if the marks are atomic (a vector or a factor) and z is NULL,
 # then set z equal to the marks.
     y1 <- try(y,silent=TRUE)
-    if(!inherits(y1,"try-error"))
+    if(!is.null(y1))
          warning("Since \"x\" is of class \"ppp\", argument \"y\" is ignored.\n")
     if(is.null(z)) {
         marx <- x$marks
         ok   <- !is.null(marx) & is.atomic(marx)
         if(ok) z <- marx
     }
+    if(is.null(rw)) rw <- c(x$window$xrange, x$window$yrange)
     y <- x$y
     x <- x$x
-    if(is.null(rw)) rw <- c(x$window$xrange, x$window$yrange)
 } else {
     z1  <- try(z,silent=TRUE)
     if(inherits(z1,"character") & length(z1)==1) {

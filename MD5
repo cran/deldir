@@ -1,11 +1,11 @@
-55b7a567ccb8ac3d77a3acb972d7937b *ChangeLog
-39a8ca9bb6391173d97032a575f5655f *DESCRIPTION
+3086eed27c10d94f3098959a059c5495 *ChangeLog
+5db94cf8509b2d4bcdde1585ad937aa7 *DESCRIPTION
 058da4b8b5765582931e43414bf5bdda *NAMESPACE
 778ef1fdc942cfbedeb142ecfad2957b *R/First.R
 73e1fe7de214e92456cd97ad52a32f44 *R/acw.R
 e3a2a2668bc0f9ef0d2d845c0a712c31 *R/binsrt.R
 cf63d30192e7000cdd0a5fd38bcabd94 *R/cvt.R
-d25bc36f209c6c5b0cc06ec5626d2936 *R/deldir.R
+6502e098bfec61f9ebfdd14a54979f40 *R/deldir.R
 e93cf566c9d47595ee8fd48fd53c49ff *R/divchain.R
 55724ca4cc120c540362ffc357e7d961 *R/divchain.default.R
 8ab92bd123378abf04a0914cb1606809 *R/divchain.deldir.R
@@ -37,6 +37,7 @@ d7d6dfe03916e59bef1323472197b6a2 *R/which.tile.R
 e7a454eb643952ec275aa13284d59743 *data/grapherXmpl.rda
 ef2d63a96173049a99f51a8d1c34ca56 *data/niProperties.rda
 5dfdbbefad82262ca74aace254408008 *data/seaweed.rda
+59eb2aa00df155e373986b1426e377d1 *data/toyPattern.rda
 2a391618a6a0112d471faf5a333c5789 *data/volTriPoints.rda
 3c54acc86ffad1135b71f8606ca25d87 *inst/READ_ME
 238b147302480cbe754a6222b01a37b1 *inst/SavedRatfor/acchk.r
@@ -117,7 +118,7 @@ fd5fe33dcd585cd6097f0706dcd32366 *inst/ratfor/testeq.r
 921825b1723feb639f006d7046b37f94 *inst/ratfor/trifnd.r
 8b4e23dba28fea3e40e2e825ff7cd0fb *man/cvt.Rd
 3ee6bc45549c683eb71d6921910bef50 *man/deldir-internal.Rd
-a1d1aa1b4473c9d8de16d9c6f718e0b3 *man/deldir.Rd
+dd9ec95e9fc2e58e9d1f6b97a64f8b13 *man/deldir.Rd
 bc0c7a2fe2011698f9daa9587223bfd3 *man/divchain.Rd
 4d3115865ece296df66e7899d53f3be6 *man/duplicatedxy.Rd
 b4c81092e8fd5552ba4b24088301e95b *man/grapherXmpl.Rd
@@ -136,6 +137,7 @@ e9e5fda3117e4c5fb172c8f883c6e3f6 *man/print.deldir.Rd
 278c6d8881f87c1ab40effa32a248846 *man/tileArea.Rd
 57872a1703e2520cb3c733c4d7b21d1b *man/tileInfo.Rd
 82e8e514420f409a73dc5d39a03af645 *man/tilePerim.Rd
+8232ad29072b60f257fd5ae8cd695554 *man/toyPattern.Rd
 7e842fc294ccc575145982409e6ea45f *man/triMat.Rd
 f6035d723d027fb8e3ad32c0c51648b6 *man/triang.list.Rd
 f81bd0b754273c155b7100ddefdb8e0a *man/volTriPoints.Rd
