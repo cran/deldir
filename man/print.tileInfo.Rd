@@ -8,15 +8,24 @@
    \code{tileInfo} as produced by the \code{tileInfo()} function.
 }
 \usage{
-\method{print}{tileInfo}(x, digits = 4, ...)
+\method{print}{tileInfo}(x, digits = 4, npl = 6, ...)
 }
 \arguments{
   \item{x}{An object of class \code{tileInfo} as produced by the
   \code{tileInfo()} function.
 }
   \item{digits}{
-  The (maximum) number of decimal digits to which the output
-  is to be printed.
+  Integer scalar.  The (maximum) number of decimal digits to which
+  the output is to be printed.
+}
+  \item{npl}{
+  Integer scalar.  \dQuote{Number per line}. It specifies the
+  (maximum) number of values per line.  Used (only) when printing
+  the edge lengths component of \code{x}.  It effects a tidy
+  \dQuote{folding} of the printed vector of edge lengths of the
+  tile associated with a given point.  If you increase the value of
+  \code{digits} you may wish to decrease the value of \code{npl},
+  and vice versa.
 }
   \item{\dots}{
   Not used.  Present for compatibility with the generic
@@ -32,29 +41,35 @@
   There are four components to the display:
 
   \itemize{
-  \item A matrix, each row of which is the vector of edge
-  lengths of the tile.  The number of columns is the \emph{maximum}
-  of the lengths of the edge length vectors.  Rows corresponding
-  to shorter vectors are filled in with blanks.  The row names
-  of the matrix indicate the number of the point corresponding to
-  the tile.  Note that this number is the index of the point in
-  the original sequence of points that is being tessellated.
+  \item A list, each entry of which is the vector of edge lengths
+  of the tile.  Each edge length is formatted to have a number
+  of digits specified by the \code{digits} argument.  Each list
+  entry may be displayed over a number of lines. The first of these
+  lines is prefixed by an \dQuote{informative} string indicating
+  the point that determines the tile whose edge lengths are being
+  printed.  The string is formed from the identifier of the point.
+  See \code{\link{deldir}()}, \code{\link{plot.deldir}()} and
+  \code{\link{getNbrs}()}.  The identifier may consist essentially
+  of the index of the point in the sequence of points that is
+  being tessellated.
+
+  Succeeding lines, corresponding to the same list entry, are
+  prefixed with a number of blanks so as to produce an aesthetically
+  pleasing alignment.
+
   \item A table of the edge counts of the tiles.
+
   \item A simple print out of the areas of the tiles (rounded
   to a maximum of \code{digits} decimal digits).
+
   \item A simple print out of the perimeters of the tiles (rounded
   to a maximum of \code{digits} decimal digits).
   }
 
-  This screen display is for \dQuote{looking at} only.  In
-  order to do further calculations on the output of \code{tileInfo}
-  it is necessary to delve into the bowels of \code{x} and
-  extract the relevant bits.
-
-  In order to get a decent looking display you may (if there are
-  tiles with a large number of edges) need to widen the window in
-  which you are displaying the output and increase the value of the
-  \code{width} option.  E.g. use \code{options(width=120)}.
+  This screen display is for \dQuote{looking at} only.  In order
+  to do further calculations on the output of \code{tileInfo} it
+  is necessary to delve into the bowels of \code{x} and extract
+  the relevant bits.
 }
 \value{
   None.

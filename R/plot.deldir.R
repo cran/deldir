@@ -1,7 +1,7 @@
 plot.deldir <- local({
 
 fixColours <- function(cmpnt_col) {
-    cmpnt_nms <- c("tri","tess","points","num","rect")
+    cmpnt_nms <- c("tri","tess","points","labels","rect")
     if(is.null(cmpnt_col)) {
         cmpnt_col <- rep(1,5)
         names(cmpnt_col) <- cmpnt_nms
@@ -81,7 +81,7 @@ fixLines <- function(cmpnt_lty) {
 }
 
 function(x,add=FALSE,wlines=c('both','triang','tess'),
-                        showpoints=TRUE,number=FALSE,cex=1,nex=1,
+                        showpoints=TRUE,labelPts=FALSE,cex=1,lex=1,
                         cmpnt_col=NULL,cmpnt_lty=NULL,pch=1,
                         xlim=NULL,ylim=NULL,axes=FALSE,
                         xlab=if(axes) 'x' else '',
@@ -93,6 +93,26 @@ function(x,add=FALSE,wlines=c('both','triang','tess'),
 # and Dirichlet tesselation of a point set, as produced by the
 # function deldir().
 #
+
+# Check for use of the defunct argument name "number".
+ccc <- match.call()
+i   <- match("number",names(ccc))
+if(!is.na(i)) {
+    if("labelPts" %in% names(ccc)) {
+        whinge <- paste0("Both \"labelPts\" and the defunct argument",
+                         " \"number\" have been\n  specified.  Do not use",
+                         " the defunct argument \"number\".  Use\n",
+                         "  \"labelPts\" only.\n")
+        stop(whinge)
+    }
+    whinge <- paste0("The argument name \"number\" is defunct. Please",
+                     " use \"labelPts\"\n  instead.\n")
+    warning(whinge)
+    names(ccc)[i] <- "labelPts"
+    return(eval(ccc))
+}
+
+# Carry on.
 
 # Check that x is of the appropriate class.
 if(!inherits(x, "deldir")) 
@@ -165,14 +185,16 @@ if(showpoints) {
     dotargs$cex <- NULL
     do.call(points,c(list(x=X,y=Y,pch=pch,col=cmpnt_col[3],cex=cex),dotargs))
 }
-if(number) {
+if(labelPts) {
     xoff <- 0.02*diff(range(X))
     yoff <- 0.02*diff(range(Y))
     dotargs <- list(...)
     dotargs$ces <- NULL
     dotargs$col <- NULL
-    do.call(text,c(list(x=X+xoff,y=Y+yoff,labels=1:length(X),
-                   cex=nex,col=cmpnt_col[4]),dotargs))
+    lbls <- x$summary[["id"]]
+    if(is.null(lbls)) lbls <- 1:nrow(x$summary)
+    do.call(text,c(list(x=X+xoff,y=Y+yoff,labels=lbls,cex=lex,
+            col=cmpnt_col[4]),dotargs))
 }
 if(showrect) do.call(rect,c(as.list(x$rw)[c(1,3,2,4)],list(border=cmpnt_col[5])))
 invisible()

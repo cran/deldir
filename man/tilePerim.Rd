@@ -81,7 +81,7 @@ tilePerim(object,inclbdry=TRUE)
                               # two parts, a tetrahedron and a triangle.
         cul <- rainbow(10)[c(1,7,3:6,2,8:10)] # Rearranging colours to improve
                                               # the contrast between contiguous tiles.
-        plot(wc,number=TRUE,fillcol=cul)
+        plot(wc,labelPts=TRUE,fillcol=cul)
     }
 }
 \keyword{spatial}

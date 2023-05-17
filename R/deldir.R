@@ -76,7 +76,7 @@ list(x=x,y=y)
 }
 
 function(x,y=NULL,z=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
-                   round=TRUE,digits=6,...) {
+                   round=TRUE,digits=6,id=NULL,...) {
 # Function deldir to compute the Delaunay Triangulation (and hence
 # the Dirichlet Tesselation) of a planar point set according to the
 # second (iterative) algorithm of Lee and Schacter, International
@@ -144,6 +144,16 @@ if(haveZ) {
         stop("Length of \"z\" does not match lengths of \"x\" and \"y\".\n")
 }
 
+# Check on the "id" argument.
+haveId <- !is.null(id)
+if(haveId) {
+    if(any(duplicated(id)))
+        stop("Argument \"id\", if supplied, must contain no duplicate values.\n")
+    if(n!=length(id))
+        stop("Length of \"id\" does not match lengths of \"x\" and \"y\".\n")
+    id <- as.character(id)
+}
+
 # If a data window is specified, turn it into a 4-tuple (if necessary).
 if(!is.null(rw)) {
    if(inherits(rw,"owin")) {
@@ -170,13 +180,14 @@ if(!is.null(rw)) {
     xmax <- rw[2]
     ymin <- rw[3]
     ymax <- rw[4]
-        ind.orig <- 1:n
+    ind.orig <- 1:n
     drop     <- ind.orig[x<xmin|x>xmax|y<ymin|y>ymax]
     if(length(drop)>0) {
-        x <- x[-drop]
-        y <- y[-drop]
-                ind.orig <- ind.orig[-drop]
-                if(haveZ) z <- z[-drop]
+        x  <- x[-drop]
+        y  <- y[-drop]
+        if(haveZ) z <- z[-drop]
+        if(haveId) id <- id[-drop]
+        ind.orig <- ind.orig[-drop]
     }
 }
 nn <- length(x) # Could be different from "n" if the data were
@@ -295,10 +306,9 @@ repeat {
             dirsgs=double(tdir),
             ndir=as.integer(ndir),
             dirsum=double(ntdir),
-                        incAdj=integer(1),
-                        incSeg=integer(1),
+            incAdj=integer(1),
+            incSeg=integer(1),
             PACKAGE='deldir'
-
         )
 
 # Check for problems with insufficient storage:
@@ -378,6 +388,19 @@ dirsgs$ind2 <- rind[dirsgs$ind2]
 dirsgs$thirdv1  <- with(dirsgs,ifelse(thirdv1<0,thirdv1,rind[abs(thirdv1)]))
 dirsgs$thirdv2  <- with(dirsgs,ifelse(thirdv2<0,thirdv2,rind[abs(thirdv2)]))
 
+# If "id" was supplied, change the entries of "ind1", "ind2", "thirdv1",
+# and "thirdv2" to be the corresponding entries of "id".
+if(haveId) {
+    delsgs$ind1 <- id[delsgs$ind1]
+    delsgs$ind2 <- id[delsgs$ind2]
+    dirsgs$ind1 <- id[dirsgs$ind1]
+    dirsgs$ind2 <- id[dirsgs$ind2]
+    dirsgs$thirdv1  <- with(dirsgs,ifelse(thirdv1<0,as.character(thirdv1),
+                                          id[abs(thirdv1)]))
+    dirsgs$thirdv2  <- with(dirsgs,ifelse(thirdv2<0,as.character(thirdv2),
+                                          id[abs(thirdv2)]))
+}
+
 # The points in "allsum" appear in bin-sorted order; rearrange
 # the rows of "allsum" so that the points appear in the original order.
 allsum          <- allsum[ind,]
@@ -396,14 +419,20 @@ allsum          <- allsum[ind,]
 
 rownames(allsum) <- ind.orig
 
-# Arrange for the tags to be in the summary.
-iz <- if(haveZ) {
+# Arrange for the tags and id to be in the summary, given
+# that they were supplied.
+dfz <- if(haveZ) {
     data.frame(z=z)
 } else {
     as.data.frame(matrix(nrow=nn,ncol=0))
 }
+dfid <- if(haveId) {
+    data.frame(id=id)
+} else {
+    as.data.frame(matrix(nrow=nn,ncol=0))
+}
 
-allsum <- cbind(allsum[,1:2],iz,allsum[,3:9])
+allsum <- cbind(allsum[,1:2],dfid,dfz,allsum[,3:9])
 rw     <- if(round) round(rw,digits) else rw
 
 # Aw' done!!!

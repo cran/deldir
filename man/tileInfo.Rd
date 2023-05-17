@@ -19,17 +19,27 @@ tileInfo(object, bndry = FALSE, clipp=NULL)
   Logical scalar.  If \code{TRUE} then the \dQuote{boundary} tiles
   (those tiles having edges forming part of the \dQuote{rectangular
   window} enclosing the tessellation) are included in the summary.
-  Otherwise they are not included.
+  Otherwise they are excluded.  Note that if all tiles are
+  boundary tiles and \code{bndry} is \code{FALSE}, then the list of
+  included tiles is empty.  In this setting the information summary
+  would be vacuous and hence an error is thrown.
+
 }
-  \item{clipp}{An object specifying a polygon to which the
-  tiles of the tessellation should be clipped.  See \code{link{tile.list}()}
-  for more information.
+  \item{clipp}{An object specifying a polygon to which the tiles of
+  the tessellation should be clipped.  See \code{link{tile.list}()}
+  for more information.  Note that tiles which were originally
+  boundary tiles may no longer be boundary tiles after being clipped.
 }
 }
 \section{Remark}{
 There is a \code{print()} method for class \code{"tileInfo"} which
 produces a convenient display of the information returned by this
 function.
+}
+\section{Acknowledgement}{
+Thanks to Krisztina Konya of Ruhr-University Bochum, who provided
+an example illustrating the need for an error trap in the setting
+in which all tiles are boundary tiles.
 }
 \value{An object of class \code{"tileInfo"} which consists of a
 list with components:

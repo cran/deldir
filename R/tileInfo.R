@@ -12,6 +12,8 @@ tileInfo <- function(object,bndry=FALSE,clipp=NULL) {
 # Required info:
 # * for each tile, the number of edges
 # * for each tile, a vector of the lengths of the edges
+# * for each tile, the vector of indices of the Delaunay neighbours
+#   of the centre of the tile
 # * a tabulation of the numbers of edges of tiles
 # * a vector of all lengths of edges (with repetitions)
 # * a vector of lengths of _unique_ edges
@@ -52,10 +54,20 @@ tileInfo <- function(object,bndry=FALSE,clipp=NULL) {
         }
         all(sapply(cmps,function(x){!any(x$bp)}))
     }
-    ok <- if(bndry) rep(TRUE,length(tl)) else sapply(tl,cnob)
-    xxx <- lapply(tl[ok],getEdges)
-    ptNums <- sapply(xxx,function(x){x$ptNum})
-    nms <- paste("pt",ptNums,sep=".")
+
+    ok <- sapply(tl,if(bndry) function(x){TRUE} else cnob)
+    if(sum(ok)==0) {
+        whinge <- paste0("All tiles are boundary tiles.  To get a non-vacuous\n",
+                         "  result, set bndry=TRUE.\n")
+        stop(whinge)
+    }
+    xxx   <- lapply(tl[ok],getEdges)
+    ptNms <- object$summary[["id"]]
+    if(is.null(ptNms)) {
+        ptNums <- unname(sapply(xxx,function(x){x$ptNum}))
+        ptNms  <- paste0("pt.",1:nrow(object$summary))
+    }
+    nms <- ptNms[ptNms %in% names(ok)][ok]
     names(xxx) <- nms
 
 # Extract and tabulate the edge counts.
@@ -76,11 +88,17 @@ tileInfo <- function(object,bndry=FALSE,clipp=NULL) {
 
 # Tile perimeters.
   perims <- tilePerim(tl[ok],inclbdry=bndry)
+  names(perims$perimeters) <- nms
+
+# Delaunay neighbours of tile centres.
+nbrs   <- getNbrs(object,interior=clipp)
+nms.ok <- intersect(nms,names(nbrs))
+nbrs   <- nbrs[nms.ok]
 
 # Pack up and go home.
     rslt <- list(indivTiles=xxx,allEdgeCounts=allnedge,tabEdgeCounts=tabnedge,
                  allEdgeLengths=all.lengths,Areas=areas,uniqueEdgeLengths=ue,
-                 perimeters=perims)
+                 perimeters=perims,nbrs=nbrs)
     class(rslt) <- "tileInfo"
     rslt
 }

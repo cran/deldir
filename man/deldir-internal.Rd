@@ -7,6 +7,8 @@
 \alias{findNewInOld}
 \alias{get.cnrind}
 \alias{getCol}
+\alias{insidePoly}
+\alias{insideRect}
 \alias{mid.in}
 \alias{mnndR}
 \alias{prelimtlist}
@@ -25,6 +27,8 @@ binsrtR(x,y,rw)
 findNewInOld(xnew,xold,ynew,yold,tolerance=sqrt(.Machine$double.eps))
 get.cnrind(x,y,rw)
 getCol(x,warn=FALSE)
+insidePoly(x,y,pgon)
+insideRect(x,y,rect,rw)
 mid.in(x,y,rx,ry)
 mnndR(x,y)
 prelimtlist(object)

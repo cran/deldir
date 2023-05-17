@@ -8,7 +8,7 @@ This is a method for plot.
 }
 \usage{
 \method{plot}{deldir}(x,add=FALSE,wlines=c("both","triang","tess"),
-                      showpoints=TRUE,number=FALSE,cex=1,nex=1,
+                      showpoints=TRUE,labelPts=FALSE,cex=1,lex=1,
                       cmpnt_col=NULL,cmpnt_lty=NULL,pch=1,xlim=NULL,
                       ylim=NULL,axes=FALSE,xlab=if(axes) "x" else "",
                       ylab=if(axes) "y" else"",showrect=FALSE,asp=1,...)
@@ -30,29 +30,31 @@ default) ?
 Logical scalar; should the points being triangulated/tessellated
 be plotted?
 }
-\item{number}{
+\item{labelPts}{
 Logical argument, defaulting to \code{FALSE}; if \code{TRUE} then the
-points plotted will be labelled with their index numbers
-(corresponding to the row numbers of the matrix "summary" in the
-output of deldir).
+points plotted will be labelled with their identifiers (as specified
+by the optional argument \code{id} of \code{deldir()}.  If \code{id}
+was not specified to \code{deldir()}, then the identifiers default
+to the indices of the points, which correspond to the row numbers
+of the matrix "summary" in the output of \code{deldir()}).
 }
 \item{cex}{
 The value of the character expansion argument cex to be used
 with the plotting symbols for plotting the points.
 }
-\item{nex}{
+\item{lex}{
 The value of the character expansion argument cex to be used by the
-text function when numbering the points with their indices.  Used only
-if number=\code{TRUE}.
+text function when labelling the points with their identifiers.  Used only
+if \code{labelPts} is \code{TRUE}.
 }
 \item{cmpnt_col}{
 A vector or list specifying the colours to be used for plotting
 the (up to five) different components of the graphic, explicitly the
 triangulation, the tessellation, the data points,
-the point numbers and the enclosing rectangle (\code{x$rw}) in that
+the point labels and the enclosing rectangle (\code{x$rw}) in that
 order.  The components of this vector or list may be named, with the
-names chosen from \code{"tri","tess","points","num","rect".}
-The default is \code{c(tri=1,tess=1,points=1,num=1,rect=1)}.
+names chosen from \code{"tri","tess","points","labels","rect".}
+The default is \code{c(tri=1,tess=1,points=1,labels=1,rect=1)}.
 If the vector or list is not named, the component names are assumed
 to be from the default list of names in the given order.
 
@@ -134,19 +136,27 @@ triangles are plotted with solid lines (lty=1) and the tiles with
 dotted lines (lty=2).  In addition the points
 being triangulated may be plotted.
 }
-\section{Warning}{
-In previous versions of the \code{deldir} package, the aspect
-ratio was not set.  Instead, the shape of the plotting region was
-set to be square (\code{pty="s"}).  This practice was suboptimal.
-To reproduce previous behaviour set \code{asp=NA} (and possibly
-\code{pty="s"}) in the call to \code{plot.deldir()}.  Users, unless
-they \emph{really} understand what they are doing and why they are
-doing it, are now \emph{strongly advised} not to set the value of
-\code{asp} but rather to leave \code{asp} equal to its default value
-of \code{1}.  Any other value may distort the tessellation and destroy
-the perpendicular appearance of lines which are indeed perpendicular.
-(And conversely may cause lines which are not perpendicular to
-appear as if they are.)
+\section{Warnings}{
+\itemize{
+  \item As of release 1.0-8 the argument \code{number} of
+  \code{\link{plot.deldir}()} and \code{\link{plot.tile.list}()}
+  was changed to \code{labelPts}.  As a consequence the argument
+  \code{nex} of this function has had its name changed to
+  \code{lex}.
+
+  \item In previous versions of the \code{deldir} package, the aspect
+  ratio was not set.  Instead, the shape of the plotting region was
+  set to be square (\code{pty="s"}).  This practice was suboptimal.
+  To reproduce previous behaviour set \code{asp=NA} (and possibly
+  \code{pty="s"}) in the call to \code{plot.deldir()}.  Users, unless
+  they \emph{really} understand what they are doing and why they are
+  doing it, are now \emph{strongly advised} not to set the value of
+  \code{asp} but rather to leave \code{asp} equal to its default value
+  of \code{1}.  Any other value may distort the tessellation and destroy
+  the perpendicular appearance of lines which are indeed perpendicular.
+  (And conversely may cause lines which are not perpendicular to
+  appear as if they are.)
+}
 }
 \seealso{ \code{\link{deldir}()} }
 \author{Rolf Turner
@@ -162,7 +172,7 @@ plot(dxy)
 
 # Plots the tessellation, but does not save the results:
 deldir(x,y,rw=c(0,11,0,11),plot=TRUE,
-       wl="tess",cmpnt_col=c(1,1,2,3,4),num=TRUE)
+       wl="tess",cmpnt_col=c(1,1,2,3,4),labelPts=TRUE)
 
 # Plots the triangulation, but not the tessellation or the points,
 # and saves the returned structure:
@@ -171,7 +181,7 @@ dxy <- deldir(x,y,rw=c(0,11,0,11),plot=TRUE,wl="triang",wp="none")
 
 # Plot everything:
 plot(dxy,cmpnt_col=c("orange","green","red","blue","black"),cmpnt_lty=1,
-     number=TRUE,nex=1.5,pch=c(19,9),showrect=TRUE,axes=TRUE)
+     labelPts=TRUE,lex=1.5,pch=c(19,9),showrect=TRUE,axes=TRUE)
 
 # Complicated example from He Huang:
 # "Linguistic distances".

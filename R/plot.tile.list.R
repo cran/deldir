@@ -1,17 +1,41 @@
 plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                             fillcol = getCol(x,warn=warn), col.pts=NULL,
-                            col.num=NULL,border=NULL, showpoints = !number,
+                            col.lbls=NULL,border=NULL, showpoints = !labelPts,
                             add = FALSE, asp = 1, clipp=NULL, xlab = "x",
                             ylab = "y", main = "", warn=TRUE,
-                            number=FALSE,adj=NULL,...) {
+                            labelPts=FALSE,adj=NULL,...) {
+# Check for use of the defunct argument name "number".
+ccc <- match.call()
+i   <- match("number",names(ccc))
+if(!is.na(i)) {
+    if("labelPts" %in% names(ccc)) {
+        whinge <- paste0("Both \"labelPts\" and the defunct argument",
+                         " \"number\" have been\n  specified.  Do not use",
+                         " the defunct argument \"number\".  Use\n",
+                         "  \"labelPts\" only.\n")
+        stop(whinge)
+    }
+    whinge <- paste0("The argument name \"number\" is defunct. Please",
+                     " use \"labelPts\"\n  instead.\n")
+    warning(whinge)
+    names(ccc)[i] <- "labelPts"
+    return(eval(ccc))
+}
+
+# Carry on.
     object <- x
     if (!inherits(object, "tile.list")) 
         stop("Argument \"object\" is not of class tile.list.\n")
     clip  <- !is.null(clipp)
-    if(clip & !is.null(attr(object,"clipp"))) {
-        whinge <- paste0("Argument \"x\" is already clipped.  Re-clip it\n",
-                         "  if you want a different clipping polygon.\n")
-        stop(whinge)
+    if(clip) {
+        if(!is.null(attr(object,"clipp"))) {
+            whinge <- paste0("Argument \"x\" is already clipped.  Re-clip it\n",
+                             "  if you want a different clipping polygon.\n")
+            stop(whinge)
+            if(!requireNamespace("polyclip",quietly=TRUE)) {
+                stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
+            }
+        }
     }
     n     <- length(object)
     rw    <- attr(object, "rw")
@@ -40,45 +64,33 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
         })
         col.pts <- rep(col.pts, length = length(object))
     }
-    if(is.null(col.num)){
-        col.num <- ifelse(fillcol == hexbla, hexwhi, hexbla)
+    if(is.null(col.lbls)){
+        col.lbls <- ifelse(fillcol == hexbla, hexwhi, hexbla)
     } else {
-        col.num <- apply(col2rgb(col.num, TRUE), 2, function(x) {
+        col.lbls <- apply(col2rgb(col.lbls, TRUE), 2, function(x) {
             do.call(rgb, as.list(x/255))
         })
-        col.num <- rep(col.num, length = length(object))
+        col.lbls <- rep(col.lbls, length = length(object))
     }
     if(is.null(border)) {
         border <- if(all(fillcol == hexbla)) hexwhi else hexbla
     } else if(length(border) > 1) border <- border[1]
     lnwid <- if(all(fillcol == hexbla)) 2 else 1
-    ptNums <- sapply(x,function(u){u$ptNum})
+    ptNms <- names(x)
     Adj <- adj
     if(is.null(Adj)) Adj <- if(showpoints) -1 else 0
     pch <- rep(pch,n)
-    okn <- logical(n)
     pgons <- vector("list",n)
     icol <- 0
     for(i in 1:n) {
-        if(clip) {
-            if(requireNamespace("polyclip",quietly=TRUE)) {
-                pgon <- doClip(object[[i]],clipp,rw)
-                ok   <- length(pgon) > 0
-                pgons[[i]] <- pgon
-            } else {
-                stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
-            }
-        } else {
-            pgon <- object[[i]]
-            ok   <- TRUE
-        }
+        pgon <- if(clip) doClip(object[[i]],clipp,rw) else object[[i]]
+        pgons[[i]] <- pgon
         if(is.null(pgon)) next
         icol <- icol+1
         if(is.null(attr(pgon,"ncomp"))) attr(pgon,"ncomp") <- 1
         if(attr(pgon,"ncomp") > 1) {
             pgon <- pgon$tileParts
         } else pgon <- list(pgon)
-        okn[i] <- ok
         for(ii in seq(along=pgon)){
             ptmp <- pgon[[ii]]
             inner <- !any(ptmp$bp)
@@ -98,21 +110,22 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                 }
             }
          }
-         if(ok & verbose) {
+         if(verbose) {
              if(showpoints) points(object[[i]]$pt[1], object[[i]]$pt[2],
                                    pch = pch[i], col = col.pts[i],...)
-             if(number) text(object[[i]]$pt[1], object[[i]]$pt[2],
-                             labels=ptNums[i], col = col.num[i],adj=Adj,...)
+             if(labelPts) text(object[[i]]$pt[1], object[[i]]$pt[2],
+                             labels=ptNms[i], col = col.lbls[i],adj=Adj,...)
              if(i < n) readline(paste("i = ",i,"; Go? ",sep=""))
              if(i == n) cat("i = ",i,"\n",sep="")
          }
     }
-    if (showpoints & !verbose) 
-    points(x.pts[okn], y.pts[okn], pch = pch[okn], col = col.pts[okn],...)
-    if (number & !verbose) 
-    text(x.pts[okn], y.pts[okn], labels = ptNums[okn], col = col.num[okn],
-         adj=Adj,...)
-    pgons <- pgons[!sapply(pgons,is.null)]
+    ok <- !sapply(pgons,is.null)
+    if(showpoints & !verbose)
+        points(x.pts[ok], y.pts[ok], pch = pch[ok], col = col.pts[ok],...)
+    if (labelPts & !verbose) 
+        text(x.pts[ok], y.pts[ok], labels = ptNms[ok], col = col.lbls[ok],
+             adj=Adj,...)
+    pgons <- pgons[ok]
     pgons <- if(length(pgons)) pgons else NULL
     invisible(pgons)
 }

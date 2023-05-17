@@ -14,7 +14,7 @@ is also enclosed in a finite rectangular window.
 }
 \usage{
 deldir(x, y, z=NULL, rw=NULL, eps=1e-09, sort=TRUE, plot=FALSE,
-       round=TRUE,digits=6, \dots)
+       round=TRUE,digits=6, id=NULL, \dots)
 }
 \arguments{
 \item{x,y}{
@@ -84,9 +84,25 @@ The number of decimal places to which all numeric values in the
 returned list should be rounded.  Defaults to 6. Ignored if
 \code{round} (see above) is set to \code{FALSE}.
 }
+\item{id}{
+Optional vector of the same length as \code{x} and
+\code{y}, providing identifiers for the points that are being
+triangulated/tessellated.  This vector will be coerced to mode
+\code{"character"} internally.  If \code{id} is not specified,
+it defaults to the sequence of indices of the points.  Note that
+\code{id} must specify identifiers for \emph{all} points, even
+though some of these points may be dropped from consideration if
+they do not lie inside the \dQuote{rectangular window} \code{rw}.
+Note also that \code{id} must contain no duplicate values.
+
+The \code{id} argument should not be confused with the \code{z}
+argument.  The two are entirely different and serve entirely different
+purposes.
+}
+
 \item{...}{
 Auxiliary arguments \code{add}, \code{wlines},
-\code{number}, \code{nex}, \code{col}, \code{lty}, \code{pch},
+\code{labelPts}, \code{lex}, \code{col}, \code{lty}, \code{pch},
 \code{xlim}, and \code{ylim} (and possibly other plotting parameters)
 may be passed to \code{\link{plot.deldir}()} through \code{\dots}
 if \code{plot=TRUE}.
@@ -98,7 +114,8 @@ A list (of class \code{deldir}), invisible if \code{plot=TRUE}, with components:
 \item{delsgs}{
 A data frame with 6 columns.  The first 4 entries of each row are the
 coordinates of the points joined by an edge of a Delaunay triangle,
-in the order \code{(x1,y1,x2,y2)}.  The last two entries are the indices
+in the order \code{(x1,y1,x2,y2)}.  The last two entries are the
+identifiers (defaulting to the indices, if \code{id} is not supplied)
 of the two points which are joined.
 }
 \item{dirsgs}{
@@ -106,7 +123,8 @@ A data frame with 10 columns.  The first 4 entries of each
 row are the coordinates of the endpoints of one the edges of a
 Dirichlet tile, in the order \code{(x1,y1,x2,y2)}.  The fifth and
 sixth entries, in the columns named \code{ind1} and \code{ind2},
-are the indices of the two points, in the set being triangulated,
+are the identifiers (defaulting to the indices, if \code{id} is
+not supplied)  of the two points, in the set being triangulated,
 which are separated by that edge. The seventh and eighth entries,
 in the columns named \code{bp1} and \code{bp2} are logical values.
 The entry in column \code{bp1} indicates whether the first endpoint
@@ -115,14 +133,15 @@ of the corresponding edge of a Dirichlet tile is a boundary point
 the entry in column \code{bp2} and the second endpoint of the edge.
 
 The ninth and tenth entries, in columns named \code{thirdv1}
-and \code{thirdv2} are the indices of the respective third
+and \code{thirdv2} are the identifiers of the respective third
 vertices of the Delaunay triangles whose circumcentres constitute
 the corresponding endpoints of the edge under consideration.
-(The other two vertices of the triangle in question are indexed by
+(The other two vertices of the triangle in question are identified by
 the entries of columns \code{ind1} and \code{ind2}.)
 
 The entries of columns \code{thirdv1} and \code{thirdv2} may (also)
-take the values $-1, -2, -3$, and $-4$.  This will be the case
+take the values $-1, -2, -3$, and $-4$. (These will be coerced to
+mode character if \code{id} was supplied.)  This will be the case
 if the circumcentre in question lies outside of the rectangular
 window \code{rw}.  In these circumstances the corresponding
 endpoint of the tile edge is the intersection of the line joining
@@ -139,7 +158,7 @@ Similarly for columns \code{thirdv2} and \code{bp2}.
 }
 
 \item{summary}{
-a data frame with 9, 10 or 11 columns and \code{n.data + n.dum} rows
+a data frame with 9, 10 or 11 columns and \code{n.data} rows
 (see below).  The rows correspond to the points in the set being
 triangulated.  Note that the row names are the indices of the points
 in the original sequence of points being triangulated/tessellated.
@@ -151,6 +170,8 @@ points in which the given point appears.  The columns are:
 \itemize{
 \item \code{x} (the \eqn{x}-coordinate of the point)
 \item \code{y} (the \eqn{y}-coordinate of the point)
+\item \code{id} (the identifers of the points; present only if
+\code{id} was specified)
 \item \code{z} (the auxiliary values or \dQuote{tags}; present
 only if these were specified)
 \item \code{n.tri} (the number of Delaunay triangles emanating from
@@ -492,13 +513,14 @@ dxy2 <- deldir(x,y,rw=c(0,10,0,10),plot=TRUE,wl="tr")
     dniP <- deldir(niProperties) # Throws an error
 }
     dniP <- deldir(niProperties,eps=1e-8) # No error.
+
 # Example of using data stored in a data frame.
 dsw  <- deldir(seaweed)
 # Example where "data" is of class "ppp".
 dtoy <- deldir(toyPattern)
 # The "tags", in dtoy$summary$z, are the marks of the toy ppp
 # object which consists of the letters "a","b","c" and "d".
-#
+
 # Artificial example of tags.
 set.seed(42)
 trees1  <- sample(c("spruce","birch","poplar","shoe"),20,TRUE)
@@ -536,6 +558,14 @@ d8 <- deldir(x=x, y=y, z=rnorm(10))
 # the name of the z argument i.e. "rnorm(10)" (!!!)  the specified
 # value of z takes precedence over this column (and, as per the usual
 # R syntax) over the object named "z" in the global environment.
+
+# Artificial example of the use of the "id" argument.
+set.seed(42)
+x  <- runif(50)
+y  <- runif(50)
+ll <- expand.grid(a=letters[1:10],b=letters[1:10])
+aa <- sample(paste0(ll[["a"]],ll[["b"]]),50)
+dxy.wid <- deldir(x,y,id=aa)
 }
 
 \keyword{spatial}

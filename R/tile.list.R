@@ -12,7 +12,6 @@ edgeLengths <- function(x,y) {
 function (object,minEdgeLength=NULL,clipp=NULL) {
   if (!inherits(object, "deldir"))
     stop("Argument \"object\" is not of class \"deldir\".\n")
-  ptp <- object$summary$pt.type
   rw <- object$rw
   if(is.null(minEdgeLength)) {
     drw <- sqrt((rw[2] - rw[1])^2 + (rw[4] - rw[3])^2)
@@ -26,13 +25,16 @@ function (object,minEdgeLength=NULL,clipp=NULL) {
   x <- sss[["x"]]
   y <- sss[["y"]]
   z <- sss[["z"]]
-  haveZ <- !is.null(z)
+  id <- sss[["id"]]
+  noid <- is.null(id)
+  if(noid) id <- 1:nrow(sss)
+  noz <- is.null(z)
   i.crnr <- get.cnrind(x, y, rw)
-  rslt <- list()
   ind.orig <- object$ind.orig
+  rslt <- vector("list",npts)
   for (i in 1:npts) {
-    filter1 <- ddd$ind1 == i
-    filter2 <- ddd$ind2 == i
+    filter1 <- ddd$ind1 == id[i]
+    filter2 <- ddd$ind2 == id[i]
     subset  <- ddd[which(filter1 | filter2),,drop=FALSE]
     m <- matrix(unlist(subset[, 1:4]), ncol = 4)
     bp1 <- subset[, 7]
@@ -63,28 +65,27 @@ function (object,minEdgeLength=NULL,clipp=NULL) {
     tmp$x  <- tmp$x[ok]
     tmp$y  <- tmp$y[ok]
     tmp$bp <- tmp$bp[ok]
-    if(length(ptp)) {
-      tmp <- append(tmp,values=ptp[i],after=2)
-      names(tmp)[3] <- "ptType"
-    }
     rslt[[i]] <-acw(tmp)
-    if(haveZ) {
+    if(!noz) {
         rslt[[i]]["z"] <- z[i]
     }
     if(is.null(clipp)) {
         attr(rslt[[i]],"ncomp") <- 1
+    }
+}
+if(!is.null(clipp)) {
+    if(requireNamespace("polyclip",quietly=TRUE)) {
+        rslt <- lapply(rslt,doClip,clipp=clipp,rw=rw)
     } else {
-        if(requireNamespace("polyclip",quietly=TRUE)) {
-            rslt[[i]] <- doClip(rslt[[i]],clipp,rw)
-        } else {
-            stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
-        }
+        stop("Cannot clip the tiles; package \"polyclip\" not available.\n")
     }
 }
     ok <- !sapply(rslt,is.null)
     rslt <- rslt[ok]
-    ptNums <- sapply(rslt,function(x){x$ptNum})
-    names(rslt) <- paste0("pt.",ptNums)
+    if(noid) {
+        id <- paste0("pt.",id)
+    }
+    names(rslt) <- id[ok]
     class(rslt) <- "tile.list"
     attr(rslt, "rw") <- object$rw
     attr(rslt,"clipp") <- clipp

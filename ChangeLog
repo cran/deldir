@@ -1,3 +1,58 @@
+
+ Version 1.0-9 17/05/2023
+
+ Got rid of a spurious file tile.list.R that I had saved as a backup
+ in the Deldir directory.  Psigh!!!
+
+ Version 1.0-8 30/04/2023
+
+ Added argument "id" to deldir(), allowing the user to specify a
+ vector of identifiers/names for points.  Added at the request of
+ Jiangyao Chi.
+
+ In view of the foregoing, the identifiers of points need no longer
+ be numeric indices, whence some of the terminology in plot.deldir()
+ and plot.tile.list() was no longer appropriate.  Consequently:
+
+    * changed name of argument "number" to "labelPts" in
+      plot.deldir() and in plot.tile.list().
+
+    * changed name of argument "nex" to "lex" in plot.deldir().
+
+    * changed the name of the 4th component of the argument cmpnt_col
+      in plot.deldir() from "num" to "labels".
+
+ Added function getNbrs() to list the Delaunay neighbours of
+ each point.  Added at the request of Jiangyao Chi.
+
+ Added functions insidePoly() and insideRect() to determine
+ whether points are inside an "interior" region which
+ may be specified either as a polygon or a rectangle.  In
+ the latter case the interior must be a subset of "rw",
+ the rectangular window with respect to which the points
+ are being triangulated/tessellated.
+
+ Added the results of a call to getNbrs() to the output of
+ tileInfo();  adjusted print.tileInfo() accordingly.
+
+ Fixed a mild glitch in plot.tile.list(); the returned value
+ was NULL if clipp was unspecified.  Corrected the help for
+ plot.tile.list() which had said that the returned value was
+ always null.
+
+ Tidied the code of plot.tile.list() a bit.  Amended the help
+ for plot.tile.list().
+
+ Adjusted message in First.R.
+
+ Version 1.0-7 26/12/2021
+
+ The function tileInfo() threw an opaque error if all tiles
+ were boundary tiles.  Added an error trap so as to produce
+ a more perspicuous error message.  Thanks to Krisztina Konya
+ of Ruhr-University Bochum who provided an example illustrating
+ the need for this error trap.
+
  Version 1.0-6 23/10/2021
 
  Fixed a bug that kept deldir() from working when "x" is a
