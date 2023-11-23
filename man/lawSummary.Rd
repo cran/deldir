@@ -88,9 +88,7 @@ lawSummary(object)
   }
 }
 
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \seealso{ \code{\link{tile.list}()} \code{\link{tile.centroids}()} }
 

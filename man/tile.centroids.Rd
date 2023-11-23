@@ -22,10 +22,7 @@ tile.centroids(tl)
 \references{
 URL http://en.wikipedia.org/wiki/Centroid
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 
 \seealso{ \code{\link{tile.list}()} }
 \examples{

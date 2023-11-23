@@ -47,10 +47,7 @@ triMat(object)
   Many thanks to Jay Call, who pointed out this bug to me.
 }
 
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \seealso{ \code{\link{deldir}()}
           \code{\link{triang.list}()}
 	  \code{\link{plot.triang.list}()}

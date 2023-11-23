@@ -27,9 +27,7 @@
 \details{
    This is a method for the generic \code{\link{print}()} function.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 \seealso{
    \code{\link{print}()}
 }

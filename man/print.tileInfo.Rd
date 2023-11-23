@@ -74,9 +74,7 @@
 \value{
   None.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \seealso{
   \code{\link{tileInfo}()}

@@ -47,10 +47,7 @@ tilePerim(object,inclbdry=TRUE)
    of the components.
 }
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \note{
    Function added at the request of Haozhe Zhang.
 }

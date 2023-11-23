@@ -1,4 +1,54 @@
 
+ Version 2.0-2 20/11/2023
+
+ Changed my (the maintainer's) email address to
+ rolfturner@posteo.net.
+ Made this change in the DESCRIPTION file and in the
+ help files.
+ Introduced a macro "\rolf" to go into the \author{ } field
+ so that future changes can be effected simply by changing the
+ macro.
+
+ Version 2.0-1 20/11/2023
+
+ Corrected a couple of rather silly bugs (which took an enormous
+ amount of time and effort to track down) in trifnd.r and stoke.r.
+ Both bugs involved incorrect if/else syntax.
+
+ Version 2.0-0 20/11/2023
+
+ Converted ratfor code to fortran 90 code (placing the latter
+ into the "src" directory).
+
+ Version 1.0-12 23/11/2023
+
+ While debugging the new Fortran 90 based version of this package
+ it became clear that an if/else structure in trifnd.r was (although
+ not actually wrong) ill-constructed.  I corrected this defect,
+ making the code consistent with the corresponding code in trifnd.f90.
+
+ Version 1.0-11 18/11/2023
+
+ Changed insidePoly() so that tolerance can be specified by the used,
+ rather than being hardwired to the value sqrt(.Machine$double.eps).
+ This necessitated changing the structure of insidePoly.R so as *not*
+ to use local().
+
+ Version 1.0-10 17/11/2023
+
+ Corrected a bug in insidePoly(); I had misunderstood the
+ sanity check in spatstat.utils::inside.xypolygon(), which issues
+ a *warning* if not all entries of "score" are 0 or 1, but describes
+ this as being an "internal error".  So I had made insidePoly() throw
+ an error in this circumstances; I shouldn't have!  The errors thrown
+ are spurious.  I have now changed the error to a warning, and added
+ an argument "sanityCheck=FALSE"; the warning is issued only if
+ sanityCheck is set to TRUE.
+
+ Also introduced "%~%" (almost equal).  Using this in place of "=="
+ seems (???) to do a better job of determining  boundary points
+ correctly.
+
  Version 1.0-9 17/05/2023
 
  Got rid of a spurious file tile.list.R that I had saved as a backup

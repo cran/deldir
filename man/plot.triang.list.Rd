@@ -62,10 +62,7 @@ a Delaunay triangulation of a set of points in the plane.}
    None.  This function has the side effect of producing (or
    adding to) a plot.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 
 \seealso{ \code{\link{deldir}()}, \code{\link{plot.triang.list}()},
           \code{\link{tile.list}()}, \code{\link{plot.tile.list}()} }

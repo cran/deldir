@@ -475,9 +475,7 @@ function.  Duncan provided numerous simple examples to demonstrate
 when and how things were going wrong, and patiently explained to
 me how I was getting one aspect of the protocol backwards.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \references{
 Lee, D. T. and Schacter, B. J. (1980). Two algorithms for

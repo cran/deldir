@@ -1,3 +1,4 @@
+\encoding{UTF-8}
 \name{cvt}
 \alias{cvt}
 \title{
@@ -43,7 +44,7 @@
 }
 \section{Note}{
 This function was added to the \code{deldir} package at the
-suggestion of Dr. Micha\"{e}l Aupetit, Senior Scientist at the
+suggestion of Dr. Michaël Aupetit, Senior Scientist at the
 Qatar Computing Research Institute, Hamad Bin Khalifa University.
 }
 \details{The algorithm iteratively tessellates a set of points and
@@ -70,9 +71,7 @@ Lloyd, Stuart P. (1982). Least squares quantization in PCM.
 pp. 129--137, doi:10.1109/TIT.1982.1056489.
 }
 
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 \seealso{
 \code{\link{deldir}()} \code{\link{tile.list}()}
 }

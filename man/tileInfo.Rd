@@ -84,9 +84,7 @@ list with components:
   into the perimeters of the parts into which tiles may have been
   subdivided by the clipping process.}
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \seealso{
  \code{\link{deldir}()} \code{\link{tile.list}()} \code{\link{print.tileInfo}()}

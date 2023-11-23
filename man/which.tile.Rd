@@ -30,9 +30,7 @@ which.tile(x, y, tl)
   An integer equal to the index of the tile in which the given
   point lies.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \seealso{
 \code{\link{tile.list}()} \code{\link{deldir}()}.

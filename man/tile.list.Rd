@@ -74,10 +74,7 @@ and as are appropriate for the part in question.
 with the \code{pt}; present only if such values were supplied in
 the call to \code{deldir()}.}
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \section{Acknowledgement}{
 The author expresses sincere thanks to Majid Yazdani who found and
 pointed out a serious bug in \code{tile.list} in a previous version
@@ -123,6 +120,20 @@ intersection of the tile with the enclosing rectangle.
         wc <- tile.list(z,clipp=CP) # 10 tiles are retained; the third tile,
                                     # corresponding to point 6, is
                                     # subdivided into two parts.
+    # Determine the tiles on the border of a clipping region.
+    # Example due to Huimin Wang.
+    set.seed(112)
+    x      <- runif(100)
+    y      <- runif(100)
+    dxy    <- deldir(x,y)
+    txy    <- tile.list(dxy)
+    chind  <- chull(x,y)
+    bdry   <- list(x=x[chind],y=y[chind])
+    ctxy   <- tile.list(dxy,clipp=bdry)
+    inside <- lapply(ctxy,function(tile,bdry){insidePoly(tile$x,tile$y,bdry)},
+                                            bdry=bdry)
+    border <- sapply(inside,function(x){any(!x) | any(attr(x,"on.boundary"))})
+    plot(ctxy[border],main="Border tiles")
     }
 }
 \keyword{spatial}

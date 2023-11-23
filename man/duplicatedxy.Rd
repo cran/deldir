@@ -44,10 +44,7 @@ duplicatedxy(x, y)
    corresponding point is a duplicate of a point with a smaller
    index, and \code{FALSE} otherwise.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \note{
   The real work is done by the base \bold{R} function \code{\link{duplicated}()}.
 }

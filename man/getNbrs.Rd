@@ -60,9 +60,7 @@ getNbrs(object, interior = NULL)
 \references{
   See \code{\link{deldir}()} for references.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 \section{Warning}{
 Be careful about addressing the entries of the list returned
 by this function.  If \code{id} was not specified in the call

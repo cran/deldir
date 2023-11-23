@@ -35,9 +35,7 @@ tileArea(x, y, rw)
 \value{
   A positive scalar.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \seealso{
   \code{\link{deldir}()}

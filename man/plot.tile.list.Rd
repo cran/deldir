@@ -201,10 +201,7 @@ list of  tiles specified by argument \code{x}, or this list
 clipped to the polygon \code{clipp} if the latter was specified.
 }
 
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \seealso{ \code{\link{deldir}()}, \code{\link{tile.list}()},
           \code{\link{triang.list}()}, \code{\link{plot.triang.list}()} }
 \examples{

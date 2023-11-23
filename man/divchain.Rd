@@ -83,9 +83,7 @@
   the triangulation/tessellation in question was constructed.
   (See \code{\link{deldir}()}.)
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 
 \note{
    This function was created in response to a question asked

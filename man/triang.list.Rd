@@ -37,10 +37,7 @@ triang.list(object)
   The returned value has an attribute \dQuote{rw} consisting of the
   enclosing rectangle of the triangulation.
 }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \section{Warning}{
   There may not actually \bold{be} any triangles determined by
   \code{object}, in which case this function returns an empty

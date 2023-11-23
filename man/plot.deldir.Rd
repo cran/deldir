@@ -159,9 +159,7 @@ being triangulated may be plotted.
 }
 }
 \seealso{ \code{\link{deldir}()} }
-\author{Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-}
+\author{\rolf}
 \examples{
 x <- c(2.3,3.0,7.0,1.0,3.0,8.0) + 0.5
 y <- c(2.3,3.0,2.0,5.0,8.0,9.0) + 0.5

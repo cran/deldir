@@ -1,8 +1,13 @@
-insidePoly <- function(x,y,pgon) {
+insidePoly <- function(x,y,pgon,sanityCheck=FALSE,
+                       tolerance=sqrt(.Machine$double.eps)) {
 # This code is taken from the spatstat.utils function
 # inside.xypolygon() (the "interpreted" method), with minor
-# modifications.
+# modifications, particularly in respect of the "sanity check".
 #
+# Also, in respect of determing boundary points, arrangements have
+# been made to allow conversion of` "==" to almost.equal() ("%~%";
+# see below).  This permits better determination of boundary points.
+
 # Check that pgon is of the appropriate form.
 if(inherits(pgon,"list")) {
     ok <- all(c("x","y") %in% names(pgon))
@@ -19,6 +24,16 @@ if(inherits(pgon,"list")) {
     }
 } else {
     stop("Argument \"pgon\" must be a list determining a polygon.\n")
+}
+
+if(tolerance > 0) {
+    almost.equal <- function(x, y)  {
+        abs(x - y) < tolerance
+    }
+    assign("tolerance",tolerance,envir=environment(almost.equal))
+    `%~%`  <- function(x,y) almost.equal(x,y)
+} else {
+    `%~%` <- `==`
 }
 
 full.npts <- npts <- length(x)
@@ -54,11 +69,11 @@ if(anyretain <- any(retain)) {
                 ycriterion <- y[consider] * dx - x[consider] * dy +  x0 * dy - y0 * dx
 # closed inequality
                 contrib <- (ycriterion >= 0) *
-                   ifelse(xcriterion[consider] == 0, 1/2, 1)
+                   ifelse(xcriterion[consider] %~% 0, 1/2, 1)
 # positive edge sign
                 score[consider] <- score[consider] + contrib
 # detect whether any point lies on this segment
-                on.boundary[consider] <- on.boundary[consider] | (ycriterion == 0)
+                on.boundary[consider] <- on.boundary[consider] | (ycriterion %~% 0)
             }
         } else if(dx > 0) {
 # lower edge
@@ -67,15 +82,15 @@ if(anyretain <- any(retain)) {
             if(any(consider)) {
                 ycriterion <- y[consider] * dx - x[consider] * dy + x0 * dy - y0 * dx
 # open inequality
-                contrib <- (ycriterion < 0) * ifelse(xcriterion[consider] == 0, 1/2, 1)
+                contrib <- (ycriterion < 0) * ifelse(xcriterion[consider] %~% 0, 1/2, 1)
 # negative edge sign
                 score[consider] <- score[consider] - contrib
 # detect whether any point lies on this segment
-                on.boundary[consider] <- on.boundary[consider] | (ycriterion == 0)
+                on.boundary[consider] <- on.boundary[consider] | (ycriterion %~% 0)
             }
         } else {
 # vertical edge
-            consider <- (x == x0)
+            consider <- (x %~% x0)
             if(any(consider)) {
 # zero score
 # detect whether any point lies on this segment
@@ -106,10 +121,14 @@ if(vertices.present) {
 # any point recognised as lying on the boundary gets score 1.
 score[on.boundary] <- 1
 
-# Check sanity.
-if(!all((score == 0) | (score == 1)))
-    stop("Some \"scores\" are neither equal to 0 nor to 1.\n")
+# Sanity Clause.
+if(sanityCheck) {
+    if(!all((score == 0) | (score == 1)))
+        warning("Some \"scores\" are neither equal to 0 nor to 1.\n")
+}
 
 # Aw' done!
-score==1
+score <- as.logical(score)
+attr(score,"on.boundary") <- on.boundary
+score
 }

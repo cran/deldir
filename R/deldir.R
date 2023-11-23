@@ -99,6 +99,8 @@ function(x,y=NULL,z=NULL,rw=NULL,eps=1e-9,sort=TRUE,plot=FALSE,
 # infinite Dirichlet tiles) with corners (xmin,ymin) etc.  This rectangle
 # is referred to elsewhere as `the' rectangular window.
 
+#cat("Fuck fuck fuck!!!\n")
+
 # Organise the x, y and possibly z arguments.
 
 if(inherits(x,"ppp")) {

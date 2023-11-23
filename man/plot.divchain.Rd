@@ -36,11 +36,7 @@
 \value{
    None.
 }
-\author{
-  Rolf Turner
-  \email{r.turner@auckland.ac.nz}
-% \url{https://www.stat.auckland.ac.nz/~rolf}
-}
+\author{\rolf}
 \note{
   This function was created in response to a question asked
   on \code{stackoverflow.com} by a user named \dQuote{Dan}.
