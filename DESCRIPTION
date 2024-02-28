@@ -1,6 +1,6 @@
 Package: deldir
-Version: 2.0-2
-Date: 2023-11-23
+Version: 2.0-4
+Date: 2024-02-27
 Title: Delaunay Triangulation and Dirichlet (Voronoi) Tessellation
 Author: Rolf Turner
 Maintainer: Rolf Turner <rolfturner@posteo.net>
@@ -18,6 +18,6 @@ LazyData: true
 ByteCompile: true
 License: GPL (>= 2)
 NeedsCompilation: yes
-Packaged: 2023-11-23 03:08:15 UTC; rolf
+Packaged: 2024-02-27 02:48:30 UTC; rolf
 Repository: CRAN
-Date/Publication: 2023-11-23 08:50:03 UTC
+Date/Publication: 2024-02-28 04:00:02 UTC

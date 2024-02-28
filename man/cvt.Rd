@@ -76,7 +76,7 @@ pp. 129--137, doi:10.1109/TIT.1982.1056489.
 \code{\link{deldir}()} \code{\link{tile.list}()}
 }
 \examples{
-\donttest{ # Takes too long.
+\dontrun{ # Takes too long.
     set.seed(42)
     x <- runif(20)
     y <- runif(20)

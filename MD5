@@ -1,11 +1,11 @@
-40264c9a79a70b91fc1a016fe19b1d7d *ChangeLog
-2a9ec80831e13fac93d04434c4c69520 *DESCRIPTION
+56d1a621937eae3fd2a33ae5ff85f9ef *ChangeLog
+1098cca1f03a9b1db21839398223ea8f *DESCRIPTION
 058da4b8b5765582931e43414bf5bdda *NAMESPACE
-cb182cecca1c503168d58f6d9c826b3b *R/First.R
+601630fdb6c4a59cc1bd89aa38476ba9 *R/First.R
 73e1fe7de214e92456cd97ad52a32f44 *R/acw.R
 e3a2a2668bc0f9ef0d2d845c0a712c31 *R/binsrt.R
 cf63d30192e7000cdd0a5fd38bcabd94 *R/cvt.R
-71b201b4da5b79066b8db37b3586d57e *R/deldir.R
+5aefed43ef8301aa000f6882feed90b0 *R/deldir.R
 e93cf566c9d47595ee8fd48fd53c49ff *R/divchain.R
 55724ca4cc120c540362ffc357e7d961 *R/divchain.default.R
 8ab92bd123378abf04a0914cb1606809 *R/divchain.deldir.R
@@ -22,7 +22,7 @@ e55af1ae6eb1861a0e7e2ea8a68c8444 *R/mid.in.R
 38cab98679b46834c875f24aa585652d *R/mnnd.R
 5accef90c64ff886275c4fe62a59ddb4 *R/plot.deldir.R
 d6eab673058844acdc5ec31ba74cac63 *R/plot.divchain.R
-ecade073e16301a04d49f0315e9551c3 *R/plot.tile.list.R
+3d6a1d80a7b6d17bd15b4b4a3500643b *R/plot.tile.list.R
 327d64184bed6076edaf9d86a9e4f271 *R/plot.triang.list.R
 308faf87e71c1788d1838a2dc3f32e2c *R/prelimtlist.R
 41996f1dc81f416aaacd8dda6fb7eb52 *R/print.deldir.R
@@ -58,7 +58,7 @@ c2d0b8ca101bbeea7470b1e28f7f2e4d *inst/code.discarded/ind.dup.R
 c945c2910fca08afeb14c565ae4222b7 *inst/code.discarded/trigraf.r
 b5e808eddb79d2d4be20441250910a4b *inst/code.discarded/trigraf1.r.save
 ed46e23d86abafd7a3331ffaf6fbecf9 *inst/code.discarded/xsucc.f
-fee74eca077617ad94156947ef9225ba *man/cvt.Rd
+cc713629b2837d66f036d7063d0cf1d6 *man/cvt.Rd
 83ff52450cec8a028afc8f380cf9d6dc *man/deldir-internal.Rd
 a9877580b5c8e41d81d05c366a3513db *man/deldir.Rd
 ba7168d05f65f45af6d1dc0f1d90bcb1 *man/divchain.Rd
@@ -70,7 +70,7 @@ b4c81092e8fd5552ba4b24088301e95b *man/grapherXmpl.Rd
 2ce7fbea93478b4645c8061eb4966093 *man/niProperties.Rd
 507bd0c5d40d641e71a3fa1359fb2285 *man/plot.deldir.Rd
 1314a414f10ebe107addd1664a9ae6e8 *man/plot.divchain.Rd
-32b091466045e37db69ffefbec02d67d *man/plot.tile.list.Rd
+37c19b129820ff30d2b22f594b0e8054 *man/plot.tile.list.Rd
 a75377ac21477529e112c55d80ae5354 *man/plot.triang.list.Rd
 52f4e5f6414ebfd148d110ed61160a83 *man/print.deldir.Rd
 c2e6f6bd224b8559eca750136d8dce4d *man/print.tileInfo.Rd

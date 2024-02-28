@@ -2,7 +2,7 @@ plot.tile.list <- function (x, verbose = FALSE, close = FALSE, pch = 1,
                             fillcol = getCol(x,warn=warn), col.pts=NULL,
                             col.lbls=NULL,border=NULL, showpoints = !labelPts,
                             add = FALSE, asp = 1, clipp=NULL, xlab = "x",
-                            ylab = "y", main = "", warn=TRUE,
+                            ylab = "y", main = "", axes=TRUE, warn=TRUE,
                             labelPts=FALSE,adj=NULL,...) {
 # Check for use of the defunct argument name "number".
 ccc <- match.call()
@@ -49,7 +49,7 @@ if(!is.na(i)) {
     }))
     if (!add) 
         plot(0, 0, type = "n", asp = asp, xlim = rx, ylim = ry, 
-            xlab = xlab, ylab = ylab, main = main)
+            xlab = xlab, ylab = ylab, main = main, axes=axes)
     fillcol <- apply(col2rgb(fillcol, TRUE), 2, function(x) {
         do.call(rgb, as.list(x/255))
     })

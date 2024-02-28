@@ -206,6 +206,22 @@ if(is.null(rw)) {
     ymax <- max(y)
     xdff <- xmax-xmin
     ydff <- ymax-ymin
+# Check for the setting in which all points lie on a vertical
+# or horizontal straight line.
+    if(isTRUE(all.equal(xdff,0))) {
+        whinge <- paste0("The x-range of the points is zero, whence a",
+                         " rectangular window\n  cannot be inferred from",
+                         " the data.  You must specify the rectangular\n",
+                         "  window explicitly.\n")
+        stop(whinge)
+    }
+    if(isTRUE(all.equal(ydff,0))) {
+        whinge <- paste0("The y-range of the points is zero, whence a",
+                         " rectangular window\n  cannot be inferred from",
+                         " the data.  You must specify the rectangular\n",
+                         "  window explicitly.\n")
+        stop(whinge)
+    }
     xmin <- xmin-0.1*xdff
     xmax <- xmax+0.1*xdff
     ymin <- ymin-0.1*ydff
@@ -213,6 +229,7 @@ if(is.null(rw)) {
     rw   <- c(xmin,xmax,ymin,ymax)
     ind.orig <- 1:n
 }
+
 # Eliminate duplicate points:
 iii <- duplicatedxy(x,y)
 if(any(iii)) {

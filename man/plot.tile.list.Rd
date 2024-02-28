@@ -8,7 +8,7 @@ the tiles associated with each point in the set being tessellated. }
                          fillcol = getCol(x,warn=warn), col.pts=NULL,
                          col.lbls=NULL,border=NULL, showpoints = !labelPts,
                          add = FALSE, asp = 1, clipp=NULL, xlab = "x",
-                         ylab = "y", main = "", warn=TRUE,
+                         ylab = "y", main = "", axes=TRUE,warn=TRUE,
                          labelPts=FALSE,adj=NULL,...) 
 }
 \arguments{
@@ -103,25 +103,33 @@ the tiles associated with each point in the set being tessellated. }
   \item{main}{
    A title for the plot (used only if \code{add} is \code{FALSE}).
 }
+  \item{axes}{
+   Logical scalar.  Should axes (with a marked numeric scale)
+   be plotted?  This argument is used only if \code{add} is
+   \code{FALSE}.  It allows the plotting of such axes to be
+   suppressed.  The argument was added at the request of Damon
+   Tutunjian.  To suppress the plotting of axis \emph{labels}
+   set \code{xlab=""} and/or \code{ylab=""}.
+}
   \item{warn}{Logical scalar passed to the internal function \code{getCol()}.
   Should a warning be issued if the \code{z} components of the entries
   of \code{x} cannot all be interpreted as colours?  (See \bold{Notes}.)
-  }
+}
   \item{labelPts}{Logical scalar; if \code{TRUE} the labels of the
   points determining the tiles are plotted in the tiles.  Note
   that if \code{labelPts} is \code{TRUE} then \code{showpoints}
   defaults to \code{FALSE}
-  }
+}
   \item{adj}{The \dQuote{adjustment} argument to \code{text()}.
   If \code{labelPts} and \code{showpoints} are both \code{TRUE} it
   defaults to \code{-1} (so that the labels and point symbols
   are not superimposed).  If \code{labelPts} is \code{TRUE} and
   \code{showpoints} is \code{FALSE} it defaults to \code{0}.
   If \code{labelPts} is \code{FALSE} it is ignored.
-  }
+}
   \item{...}{Optional arguments; may be passed to \code{points()}
   and \code{text()}.
-  }
+}
 }
   \section{Warnings}{
   \itemize{
@@ -159,9 +167,11 @@ the tiles associated with each point in the set being tessellated. }
   doing and why they are doing it, are \emph{strongly advised}
   not to set the value of \code{asp} but rather to leave \code{asp}
   equal to its default value of \code{1}.  Any other value distorts
-  the tesselation and destroys the perpendicular appearance of lines
-  which are indeed perpendicular.  (And conversely can cause lines
-  which are not perpendicular to appear as if they are.)
+  the tesselation and destroys the perpendicular appearance of
+  lines which are indeed perpendicular.  (And conversely can cause
+  lines which are not perpendicular to appear as if they are.)
+  The argument \code{asp} was added at the request of Zubin Dowlaty
+  (who presumably knows what he's doing!).
   }
 }
 \section{Notes}{
@@ -190,9 +200,6 @@ the tiles associated with each point in the set being tessellated. }
   plotted tiles are filled with colours, was made as a result of
   a request from Chris Triggs.  Likewise the argument \code{clipp}
   was added due to a request from Chris Triggs.
-
-  \item The argument \code{asp} was added at the request of Zubin
-  Dowlaty (who presumably knows what he's doing!).
   }
 }
 
@@ -226,5 +233,6 @@ clipped to the polygon \code{clipp} if the latter was specified.
   plot(w,labelPts=TRUE,col.lbls="red")
   plot(w,labelPts=TRUE,col.lbls="red",cex=0.5)
   plot(w,showpoints=TRUE,labelPts=TRUE,col.pts="green",col.lbls="red")
+  plot(w,axes=FALSE,xlab="",ylab="",close=TRUE)
 }
 \keyword{ hplot }

@@ -1,19 +1,35 @@
 
+ Version 2.0-4 27/02/2024
+
+ Added an informative (???) error message to handle the setting
+ in which all points lie on a vertical or horizontal straight line
+ (whence the rectangular window cannot be inferred from the data).
+
+ Version 2.0-3 06/12/2023
+
+ Added the argument "axes" to plot.tile.list(), to permit the
+ suppression of the plotting of axes marked with a numeric scale.
+ Argument added at the request of Damon Tutunjia.
+
+ Adjust the help file for plot.tile.list().
+
+ Changed the startup message.
+
+ Also changed the  nickname.
+
  Version 2.0-2 20/11/2023
 
  Changed my (the maintainer's) email address to
- rolfturner@posteo.net.
- Made this change in the DESCRIPTION file and in the
- help files.
- Introduced a macro "\rolf" to go into the \author{ } field
- so that future changes can be effected simply by changing the
- macro.
+ rolfturner@posteo.net.  Made this change in the DESCRIPTION file
+ and in the help files.  Introduced a macro "\rolf" to go into the
+ \author{ } field so that future changes can be effected simply by
+ changing the macro.  Version 2.0-2 is now up on CRAN.
 
  Version 2.0-1 20/11/2023
 
  Corrected a couple of rather silly bugs (which took an enormous
- amount of time and effort to track down) in trifnd.r and stoke.r.
- Both bugs involved incorrect if/else syntax.
+ amount of time and effort to track down) in trifnd.f90 and stoke.f90.
+ Both bugs involved incorrect Fortran 90 if/else syntax.
 
  Version 2.0-0 20/11/2023
 
@@ -22,10 +38,11 @@
 
  Version 1.0-12 23/11/2023
 
- While debugging the new Fortran 90 based version of this package
- it became clear that an if/else structure in trifnd.r was (although
- not actually wrong) ill-constructed.  I corrected this defect,
- making the code consistent with the corresponding code in trifnd.f90.
+ While debugging the new Fortran 90 based version (see above) of this
+ package it became clear that an if/else structure in trifnd.r was
+ (although not actually wrong) ill-constructed.  I corrected this
+ defect, making the code consistent with the corresponding code
+ in trifnd.f90.
 
  Version 1.0-11 18/11/2023
 
@@ -48,6 +65,9 @@
  Also introduced "%~%" (almost equal).  Using this in place of "=="
  seems (???) to do a better job of determining  boundary points
  correctly.
+
+ Thanks to Huimin Wang whose enquiry about inexplicable crashes in
+ tileInfo() disclosed the aforementioned bug.`
 
  Version 1.0-9 17/05/2023
 
